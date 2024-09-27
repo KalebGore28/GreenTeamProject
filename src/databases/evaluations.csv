@@ -1,0 +1,6 @@
+employee_id,first_name,last_name,department,evaluation_data,performance_score,comments
+1,John,Doe,Engineering,2023-10-01,4.5,Excellent problem-solving skills
+2,Jane,Smith,Marketing,2023-10-01,4.0,Great team player
+3,Emily,Jones,Sales,2023-10-01,3.8,Consistent performer
+4,Michael,Brown,HR,2023-10-01,4.2,Strong leadership qualities
+5,Jessica,Johnson,Finance,2023-10-01,3.9,Detail-oriented and reliable
