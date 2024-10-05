@@ -49,6 +49,7 @@ public class CSVHelperTest {
 		String[][] lines = CSVHelper.readLinesAsStrings("src/databases/employees.csv", 1, 2);
 
 		assertNotNull(lines);
+		assertEquals(2, lines.length);
 
 		assertEquals(2, lines.length);
 		assertEquals("1", lines[0][0]);
