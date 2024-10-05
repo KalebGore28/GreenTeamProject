@@ -18,6 +18,7 @@ public class CSVHelperTest {
 		String[] line = CSVHelper.readLineAsStrings("src/databases/employees.csv", 1);
 
 		assertNotNull(line);
+
 		assertEquals("1", line[0]);
 		assertEquals("John", line[1]);
 		assertEquals("Doe", line[2]);
@@ -32,6 +33,7 @@ public class CSVHelperTest {
 		Map<String, String> line = CSVHelper.readLineAsMap("src/databases/employees.csv", 1);
 
 		assertNotNull(line);
+
 		assertEquals("1", line.get("employee_id"));
 		assertEquals("John", line.get("first_name"));
 		assertEquals("Doe", line.get("last_name"));
@@ -47,6 +49,8 @@ public class CSVHelperTest {
 		String[][] lines = CSVHelper.readLinesAsStrings("src/databases/employees.csv", 1, 2);
 
 		assertNotNull(lines);
+
+		assertEquals(2, lines.length);
 		assertEquals("1", lines[0][0]);
 		assertEquals("John", lines[0][1]);
 		assertEquals("Doe", lines[0][2]);
@@ -69,6 +73,8 @@ public class CSVHelperTest {
 		Map<String, String>[] lines = CSVHelper.readLinesAsMap("src/databases/employees.csv", 1, 2);
 
 		assertNotNull(lines);
+		assertEquals(2, lines.length);
+
 		assertEquals("1", lines[0].get("employee_id"));
 		assertEquals("John", lines[0].get("first_name"));
 		assertEquals("Doe", lines[0].get("last_name"));
@@ -92,6 +98,7 @@ public class CSVHelperTest {
 		String[] line = CSVHelper.searchLineAsStrings("src/databases/employees.csv", "employee_id", "1");
 
 		assertNotNull(line);
+
 		assertEquals("1", line[0]);
 		assertEquals("John", line[1]);
 		assertEquals("Doe", line[2]);
@@ -106,6 +113,7 @@ public class CSVHelperTest {
 		Map<String, String> line = CSVHelper.searchLineAsMap("src/databases/employees.csv", "salary", "75000");
 
 		assertNotNull(line);
+
 		assertEquals("1", line.get("employee_id"));
 		assertEquals("John", line.get("first_name"));
 		assertEquals("Doe", line.get("last_name"));
@@ -121,6 +129,8 @@ public class CSVHelperTest {
 		String[][] lines = CSVHelper.searchLinesAsStrings("src/databases/employees.csv", "salary", "75000", 2);
 
 		assertNotNull(lines);
+		assertEquals(2, lines.length);
+
 		assertEquals("1", lines[0][0]);
 		assertEquals("John", lines[0][1]);
 		assertEquals("Doe", lines[0][2]);
@@ -143,6 +153,8 @@ public class CSVHelperTest {
 		Map<String, String>[] lines = CSVHelper.searchLinesAsMap("src/databases/employees.csv", "salary", "75000", 2);
 
 		assertNotNull(lines);
+		assertEquals(2, lines.length);
+
 		assertEquals("1", lines[0].get("employee_id"));
 		assertEquals("John", lines[0].get("first_name"));
 		assertEquals("Doe", lines[0].get("last_name"));
