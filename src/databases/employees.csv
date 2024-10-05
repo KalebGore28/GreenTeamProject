@@ -3,4 +3,4 @@ employee_id,first_name,last_name,email,department,position,salary
 2,Jane,Smith,jane.smith@example.com,Marketing,Marketing Manager,90000
 3,Emily,Jones,emily.jones@example.com,Sales,Sales Manager,80000
 4,Michael,Brown,michael.brown@example.com,HR,HR Manager,75000
-5,Jessica,Johnson,jessica.johnson@example.com,Finance,Finance Manager,85000
+5,Jessica,Johnson,jessica.johnson@example.com,Finance,Finance Manager,75000

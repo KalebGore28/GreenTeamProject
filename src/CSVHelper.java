@@ -271,14 +271,14 @@ public class CSVHelper {
 	 * Searches for lines in a CSV file that match a specified key-value pair and
 	 * returns them as a 2D array of strings.
 	 *
-	 * @param filePath       the path to the CSV file to be searched.
-	 * @param key            the header key to search for in the CSV file.
-	 * @param value          the value to match against the specified key.
-	 * @param maxSearchLines the maximum number of lines to search before stopping.
+	 * @param filePath   the path to the CSV file to be searched.
+	 * @param key        the header key to search for in the CSV file.
+	 * @param value      the value to match against the specified key.
+	 * @param limitSearch the maximum number of matching lines to return.
 	 * @return a 2D array of strings containing the matching lines, or null if the
 	 *         key is not found or an error occurs.
 	 */
-	public static String[][] searchLinesAsStrings(String filePath, String key, String value, int maxSearchLines) {
+	public static String[][] searchLinesAsStrings(String filePath, String key, String value, int limitSearch) {
 		try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
 
 			// Find the index of the key
@@ -297,7 +297,7 @@ public class CSVHelper {
 			// Temporarily store matching lines
 			List<String[]> tempLines = new ArrayList<>();
 			String[] data;
-			while ((data = reader.readNext()) != null && tempLines.size() < maxSearchLines) {
+			while ((data = reader.readNext()) != null && tempLines.size() < limitSearch) {
 				if (data[index].equals(value)) {
 					tempLines.add(data);
 				}
@@ -322,12 +322,12 @@ public class CSVHelper {
 	 * @param filePath       the path to the CSV file to be searched.
 	 * @param key            the header key to search for in the CSV file.
 	 * @param value          the value to match against the specified key.
-	 * @param maxSearchLines the maximum number of lines to search before stopping.
+	 * @param limitSearch the maximum number of matching lines to return.
 	 * @return an array of maps containing the matching lines, or null if the key is
 	 *         not found or an error occurs.
 	 */
 	public static Map<String, String>[] searchLinesAsMap(String filePath, String key, String value,
-			int maxSearchLines) {
+			int limitSearch) {
 		try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
 			// Read the header row and store it in an array
 			String[] headers = reader.readNext();
@@ -347,7 +347,7 @@ public class CSVHelper {
 			// Temporarily store matching lines
 			List<Map<String, String>> tempLines = new ArrayList<>();
 			String[] data;
-			while ((data = reader.readNext()) != null && tempLines.size() < maxSearchLines) {
+			while ((data = reader.readNext()) != null && tempLines.size() < limitSearch) {
 				if (data[index].equals(value)) {
 					// Store the data in a map
 					Map<String, String> map = new HashMap<>();
