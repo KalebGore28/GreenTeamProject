@@ -1,6 +1,6 @@
-employee_id,first_name,last_name,email,department,position,salary
-1,John,Doe,john.doe@example.com,Engineering,Software Engineer,75000
-2,Jane,Smith,jane.smith@example.com,Marketing,Marketing Manager,90000
-3,Emily,Jones,emily.jones@example.com,Sales,Sales Manager,80000
-4,Michael,Brown,michael.brown@example.com,HR,HR Manager,75000
-5,Jessica,Johnson,jessica.johnson@example.com,Finance,Finance Manager,75000
+id,employee_id,first_name,last_name,email,department,position,salary
+1,100,John,Doe,john.doe@example.com,Engineering,Software Engineer,75000.0
+2,101,Jane,Smith,jane.smith@example.com,Marketing,Marketing Manager,90000.0
+3,102,Emily,Jones,emily.jones@example.com,Sales,Sales Manager,80000.0
+4,103,Michael,Brown,michael.brown@example.com,HR,HR Manager,75000.0
+5,104,Jessica,Johnson,jessica.johnson@example.com,Finance,Finance Manager,75000.0

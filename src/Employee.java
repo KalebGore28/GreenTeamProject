@@ -1,3 +1,5 @@
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Employee {
@@ -28,13 +30,89 @@ public class Employee {
 	 *         empty {@code Optional} if not found.
 	 */
 	public static Optional<Employee> getEmployee(int id) {
-		String[] data = CSVHelper.searchLineAsStrings("src/databases/employees.csv", "employee_id", String.valueOf(id));
-		if (data == null || data.length == 0) {
-			return Optional.empty(); // Return empty Optional if employee not found
+
+		// Search for the employee by ID
+		Map<String, String> data = CSVHelper.searchLineAsMap("src/databases/employees.csv", "employee_id",
+				String.valueOf(id));
+
+		// Return empty Optional if employee not found
+		if (data == null) {
+			return Optional.empty();
 		}
-		Employee employee = new Employee(Integer.parseInt(data[0]), data[1], data[2], data[3], data[4], data[5],
-				Double.parseDouble(data[6]));
+
+		// Create and return an Optional containing the employee
+		Employee employee = new Employee(
+				Integer.parseInt(data.get("employee_id")),
+				data.get("first_name"),
+				data.get("last_name"),
+				data.get("email"),
+				data.get("department"),
+				data.get("position"),
+				Double.parseDouble(data.get("salary")));
 		return Optional.of(employee);
+	}
+
+	/**
+	 * Retrieves a range of employee records from a CSV file based on the provided
+	 * row range.
+	 *
+	 * @param startRow The starting row of the range to retrieve. Starts from 1.
+	 * @param endRow   The ending row of the range to retrieve. Starts from 1.
+	 * @return An {@code Optional<Employee[]>} containing the employees if found, or
+	 *         an empty {@code Optional} if not found.
+	 */
+	public static Optional<Employee[]> getEmployees(int startRow, int endRow) {
+
+		// Search for the employees by row range
+		List<Map<String, String>> data = CSVHelper.readLinesAsMap("src/databases/employees.csv", startRow, endRow);
+
+		// Return empty Optional if employees not found
+		if (data.size() == 0) {
+			return Optional.empty();
+		}
+
+		// Create and return an Optional containing the employees
+		Employee[] employees = new Employee[data.size()];
+		for (int i = 0; i < data.size(); i++) {
+			Map<String, String> employeeData = data.get(i);
+			employees[i] = new Employee(
+					Integer.parseInt(employeeData.get("employee_id")),
+					employeeData.get("first_name"),
+					employeeData.get("last_name"),
+					employeeData.get("email"),
+					employeeData.get("department"),
+					employeeData.get("position"),
+					Double.parseDouble(employeeData.get("salary")));
+		}
+
+		return Optional.of(employees);
+	}
+
+	public static Optional<Employee[]> searchEmployees(String column, String value, int limit) {
+
+		// Search for the employees by column and value
+		List<Map<String, String>> data = CSVHelper.searchLinesAsMap("src/databases/employees.csv", column, value, limit);
+
+		// Return empty Optional if employees not found
+		if (data.size() == 0) {
+			return Optional.empty();
+		}
+
+		// Create and return an Optional containing the employees
+		Employee[] employees = new Employee[data.size()];
+		for (int i = 0; i < data.size(); i++) {
+			Map<String, String> employeeData = data.get(i);
+			employees[i] = new Employee(
+					Integer.parseInt(employeeData.get("employee_id")),
+					employeeData.get("first_name"),
+					employeeData.get("last_name"),
+					employeeData.get("email"),
+					employeeData.get("department"),
+					employeeData.get("position"),
+					Double.parseDouble(employeeData.get("salary")));
+		}
+
+		return Optional.of(employees);
 	}
 
 	// Getters
@@ -97,12 +175,4 @@ public class Employee {
 				+ ", department=" + department + ", position=" + position + ", salary=" + salary + "]";
 	}
 
-	public static void main(String[] args) {
-		Optional<Employee> employee = Employee.getEmployee(6);
-		if (employee.isPresent()) {
-			System.out.println(employee.get());
-		} else {
-			System.out.println("Employee not found.");
-		}
-	}
 }
