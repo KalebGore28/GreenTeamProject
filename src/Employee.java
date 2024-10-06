@@ -88,6 +88,15 @@ public class Employee {
 		return Optional.of(employees);
 	}
 
+	/**
+	 * Searches for employees in the CSV file based on the specified column and value.
+	 *
+	 * @param column the column to search by (e.g., "first_name", "last_name", "department")
+	 * @param value the value to search for in the specified column
+	 * @param limit the maximum number of employees to return
+	 * @return an Optional containing an array of Employee objects that match the search criteria,
+	 *         or an empty Optional if no employees are found
+	 */
 	public static Optional<Employee[]> searchEmployees(String column, String value, int limit) {
 
 		// Search for the employees by column and value
