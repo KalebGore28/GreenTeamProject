@@ -1,5 +1,8 @@
 import com.opencsv.bean.CsvBindByName;
 
+import java.io.IOException;
+import java.util.List;
+
 public class Employee {
 
 	@CsvBindByName(column = "id")
@@ -36,6 +39,16 @@ public class Employee {
 		this.department = department;
 		this.position = position;
 		this.salary = salary;
+	}
+
+	// Methods
+	public static List<Employee> getEmployees() {
+		try {
+			return CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	// Getters
@@ -94,8 +107,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email="
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
 				+ email + ", department=" + department + ", position=" + position + ", salary=" + salary + "]";
 	}
 }
