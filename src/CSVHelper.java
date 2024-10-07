@@ -2,7 +2,6 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,7 +15,6 @@ public class CSVHelper {
 	 * @param filePath the path to the CSV file to be read
 	 * @param key      the key to search for in the header row
 	 * @return true if the key is found in the header row, false otherwise
-	 * @throws IOException if an I/O error occurs while reading the file
 	 */
 	public static boolean findKey(String filePath, String key) {
 		try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
