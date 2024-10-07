@@ -1,0 +1,11 @@
+ID,EMPLOYEE_ID,SKILL_NAME,PROFICIENCY_LEVEL,YEARS_OF_EXPERIENCE,LAST_USED_DATE
+1,100,Java,Expert,5,2023-01-15
+2,100,Python,Advanced,3,2023-02-10
+3,101,Marketing Strategy,Intermediate,2,2022-12-01
+4,102,Salesforce,Advanced,4,2023-03-05
+5,103,Recruitment,Expert,6,2023-01-20
+6,104,Graphic Design,Intermediate,3,2023-01-25
+7,105,Data Analysis,Advanced,4,2023-02-15
+8,106,Project Management,Expert,7,2023-01-30
+9,107,Customer Service,Advanced,5,2023-02-05
+10,108,Network Security,Expert,6,2023-03-01
