@@ -1,0 +1,6 @@
+ID,EMPLOYEE_ID,DEPARTMENT,POSITION,START_DATE,END_DATE,SALARY,REASON_FOR_LEAVING,SUPERVISOR_ID
+1,100,Engineering,Software Engineer,2020-01-01,2021-06-30,75000,Promotion,200
+2,100,Engineering,Senior Software Engineer,2021-07-01,,90000,,200
+3,101,Marketing,Marketing Specialist,2019-03-15,2020-12-31,60000,Resignation,201
+4,102,Sales,Sales Representative,2018-05-01,2021-05-01,55000,Termination,202
+5,103,HR,HR Assistant,2020-02-01,,50000,,203
