@@ -30,9 +30,8 @@ public class Employee {
 	public Employee() {
 	}
 
-	public Employee(int id, String firstName, String lastName, String email, String department,
+	public Employee(String firstName, String lastName, String email, String department,
 			String position, double salary) {
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -49,6 +48,33 @@ public class Employee {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static void saveEmployees(List<Employee> employees) {
+		try {
+			CSVHelper.writeBeansToCsv(employees, "src/databases/employees.csv", Employee.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void saveEmployee(Employee employee) {
+		List<Employee> employees = getEmployees();
+
+		// Figure out the next available ID
+		int nextId = 1;
+		for (Employee emp : employees) {
+			if (emp.getId() >= nextId) {
+				nextId = emp.getId() + 1;
+			}
+		}
+
+		// Set the ID and add the employee to the list
+		employee.id = nextId;
+		employees.add(employee);
+
+		// Save the updated list of employees
+		saveEmployees(employees);
 	}
 
 	// Getters
@@ -109,5 +135,14 @@ public class Employee {
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
 				+ email + ", department=" + department + ", position=" + position + ", salary=" + salary + "]";
+	}
+
+	public static void main(String[] args) {
+		// Test the Employee class
+		List<Employee> employees = Employee.getEmployees();
+		System.out.println(employees);
+
+		Employee employee = new Employee("Jackson", "Piper", "jackson.piper@example.com", "Engineering", "Software Engineer", 75000);
+		Employee.saveEmployee(employee);
 	}
 }
