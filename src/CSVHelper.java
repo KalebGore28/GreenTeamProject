@@ -15,8 +15,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
  */
 public final class CSVHelper {
 
-	public CSVHelper() {
-		throw new UnsupportedOperationException("Utility class");
+	private CSVHelper() {
 	}
 
     /**
