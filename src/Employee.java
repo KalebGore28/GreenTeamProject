@@ -1,8 +1,5 @@
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Employee {
@@ -50,6 +47,20 @@ public class Employee {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static Employee getEmployee(int employee_id) {
+		try {
+			List<Employee> employees = CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
+			for (Employee employee : employees) {
+				if (employee.getId() == employee_id) {
+					return employee;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// Static Save Methods
@@ -138,16 +149,5 @@ public class Employee {
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
 				+ email + ", department=" + department + ", position=" + position + ", salary=" + salary + "]";
-	}
-
-	public static void main(String[] args)
-			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-		// Test the Employee class
-		List<Employee> employees = Employee.getEmployees();
-		System.out.println(employees);
-
-		Employee employee = new Employee("Jackson", "Piper", "jackson.piper@example.com", "Engineering",
-				"Software Engineer", 75000);
-		Employee.saveEmployee(employee);
 	}
 }
