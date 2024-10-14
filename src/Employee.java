@@ -43,7 +43,7 @@ public class Employee {
 	public static List<Employee> getEmployees() {
 		try {
 			return CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -64,7 +64,7 @@ public class Employee {
 	}
 
 	// Static Save Methods
-	public static void saveEmployees(List<Employee> employees) {
+	private static void saveEmployees(List<Employee> employees) {
 		try {
 			CSVHelper.writeBeansToCsv(employees, "src/databases/employees.csv", Employee.class);
 		} catch (Exception e) {
@@ -86,6 +86,38 @@ public class Employee {
 		// Set the ID and add the employee to the list
 		employee.id = nextId;
 		employees.add(employee);
+
+		// Save the updated list of employees
+		saveEmployees(employees);
+	}
+
+	// Static Update Method
+	public static void updateEmployee(Employee employee) {
+		List<Employee> employees = getEmployees();
+
+		// Find the employee in the list
+		for (int i = 0; i < employees.size(); i++) {
+			if (employees.get(i).getId() == employee.getId()) {
+				employees.set(i, employee);
+				break;
+			}
+		}
+
+		// Save the updated list of employees
+		saveEmployees(employees);
+	}
+
+	// Static Delete Method
+	public static void deleteEmployee(int employee_id) {
+		List<Employee> employees = getEmployees();
+
+		// Find the employee in the list
+		for (int i = 0; i < employees.size(); i++) {
+			if (employees.get(i).getId() == employee_id) {
+				employees.remove(i);
+				break;
+			}
+		}
 
 		// Save the updated list of employees
 		saveEmployees(employees);
