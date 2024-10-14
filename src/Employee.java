@@ -1,5 +1,4 @@
 import com.opencsv.bean.CsvBindByName;
-
 import java.util.List;
 
 public class Employee {
@@ -26,9 +25,23 @@ public class Employee {
 	private double salary;
 
 	// Constructors
+
+	/**
+	 * Default constructor.
+	 */
 	public Employee() {
 	}
 
+	/**
+	 * Parameterized constructor to initialize an Employee object.
+	 *
+	 * @param firstName  The first name of the employee.
+	 * @param lastName   The last name of the employee.
+	 * @param email      The email address of the employee.
+	 * @param department The department where the employee works.
+	 * @param position   The position or job title of the employee.
+	 * @param salary     The salary of the employee.
+	 */
 	public Employee(String firstName, String lastName, String email, String department,
 			String position, double salary) {
 		this.firstName = firstName;
@@ -40,6 +53,12 @@ public class Employee {
 	}
 
 	// Static Get Methods
+
+	/**
+	 * Retrieves a list of all employees from the CSV file.
+	 *
+	 * @return A list of Employee objects, or null if an error occurs.
+	 */
 	public static List<Employee> getEmployees() {
 		try {
 			return CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
@@ -49,6 +68,13 @@ public class Employee {
 		}
 	}
 
+	/**
+	 * Retrieves a specific employee by their ID from the CSV file.
+	 *
+	 * @param employee_id The ID of the employee to retrieve.
+	 * @return The Employee object with the specified ID, or null if not found or an
+	 *         error occurs.
+	 */
 	public static Employee getEmployee(int employee_id) {
 		try {
 			List<Employee> employees = CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
@@ -64,6 +90,13 @@ public class Employee {
 	}
 
 	// Static Save Methods
+
+	/**
+	 * Helper method to save the list of employees to the CSV file.
+	 * This method is not meant to be called directly.
+	 *
+	 * @param employees The list of Employee objects to save.
+	 */
 	private static void saveEmployees(List<Employee> employees) {
 		try {
 			CSVHelper.writeBeansToCsv(employees, "src/databases/employees.csv", Employee.class);
@@ -72,6 +105,12 @@ public class Employee {
 		}
 	}
 
+	/**
+	 * Saves a single employee to the CSV file.
+	 * If the employee does not have an ID, it assigns the next available ID.
+	 *
+	 * @param employee The Employee object to save.
+	 */
 	public static void saveEmployee(Employee employee) {
 		List<Employee> employees = getEmployees();
 
@@ -92,6 +131,12 @@ public class Employee {
 	}
 
 	// Static Update Method
+
+	/**
+	 * Updates an existing employee in the CSV file.
+	 *
+	 * @param employee The Employee object with updated information.
+	 */
 	public static void updateEmployee(Employee employee) {
 		List<Employee> employees = getEmployees();
 
@@ -108,6 +153,12 @@ public class Employee {
 	}
 
 	// Static Delete Method
+
+	/**
+	 * Deletes an employee from the CSV file by their ID.
+	 *
+	 * @param employee_id The ID of the employee to delete.
+	 */
 	public static void deleteEmployee(int employee_id) {
 		List<Employee> employees = getEmployees();
 
