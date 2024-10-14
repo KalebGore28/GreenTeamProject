@@ -1,150 +1,222 @@
 import com.opencsv.bean.CsvBindByName;
-
 import java.util.List;
 
 public class EmployeeHistory {
 
-	@CsvBindByName(column = "id")
-	private int id;
+    @CsvBindByName(column = "id")
+    private int id;
 
-	@CsvBindByName(column = "employee_id")
-	private int employeeId;
+    @CsvBindByName(column = "employee_id")
+    private int employeeId;
 
-	@CsvBindByName(column = "department")
-	private String department;
+    @CsvBindByName(column = "department")
+    private String department;
 
-	@CsvBindByName(column = "position")
-	private String position;
+    @CsvBindByName(column = "position")
+    private String position;
 
-	@CsvBindByName(column = "start_date")
-	private String startDate;
+    @CsvBindByName(column = "start_date")
+    private String startDate;
 
-	@CsvBindByName(column = "end_date")
-	private String endDate;
+    @CsvBindByName(column = "end_date")
+    private String endDate;
 
-	@CsvBindByName(column = "salary")
-	private double salary;
+    @CsvBindByName(column = "salary")
+    private double salary;
 
-	@CsvBindByName(column = "reason_for_leaving")
-	private String reasonForLeaving;
+    @CsvBindByName(column = "reason_for_leaving")
+    private String reasonForLeaving;
 
-	// Constructors
-	public EmployeeHistory() {
-	}
+    // Constructors
 
-	public EmployeeHistory(int employeeId, String department, String position, String startDate, String endDate,
-			double salary, String reasonForLeaving) {
-		this.employeeId = employeeId;
-		this.department = department;
-		this.position = position;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.salary = salary;
-		this.reasonForLeaving = reasonForLeaving;
-	}
+    /**
+     * Default constructor.
+     */
+    public EmployeeHistory() {
+    }
 
-	// Static Get Methods
-	public static List<EmployeeHistory> getEmployeeHistories() {
-		try {
-			return CSVHelper.readBeansFromCsv("src/databases/employee_histories.csv", EmployeeHistory.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+    /**
+     * Parameterized constructor to initialize an EmployeeHistory object.
+     *
+     * @param employeeId       The ID of the employee.
+     * @param department       The department where the employee worked.
+     * @param position         The position or job title held by the employee.
+     * @param startDate        The start date of the position.
+     * @param endDate          The end date of the position.
+     * @param salary           The salary of the employee during this position.
+     * @param reasonForLeaving The reason why the employee left the position.
+     */
+    public EmployeeHistory(int employeeId, String department, String position, String startDate, String endDate,
+                           double salary, String reasonForLeaving) {
+        this.employeeId = employeeId;
+        this.department = department;
+        this.position = position;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.salary = salary;
+        this.reasonForLeaving = reasonForLeaving;
+    }
 
-	public static EmployeeHistory getEmployeeHistory(int employee_id) {
-		try {
-			List<EmployeeHistory> employeeHistories = CSVHelper.readBeansFromCsv("src/databases/employee_histories.csv",
-					EmployeeHistory.class);
-			for (EmployeeHistory employeeHistory : employeeHistories) {
-				if (employeeHistory.getEmployeeId() == employee_id) {
-					return employeeHistory;
-				}
-			}
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+    // Static Get Methods
 
-	}
+    /**
+     * Retrieves a list of all employee histories from the CSV file.
+     *
+     * @return A list of EmployeeHistory objects, or null if an error occurs.
+     */
+    public static List<EmployeeHistory> getHistories() {
+        try {
+            return CSVHelper.readBeansFromCsv("src/databases/employee_histories.csv", EmployeeHistory.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	// Static Save Methods
-	public static void saveEmployeeHistories(List<EmployeeHistory> employeeHistories) {
-		try {
-			CSVHelper.writeBeansToCsv(employeeHistories, "src/databases/employee_histories.csv", EmployeeHistory.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Retrieves a specific employee history by the employee ID from the CSV file.
+     *
+     * @param employee_id The ID of the employee whose history is to be retrieved.
+     * @return The EmployeeHistory object with the specified employee ID, or null if not found or an error occurs.
+     */
+    public static EmployeeHistory getHistory(int employee_id) {
+        try {
+            List<EmployeeHistory> employeeHistories = CSVHelper.readBeansFromCsv("src/databases/employee_histories.csv",
+                    EmployeeHistory.class);
+            for (EmployeeHistory employeeHistory : employeeHistories) {
+                if (employeeHistory.getEmployeeId() == employee_id) {
+                    return employeeHistory;
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	public static void saveEmployeeHistory(EmployeeHistory employeeHistory) {
-		List<EmployeeHistory> employeeHistories = getEmployeeHistories();
-		employeeHistories.add(employeeHistory);
-		saveEmployeeHistories(employeeHistories);
-	}
+    // Static Save Methods
 
-	// Getters
-	public int getId() {
-		return id;
-	}
+    /**
+     * Helper method to save a list of EmployeeHistory objects to the CSV file.
+     * This method is not meant to be called directly.
+     *
+     * @param employeeHistories The list of EmployeeHistory objects to save.
+     */
+    private static void saveHistories(List<EmployeeHistory> employeeHistories) {
+        try {
+            CSVHelper.writeBeansToCsv(employeeHistories, "src/databases/employee_histories.csv", EmployeeHistory.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	public int getEmployeeId() {
-		return employeeId;
-	}
+    /**
+     * Saves a single employee history to the CSV file.
+     *
+     * @param employeeHistory The EmployeeHistory object to save.
+     */
+    public static void saveHistory(EmployeeHistory employeeHistory) {
+        List<EmployeeHistory> employeeHistories = getHistories();
+        employeeHistories.add(employeeHistory);
+        saveHistories(employeeHistories);
+    }
 
-	public String getDepartment() {
-		return department;
-	}
+    /**
+     * Updates an existing employee history in the CSV file.
+     *
+     * @param employeeHistory The EmployeeHistory object with updated information.
+     */
+    public static void updateHistory(EmployeeHistory employeeHistory) {
+        List<EmployeeHistory> employeeHistories = getHistories();
+        for (int i = 0; i < employeeHistories.size(); i++) {
+            if (employeeHistories.get(i).getId() == employeeHistory.getId()) {
+                employeeHistories.set(i, employeeHistory);
+                break;
+            }
+        }
+        saveHistories(employeeHistories);
+    }
 
-	public String getPosition() {
-		return position;
-	}
+    // Static Delete Method
 
-	public String getStartDate() {
-		return startDate;
-	}
+    /**
+     * Deletes an employee history from the CSV file by its ID.
+     *
+     * @param id The ID of the employee history to delete.
+     */
+    public static void deleteHistory(int id) {
+        List<EmployeeHistory> employeeHistories = getHistories();
+        for (int i = 0; i < employeeHistories.size(); i++) {
+            if (employeeHistories.get(i).getId() == id) {
+                employeeHistories.remove(i);
+                break;
+            }
+        }
+        saveHistories(employeeHistories);
+    }
 
-	public String getEndDate() {
-		return endDate;
-	}
+    // Getters
 
-	public double getSalary() {
-		return salary;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getReasonForLeaving() {
-		return reasonForLeaving;
-	}
+    public int getEmployeeId() {
+        return employeeId;
+    }
 
-	// Setters
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+    public String getDepartment() {
+        return department;
+    }
 
-	public void setDepartment(String department) {
-		this.department = department;
-	}
+    public String getPosition() {
+        return position;
+    }
 
-	public void setPosition(String position) {
-		this.position = position;
-	}
+    public String getStartDate() {
+        return startDate;
+    }
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
+    public String getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
+    public double getSalary() {
+        return salary;
+    }
 
-	public void setSalary(double salary) {
-		this.salary = salary;
-	}
+    public String getReasonForLeaving() {
+        return reasonForLeaving;
+    }
 
-	public void setReasonForLeaving(String reasonForLeaving) {
-		this.reasonForLeaving = reasonForLeaving;
-	}
+    // Setters
+	
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public void setReasonForLeaving(String reasonForLeaving) {
+        this.reasonForLeaving = reasonForLeaving;
+    }
 }

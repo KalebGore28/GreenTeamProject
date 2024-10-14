@@ -175,6 +175,7 @@ public class Employee {
 	}
 
 	// Getters
+	
 	public int getId() {
 		return id;
 	}
@@ -204,6 +205,7 @@ public class Employee {
 	}
 
 	// Setters
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
