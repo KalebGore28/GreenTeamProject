@@ -47,7 +47,8 @@ public class EmployeeHistory {
      * @param reasonForLeaving The reason why the employee left the position.
      */
     public EmployeeHistory(int employeeId, String department, String position, String startDate, String endDate,
-                           double salary, String reasonForLeaving) {
+            double salary, String reasonForLeaving) {
+        this.id = findNextId();
         this.employeeId = employeeId;
         this.department = department;
         this.position = position;
@@ -55,6 +56,21 @@ public class EmployeeHistory {
         this.endDate = endDate;
         this.salary = salary;
         this.reasonForLeaving = reasonForLeaving;
+    }
+
+    // Helper Methods
+
+    /**
+     * Finds the next available ID for a new employee history.
+     *
+     * @return The next available ID.
+     */
+    private static int findNextId() {
+        List<EmployeeHistory> employeeHistories = getHistories();
+        if (employeeHistories == null || employeeHistories.isEmpty()) {
+            return 1;
+        }
+        return employeeHistories.get(employeeHistories.size() - 1).getId() + 1;
     }
 
     // Static Get, Save, Update, Delete Methods
@@ -165,7 +181,7 @@ public class EmployeeHistory {
     }
 
     // Setters
-	
+
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }

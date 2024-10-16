@@ -54,7 +54,7 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	// Static Get, Save, Update, Delete Employee Methods
+	// Helper Methods
 
 	/**
 	 * Finds the next available ID for a new employee.
@@ -71,6 +71,8 @@ public class Employee {
 		}
 		return nextId;
 	}
+
+	// Static Get, Save, Update, Delete Employee Methods
 
 	/**
 	 * Retrieves a list of all employees from the CSV file.
@@ -108,6 +110,7 @@ public class Employee {
 
 	/**
 	 * Saves a list of employees to the CSV file.
+	 * Not meant to be called directly.
 	 *
 	 * @param employees The list of Employee objects to save.
 	 */

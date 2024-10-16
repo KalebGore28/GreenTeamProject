@@ -39,12 +39,22 @@ public class EmployeeSkill {
      * @param lastUsedDate      The date when the skill was last used.
      */
     public EmployeeSkill(int employeeId, String skillName, String proficiencyLevel, int yearsOfExperience,
-                         String lastUsedDate) {
+            String lastUsedDate) {
+        this.id = findNextId();
         this.employeeId = employeeId;
         this.skillName = skillName;
         this.proficiencyLevel = proficiencyLevel;
         this.yearsOfExperience = yearsOfExperience;
         this.lastUsedDate = lastUsedDate;
+    }
+
+    // Helper Methods
+    private static int findNextId() {
+        List<EmployeeSkill> employeeSkills = getSkills();
+        if (employeeSkills == null || employeeSkills.isEmpty()) {
+            return 1;
+        }
+        return employeeSkills.get(employeeSkills.size() - 1).getId() + 1;
     }
 
     // Static Get, Save, Update, Delete Methods
@@ -67,7 +77,8 @@ public class EmployeeSkill {
      * Retrieves a specific employee skill by the employee ID from the CSV file.
      *
      * @param employee_id The ID of the employee whose skill is to be retrieved.
-     * @return The EmployeeSkill object with the specified employee ID, or null if not found or an error occurs.
+     * @return The EmployeeSkill object with the specified employee ID, or null if
+     *         not found or an error occurs.
      */
     public static EmployeeSkill getSkill(int employee_id) {
         try {
