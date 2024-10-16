@@ -57,7 +57,7 @@ public class EmployeeHistory {
         this.reasonForLeaving = reasonForLeaving;
     }
 
-    // Static Get Methods
+    // Static Get, Save, Update, Delete Methods
 
     /**
      * Retrieves a list of all employee histories from the CSV file.
@@ -72,30 +72,6 @@ public class EmployeeHistory {
             return null;
         }
     }
-
-    /**
-     * Retrieves a specific employee history by the employee ID from the CSV file.
-     *
-     * @param employee_id The ID of the employee whose history is to be retrieved.
-     * @return The EmployeeHistory object with the specified employee ID, or null if not found or an error occurs.
-     */
-    public static EmployeeHistory getHistory(int employee_id) {
-        try {
-            List<EmployeeHistory> employeeHistories = CSVHelper.readBeansFromCsv("src/databases/employee_histories.csv",
-                    EmployeeHistory.class);
-            for (EmployeeHistory employeeHistory : employeeHistories) {
-                if (employeeHistory.getEmployeeId() == employee_id) {
-                    return employeeHistory;
-                }
-            }
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // Static Save Methods
 
     /**
      * Helper method to save a list of EmployeeHistory objects to the CSV file.
@@ -137,8 +113,6 @@ public class EmployeeHistory {
         }
         saveHistories(employeeHistories);
     }
-
-    // Static Delete Method
 
     /**
      * Deletes an employee history from the CSV file by its ID.

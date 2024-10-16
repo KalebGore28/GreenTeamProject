@@ -47,14 +47,14 @@ public class EmployeeSkill {
         this.lastUsedDate = lastUsedDate;
     }
 
-    // Static Get Methods
+    // Static Get, Save, Update, Delete Methods
 
     /**
      * Retrieves a list of all employee skills from the CSV file.
      *
      * @return A list of EmployeeSkill objects, or null if an error occurs.
      */
-    public static List<EmployeeSkill> getEmployeeSkills() {
+    public static List<EmployeeSkill> getSkills() {
         try {
             return CSVHelper.readBeansFromCsv("src/databases/employee_skills.csv", EmployeeSkill.class);
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class EmployeeSkill {
      * @param employee_id The ID of the employee whose skill is to be retrieved.
      * @return The EmployeeSkill object with the specified employee ID, or null if not found or an error occurs.
      */
-    public static EmployeeSkill getEmployeeSkill(int employee_id) {
+    public static EmployeeSkill getSkill(int employee_id) {
         try {
             List<EmployeeSkill> employeeSkills = CSVHelper.readBeansFromCsv("src/databases/employee_skills.csv",
                     EmployeeSkill.class);
@@ -84,15 +84,13 @@ public class EmployeeSkill {
         return null;
     }
 
-    // Static Set Methods
-
     /**
      * Helper method to set the list of employee skills to the CSV file.
      * This method is not meant to be called directly.
      *
      * @param employeeSkills The list of EmployeeSkill objects to save.
      */
-    private static void setEmployeeSkills(List<EmployeeSkill> employeeSkills) {
+    private static void saveSkills(List<EmployeeSkill> employeeSkills) {
         try {
             CSVHelper.writeBeansToCsv(employeeSkills, "src/databases/employee_skills.csv", EmployeeSkill.class);
         } catch (Exception e) {
@@ -105,15 +103,15 @@ public class EmployeeSkill {
      *
      * @param employeeSkill The EmployeeSkill object to set.
      */
-    public static void setEmployeeSkill(EmployeeSkill employeeSkill) {
-        List<EmployeeSkill> employeeSkills = getEmployeeSkills();
+    public static void saveSkill(EmployeeSkill employeeSkill) {
+        List<EmployeeSkill> employeeSkills = getSkills();
         for (int i = 0; i < employeeSkills.size(); i++) {
             if (employeeSkills.get(i).getEmployeeId() == employeeSkill.getEmployeeId()) {
                 employeeSkills.set(i, employeeSkill);
                 break;
             }
         }
-        setEmployeeSkills(employeeSkills);
+        saveSkills(employeeSkills);
     }
 
     /**
@@ -122,14 +120,14 @@ public class EmployeeSkill {
      * @param employeeSkill The EmployeeSkill object with updated information.
      */
     public static void updateSkill(EmployeeSkill employeeSkill) {
-        List<EmployeeSkill> employeeSkills = getEmployeeSkills();
+        List<EmployeeSkill> employeeSkills = getSkills();
         for (int i = 0; i < employeeSkills.size(); i++) {
             if (employeeSkills.get(i).getId() == employeeSkill.getId()) {
                 employeeSkills.set(i, employeeSkill);
                 break;
             }
         }
-        setEmployeeSkills(employeeSkills);
+        saveSkills(employeeSkills);
     }
 
     /**
@@ -138,14 +136,14 @@ public class EmployeeSkill {
      * @param id The ID of the employee skill to delete.
      */
     public static void deleteSkill(int id) {
-        List<EmployeeSkill> employeeSkills = getEmployeeSkills();
+        List<EmployeeSkill> employeeSkills = getSkills();
         for (int i = 0; i < employeeSkills.size(); i++) {
             if (employeeSkills.get(i).getId() == id) {
                 employeeSkills.remove(i);
                 break;
             }
         }
-        setEmployeeSkills(employeeSkills);
+        saveSkills(employeeSkills);
     }
 
     // Getters

@@ -1,5 +1,6 @@
 import com.opencsv.bean.CsvBindByName;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Employee {
 
@@ -44,6 +45,7 @@ public class Employee {
 	 */
 	public Employee(String firstName, String lastName, String email, String department,
 			String position, double salary) {
+		this.id = findNextId();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -52,7 +54,23 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	// Static Get Methods
+	// Static Get, Save, Update, Delete Employee Methods
+
+	/**
+	 * Finds the next available ID for a new employee.
+	 *
+	 * @return The next available ID.
+	 */
+	private static int findNextId() {
+		List<Employee> employees = getEmployees();
+		int nextId = 1;
+		for (Employee employee : employees) {
+			if (employee.getId() >= nextId) {
+				nextId = employee.getId() + 1;
+			}
+		}
+		return nextId;
+	}
 
 	/**
 	 * Retrieves a list of all employees from the CSV file.
@@ -69,11 +87,10 @@ public class Employee {
 	}
 
 	/**
-	 * Retrieves a specific employee by their ID from the CSV file.
+	 * Retrieves a single employee from the CSV file by their ID.
 	 *
 	 * @param employee_id The ID of the employee to retrieve.
-	 * @return The Employee object with the specified ID, or null if not found or an
-	 *         error occurs.
+	 * @return The Employee object, or null if the employee is not found.
 	 */
 	public static Employee getEmployee(int employee_id) {
 		try {
@@ -89,11 +106,8 @@ public class Employee {
 		return null;
 	}
 
-	// Static Save Methods
-
 	/**
-	 * Helper method to save the list of employees to the CSV file.
-	 * This method is not meant to be called directly.
+	 * Saves a list of employees to the CSV file.
 	 *
 	 * @param employees The list of Employee objects to save.
 	 */
@@ -107,7 +121,6 @@ public class Employee {
 
 	/**
 	 * Saves a single employee to the CSV file.
-	 * If the employee does not have an ID, it assigns the next available ID.
 	 *
 	 * @param employee The Employee object to save.
 	 */
@@ -130,8 +143,6 @@ public class Employee {
 		saveEmployees(employees);
 	}
 
-	// Static Update Method
-
 	/**
 	 * Updates an existing employee in the CSV file.
 	 *
@@ -151,8 +162,6 @@ public class Employee {
 		// Save the updated list of employees
 		saveEmployees(employees);
 	}
-
-	// Static Delete Method
 
 	/**
 	 * Deletes an employee from the CSV file by their ID.
@@ -174,8 +183,137 @@ public class Employee {
 		saveEmployees(employees);
 	}
 
+	// Get, Save, Update, Delete, New History Methods
+
+	/**
+	 * Retrieves a list of all employee histories from the CSV file.
+	 *
+	 * @return A list of EmployeeHistory objects, or null if an error occurs.
+	 */
+	public List<EmployeeHistory> getHistories() {
+		try {
+			List<EmployeeHistory> allEmployeeHistory = EmployeeHistory.getHistories();
+			List<EmployeeHistory> foundEmployeeHistory = new ArrayList<EmployeeHistory>();
+			for (EmployeeHistory employeeHistory : allEmployeeHistory) {
+				if (employeeHistory.getEmployeeId() == this.id) {
+					foundEmployeeHistory.add(employeeHistory);
+				}
+			}
+			return foundEmployeeHistory;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Saves a single employee history to the CSV file.
+	 *
+	 * @param employeeHistory The EmployeeHistory object to save.
+	 */
+	public void saveHistory(EmployeeHistory employeeHistory) {
+		EmployeeHistory.saveHistory(employeeHistory);
+	}
+
+	/**
+	 * Updates an existing employee history in the CSV file.
+	 *
+	 * @param employeeHistory The EmployeeHistory object with updated information.
+	 */
+	public void updateHistory(EmployeeHistory employeeHistory) {
+		EmployeeHistory.updateHistory(employeeHistory);
+	}
+
+	/**
+	 * Deletes an employee history from the CSV file by their ID.
+	 *
+	 * @param employeeHistory_id The ID of the employee history to delete.
+	 */
+	public void deleteHistory(int employeeHistory_id) {
+		EmployeeHistory.deleteHistory(employeeHistory_id);
+	}
+
+	/**
+	 * Creates a new employee history and saves it to the CSV file.
+	 *
+	 * @param employeeId       The ID of the employee.
+	 * @param department       The department where the employee worked.
+	 * @param position         The position or job title of the employee.
+	 * @param startDate        The start date of the employment.
+	 * @param endDate          The end date of the employment.
+	 * @param salary           The salary of the employee.
+	 * @param reasonForLeaving The reason for leaving the position.
+	 */
+	public void newHistory(int employeeId, String department, String position, String startDate, String endDate,
+			double salary, String reasonForLeaving) {
+		this.saveHistory(
+				new EmployeeHistory(employeeId, department, position, startDate, endDate, salary, reasonForLeaving));
+	}
+
+	// Get, Save, Update, Delete, New Skill Methods
+
+	/**
+	 * Retrieves a list of all employee skills from the CSV file.
+	 *
+	 * @return A list of EmployeeSkill objects, or null if an error occurs.
+	 */
+	public List<EmployeeSkill> getSkills() {
+		try {
+			List<EmployeeSkill> allEmployeeSkills = EmployeeSkill.getSkills();
+			List<EmployeeSkill> foundEmployeeSkills = new ArrayList<EmployeeSkill>();
+			for (EmployeeSkill employeeSkill : allEmployeeSkills) {
+				if (employeeSkill.getEmployeeId() == this.id) {
+					foundEmployeeSkills.add(employeeSkill);
+				}
+			}
+			return foundEmployeeSkills;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Saves a single employee skill to the CSV file.
+	 *
+	 * @param employeeSkill The EmployeeSkill object to save.
+	 */
+	public void saveSkill(EmployeeSkill employeeSkill) {
+		EmployeeSkill.saveSkill(employeeSkill);
+	}
+
+	/**
+	 * Updates an existing employee skill in the CSV file.
+	 *
+	 * @param employeeSkill The EmployeeSkill object with updated information.
+	 */
+	public void updateSkill(EmployeeSkill employeeSkill) {
+		EmployeeSkill.updateSkill(employeeSkill);
+	}
+
+	/**
+	 * Deletes an employee skill from the CSV file by their ID.
+	 *
+	 * @param employeeSkill_id The ID of the employee skill to delete.
+	 */
+	public void deleteSkill(int employeeSkill_id) {
+		EmployeeSkill.deleteSkill(employeeSkill_id);
+	}
+
+	/**
+	 * Creates a new employee skill and saves it to the CSV file.
+	 *
+	 * @param skillName         The name of the skill.
+	 * @param proficiencyLevel  The proficiency level of the skill.
+	 * @param yearsOfExperience The number of years of experience with the skill.
+	 * @param lastUsedDate      The date when the skill was last used.
+	 */
+	public void newSkill(String skillName, String proficiencyLevel, int yearsOfExperience, String lastUsedDate) {
+		this.saveSkill(new EmployeeSkill(this.id, skillName, proficiencyLevel, yearsOfExperience, lastUsedDate));
+	}
+
 	// Getters
-	
+
 	public int getId() {
 		return id;
 	}
