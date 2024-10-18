@@ -209,4 +209,11 @@ public class EmployeeHistory {
     public void setReasonForLeaving(String reasonForLeaving) {
         this.reasonForLeaving = reasonForLeaving;
     }
+
+    @Override
+    public String toString() {
+        return "EmployeeHistory{" + "id=" + id + ", employeeId=" + employeeId + ", department='" + department + '\''
+                + ", position='" + position + '\'' + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\''
+                + ", salary=" + salary + ", reasonForLeaving='" + reasonForLeaving + '\'' + '}';
+    }
 }
