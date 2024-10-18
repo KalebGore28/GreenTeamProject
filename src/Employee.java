@@ -232,8 +232,8 @@ public class Employee {
 	 *
 	 * @param employeeHistory_id The ID of the employee history to delete.
 	 */
-	public void deleteHistory(int employeeHistory_id) {
-		EmployeeHistory.deleteHistory(employeeHistory_id);
+	public void deleteHistory(int history_id) {
+		EmployeeHistory.deleteHistory(history_id);
 	}
 
 	/**
@@ -299,8 +299,8 @@ public class Employee {
 	 *
 	 * @param employeeSkill_id The ID of the employee skill to delete.
 	 */
-	public void deleteSkill(int employeeSkill_id) {
-		EmployeeSkill.deleteSkill(employeeSkill_id);
+	public void deleteSkill(int skill_id) {
+		EmployeeSkill.deleteSkill(skill_id);
 	}
 
 	/**
