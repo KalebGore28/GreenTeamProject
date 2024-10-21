@@ -9,10 +9,10 @@ public class Sprint {
 	@CsvBindByName(column = "name")
 	private String name;
 
-	@CsvBindByName(column = "startDate")
+	@CsvBindByName(column = "start_date")
 	private String startDate;
 
-	@CsvBindByName(column = "endDate")
+	@CsvBindByName(column = "end_date")
 	private String endDate;
 
 	@CsvBindByName(column = "status")
