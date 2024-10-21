@@ -365,11 +365,4 @@ public class Employee {
 				+ email + ", department=" + department + ", position=" + position + ", salary=" + salary + "]";
 	}
 
-	public static void main(String[] args) {
-		// Get one employee
-		Employee employee = Employee.getEmployee(8);
-		for (EmployeeHistory history : employee.getHistories()) {
-			System.out.println(history);
-		}
-	}
 }
