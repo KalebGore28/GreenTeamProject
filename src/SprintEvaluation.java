@@ -62,7 +62,7 @@ public class SprintEvaluation {
 		return nextId;
 	}
 
-	// Static Get, Save, Update, Delete Sprint Evaluation Methods
+	// Static Get, Save, Update, Delete, New Sprint Evaluation Methods
 
 	/**
 	 * Retrieves a list of all sprint evaluations.
@@ -71,7 +71,7 @@ public class SprintEvaluation {
 	 */
 	private static List<SprintEvaluation> getSprintEvaluations() {
 		try {
-			return CSVHelper.readBeansFromCsv("src/databases/sprint_evaluation.csv", SprintEvaluation.class);
+			return CSVHelper.readBeansFromCsv("src/databases/sprint_evaluations.csv", SprintEvaluation.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -86,8 +86,7 @@ public class SprintEvaluation {
 	 */
 	public static SprintEvaluation getSprintEvaluation(int sprint_eval_id) {
 		try {
-			List<SprintEvaluation> sprint_evals = CSVHelper.readBeansFromCsv("src/databases/sprint_evaluations.csv",
-					SprintEvaluation.class);
+			List<SprintEvaluation> sprint_evals = getSprintEvaluations();
 			for (SprintEvaluation evaluation : sprint_evals) {
 				if (evaluation.getId() == sprint_eval_id) {
 					return evaluation;
@@ -199,19 +198,23 @@ public class SprintEvaluation {
 		return comment;
 	}
 
+	// Setters
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public String toString() {
 		return "SprintEvaluation{" + "id=" + id + ", sprintId=" + sprintId + ", employeeId=" + employeeId + ", date='"
 				+ date + '\'' + ", rating=" + rating + ", comment='" + comment + '\'' + '}';
 	}
 
-	public static void main(String[] args) {
-		// Test SprintEvaluation class
-		// SprintEvaluation evaluation = new SprintEvaluation(1, 1, "2021-05-01", 5,
-		// "Great job!");
-		// saveSprintEvaluation(evaluation);
-
-		SprintEvaluation savedEvaluation = getSprintEvaluation(1);
-		System.out.println(savedEvaluation);
-	}
 }

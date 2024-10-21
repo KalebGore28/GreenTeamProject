@@ -60,7 +60,7 @@ public class Sprint {
 		return nextId;
 	}
 
-	// Static Get, Save, Update, Delete Sprint Methods
+	// Static Get, Save, Update, Delete, New Sprint Methods
 
 	/**
 	 * Retrieves a list of all sprints from the CSV file.
@@ -84,7 +84,7 @@ public class Sprint {
 	 */
 	public static Sprint getSprint(int sprint_id) {
 		try {
-			List<Sprint> sprints = CSVHelper.readBeansFromCsv("src/databases/sprints.csv", Sprint.class);
+			List<Sprint> sprints = getSprints();
 			for (Sprint sprint : sprints) {
 				if (sprint.getId() == sprint_id) {
 					return sprint;
@@ -172,7 +172,6 @@ public class Sprint {
 		return new Sprint(name, startDate, endDate, status, velocity);
 	}
 
-
 	// Getters
 	public int getId() {
 		return id;
@@ -198,6 +197,27 @@ public class Sprint {
 		return velocity;
 	}
 
+	// Setters
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void setVelocity(int velocity) {
+		this.velocity = velocity;
+	}
+
 	@Override
 	public String toString() {
 		return "Sprint{" +
@@ -210,10 +230,4 @@ public class Sprint {
 				'}';
 	}
 
-	public static void main(String[] args) {
-		List<Sprint> sprints = Sprint.getSprints();
-		for (Sprint sprint : sprints) {
-			System.out.println(sprint);
-		}
-	}
 }
