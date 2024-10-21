@@ -42,6 +42,8 @@ public class Sprint {
 		this.velocity = velocity;
 	}
 
+	// Helper Methods
+
 	/**
 	 * Finds the next available ID for a new sprint.
 	 *
@@ -57,6 +59,8 @@ public class Sprint {
 		}
 		return nextId;
 	}
+
+	// Static Get, Save, Update, Delete Sprint Methods
 
 	/**
 	 * Retrieves a list of all sprints from the CSV file.
