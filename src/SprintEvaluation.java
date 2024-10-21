@@ -145,11 +145,11 @@ public class SprintEvaluation {
 	 *
 	 * @param evaluation The SprintEvaluation object to delete.
 	 */
-	public static void deleteSprintEvaluation(SprintEvaluation evaluation) {
+	public static void deleteSprintEvaluation(int sprint_eval_id ) {
 		List<SprintEvaluation> evaluations = getSprintEvaluations();
 
 		for (int i = 0; i < evaluations.size(); i++) {
-			if (evaluations.get(i).getId() == evaluation.getId()) {
+			if (evaluations.get(i).getId() == sprint_eval_id) {
 				evaluations.remove(i);
 				break;
 			}
@@ -215,14 +215,5 @@ public class SprintEvaluation {
 	public String toString() {
 		return "SprintEvaluation{" + "id=" + id + ", sprintId=" + sprintId + ", employeeId=" + employeeId + ", date='"
 				+ date + '\'' + ", rating=" + rating + ", comment='" + comment + '\'' + '}';
-	}
-
-	public static void main(String[] args) {
-		// Test getSprintEvaluations
-		List<SprintEvaluation> evals = getSprintEvaluations();
-
-		for (SprintEvaluation eval : evals) {
-			System.out.println(eval);
-		}
 	}
 }
