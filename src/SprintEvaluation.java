@@ -69,7 +69,7 @@ public class SprintEvaluation {
 	 *
 	 * @return A list of all sprint evaluations.
 	 */
-	private static List<SprintEvaluation> getSprintEvaluations() {
+	public static List<SprintEvaluation> getSprintEvaluations() {
 		try {
 			return CSVHelper.readBeansFromCsv("src/databases/sprint_evaluations.csv", SprintEvaluation.class);
 		} catch (Exception e) {
@@ -103,7 +103,7 @@ public class SprintEvaluation {
 	 *
 	 * @param evaluations The list of SprintEvaluation objects.
 	 */
-	public static void saveSprintEvaluations(List<SprintEvaluation> evaluations) {
+	private static void saveSprintEvaluations(List<SprintEvaluation> evaluations) {
 		try {
 			CSVHelper.writeBeansToCsv(evaluations, "src/databases/sprint_evaluations.csv", SprintEvaluation.class);
 		} catch (Exception e) {
@@ -156,21 +156,6 @@ public class SprintEvaluation {
 		}
 
 		saveSprintEvaluations(evaluations);
-	}
-
-	/**
-	 * Creates a new instance of SprintEvaluation.
-	 *
-	 * @param sprintId   the ID of the sprint
-	 * @param employeeId the ID of the employee
-	 * @param date       the date of the evaluation
-	 * @param rating     the rating given in the evaluation
-	 * @param comment    additional comments for the evaluation
-	 * @return a new SprintEvaluation object with the specified parameters
-	 */
-	public static SprintEvaluation newSprintEvaluation(int sprintId, int employeeId, String date, int rating,
-			String comment) {
-		return new SprintEvaluation(sprintId, employeeId, date, rating, comment);
 	}
 
 	// Getters

@@ -1,4 +1,6 @@
 import com.opencsv.bean.CsvBindByName;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sprint {
@@ -101,7 +103,7 @@ public class Sprint {
 	 *
 	 * @param sprints The list of Sprint objects.
 	 */
-	public static void saveSprints(List<Sprint> sprints) {
+	private static void saveSprints(List<Sprint> sprints) {
 		try {
 			CSVHelper.writeBeansToCsv(sprints, "src/databases/sprints.csv", Sprint.class);
 		} catch (Exception e) {
@@ -158,23 +160,69 @@ public class Sprint {
 		saveSprints(sprints);
 	}
 
+	// Get, Save, Update, Delete, New Evaluation Methods
+
 	/**
-	 * Creates a new Sprint object with the given parameters.
+	 * Retrieves a list of all evaluations for this sprint from the CSV file.
 	 *
-	 * @param name      The name of the sprint.
-	 * @param startDate The start date of the sprint.
-	 * @param endDate   The end date of the sprint.
-	 * @param status    The status of the sprint.
-	 * @param velocity  The velocity of the sprint.
-	 * @return The new Sprint object.
+	 * @return A list of SprintEvaluation objects.
 	 */
-	public static Sprint newSprint(String name, String startDate, String endDate, String status, int velocity) {
-		return new Sprint(name, startDate, endDate, status, velocity);
+	public List<SprintEvaluation> getEvaluations() {
+		try {
+			List<SprintEvaluation> allEvaluations = SprintEvaluation.getSprintEvaluations();
+			List<SprintEvaluation> foundEvaluations = new ArrayList<SprintEvaluation>();
+			for (SprintEvaluation evaluation : allEvaluations) {
+				if (evaluation.getSprintId() == this.id) {
+					foundEvaluations.add(evaluation);
+				}
+			}
+			return foundEvaluations;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
-	// Get, Save, Update, Delete, New Evaluation Methods 
+	/**
+	 * Saves a new evaluation for this sprint to the CSV file.
+	 *
+	 * @param evaluation The new SprintEvaluation object.
+	 */
+	public void saveEvaluation(SprintEvaluation evaluation) {
+		SprintEvaluation.saveSprintEvaluation(evaluation);
+	}
 
+	/**
+	 * Updates an evaluation for this sprint in the CSV file.
+	 *
+	 * @param evaluation The updated SprintEvaluation object.
+	 */
+	public void updateEvaluation(SprintEvaluation evaluation) {
+		SprintEvaluation.updateSprintEvaluation(evaluation);
+	}
 
+	/**
+	 * Deletes an evaluation for this sprint from the CSV file.
+	 *
+	 * @param evaluation_id The ID of the evaluation to delete.
+	 */
+	public void deleteEvaluation(int evaluation_id) {
+		SprintEvaluation.deleteSprintEvaluation(evaluation_id);
+	}
+
+	/**
+	 * Creates a new evaluation for this sprint with the given parameters.
+	 *
+	 * @param employeeId The ID of the employee who completed the evaluation.
+	 * @param date       The date the evaluation was completed.
+	 * @param rating     The rating given in the evaluation.
+	 * @param comment    The comment given in the evaluation.
+	 * @return The new SprintEvaluation object.
+	 */
+	public void newEvaluation(int employeeId, String date, int rating, String comment) {
+		saveEvaluation(new SprintEvaluation(this.id, employeeId, date, rating, comment));
+	}
 
 	// Getters
 	public int getId() {
