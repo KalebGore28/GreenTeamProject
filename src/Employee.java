@@ -129,20 +129,7 @@ public class Employee {
 	 */
 	public static void saveEmployee(Employee employee) {
 		List<Employee> employees = getEmployees();
-
-		// Figure out the next available ID
-		int nextId = 1;
-		for (Employee emp : employees) {
-			if (emp.getId() >= nextId) {
-				nextId = emp.getId() + 1;
-			}
-		}
-
-		// Set the ID and add the employee to the list
-		employee.id = nextId;
 		employees.add(employee);
-
-		// Save the updated list of employees
 		saveEmployees(employees);
 	}
 
@@ -247,7 +234,8 @@ public class Employee {
 	 * @param salary           The salary of the employee.
 	 * @param reasonForLeaving The reason for leaving the position.
 	 */
-	public EmployeeHistory newHistory(int employeeId, String department, String position, String startDate, String endDate,
+	public EmployeeHistory newHistory(int employeeId, String department, String position, String startDate,
+			String endDate,
 			double salary, String reasonForLeaving) {
 		return new EmployeeHistory(employeeId, department, position, startDate, endDate, salary, reasonForLeaving);
 	}
