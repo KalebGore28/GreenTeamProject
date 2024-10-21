@@ -304,6 +304,27 @@ public class Employee {
 
 	// Getters
 
+	/**
+	 * Retrieves a list of all sprint evaluations from the CSV file.
+	 *
+	 * @return A list of SprintEvaluation objects, or null if an error occurs.
+	 */
+	public List<SprintEvaluation> getEvaluations() {
+		try {
+			List<SprintEvaluation> allSprintEvaluations = SprintEvaluation.getSprintEvaluations();
+			List<SprintEvaluation> foundSprintEvaluations = new ArrayList<SprintEvaluation>();
+			for (SprintEvaluation sprintEvaluation : allSprintEvaluations) {
+				if (sprintEvaluation.getEmployeeId() == this.id) {
+					foundSprintEvaluations.add(sprintEvaluation);
+				}
+			}
+			return foundSprintEvaluations;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public int getId() {
 		return id;
 	}

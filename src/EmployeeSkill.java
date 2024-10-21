@@ -204,4 +204,11 @@ public class EmployeeSkill {
     public void setLastUsedDate(String lastUsedDate) {
         this.lastUsedDate = lastUsedDate;
     }
+
+    @Override
+    public String toString() {
+        return "EmployeeSkill [id=" + id + ", employeeId=" + employeeId + ", skillName=" + skillName
+                + ", proficiencyLevel=" + proficiencyLevel + ", yearsOfExperience=" + yearsOfExperience
+                + ", lastUsedDate=" + lastUsedDate + "]";
+    }
 }
