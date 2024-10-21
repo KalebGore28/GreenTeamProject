@@ -49,7 +49,7 @@ public class Sprint {
 	 *
 	 * @return The next available ID.
 	 */
-	private int findNextId() {
+	private static int findNextId() {
 		List<Sprint> sprints = getSprints();
 		int nextId = 1;
 		for (Sprint sprint : sprints) {

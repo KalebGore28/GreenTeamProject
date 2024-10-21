@@ -51,7 +51,7 @@ public class SprintEvaluation {
 	 *
 	 * @return The next available ID.
 	 */
-	private int findNextId() {
+	private static int findNextId() {
 		List<SprintEvaluation> evaluations = getSprintEvaluations();
 		int nextId = 1;
 		for (SprintEvaluation evaluation : evaluations) {
@@ -217,4 +217,12 @@ public class SprintEvaluation {
 				+ date + '\'' + ", rating=" + rating + ", comment='" + comment + '\'' + '}';
 	}
 
+	public static void main(String[] args) {
+		// Test getSprintEvaluations
+		List<SprintEvaluation> evals = getSprintEvaluations();
+
+		for (SprintEvaluation eval : evals) {
+			System.out.println(eval);
+		}
+	}
 }
