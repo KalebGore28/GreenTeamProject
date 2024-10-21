@@ -132,8 +132,7 @@ public class Sprint {
 		for (int i = 0; i < sprints.size(); i++) {
 			if (sprints.get(i).getId() == sprint.getId()) {
 				sprints.set(i, sprint);
-				saveSprints(sprints);
-				return;
+				break;
 			}
 		}
 
@@ -152,13 +151,27 @@ public class Sprint {
 		for (int i = 0; i < sprints.size(); i++) {
 			if (sprints.get(i).getId() == sprint_id) {
 				sprints.remove(i);
-				saveSprints(sprints);
-				return;
+				break;
 			}
 		}
 
 		saveSprints(sprints);
 	}
+
+	/**
+	 * Creates a new Sprint object with the given parameters.
+	 *
+	 * @param name      The name of the sprint.
+	 * @param startDate The start date of the sprint.
+	 * @param endDate   The end date of the sprint.
+	 * @param status    The status of the sprint.
+	 * @param velocity  The velocity of the sprint.
+	 * @return The new Sprint object.
+	 */
+	public static Sprint newSprint(String name, String startDate, String endDate, String status, int velocity) {
+		return new Sprint(name, startDate, endDate, status, velocity);
+	}
+
 
 	// Getters
 	public int getId() {
@@ -185,25 +198,22 @@ public class Sprint {
 		return velocity;
 	}
 
-	// Setters
-	public void setName(String name) {
-		this.name = name;
+	@Override
+	public String toString() {
+		return "Sprint{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", startDate='" + startDate + '\'' +
+				", endDate='" + endDate + '\'' +
+				", status='" + status + '\'' +
+				", velocity=" + velocity +
+				'}';
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public static void main(String[] args) {
+		List<Sprint> sprints = Sprint.getSprints();
+		for (Sprint sprint : sprints) {
+			System.out.println(sprint);
+		}
 	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public void setVelocity(int velocity) {
-		this.velocity = velocity;
-	}
-
 }
