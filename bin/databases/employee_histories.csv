@@ -9,3 +9,13 @@ ID,EMPLOYEE_ID,DEPARTMENT,POSITION,START_DATE,END_DATE,SALARY,REASON_FOR_LEAVING
 8,32,IT,DevOps Specialist,2020-08-01,2022-05-31,98000,New role at another company
 9,34,Engineering,Junior Security Engineer,2015-09-01,2018-10-31,80000,Promotion to Security Engineer
 10,34,Engineering,Security Engineer,2018-11-01,2021-10-31,108000,Job change for career advancement
+11,1,Engineering,Senior Software Engineer,2021-06-01,,95000,
+12,8,Engineering,Lead Machine Learning Engineer,2020-07-01,,140000,
+13,17,IT,Lead Network Security Engineer,2021-06-01,,130000,
+14,32,IT,Cloud Architect,2022-06-01,,145000,
+15,34,Engineering,Senior Security Engineer,2021-11-01,,140000,
+16,42,Engineering,Site Reliability Engineer,2021-09-01,,125000,
+17,24,IT,Database Administrator,2019-10-01,,100000,
+18,10,IT,IT Systems Administrator,2020-02-01,,85000,
+19,50,Engineering,Software Engineer,2022-01-01,,90000,
+20,48,IT,IT Infrastructure Engineer,2021-01-01,,120000,

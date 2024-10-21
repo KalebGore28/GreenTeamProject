@@ -247,10 +247,9 @@ public class Employee {
 	 * @param salary           The salary of the employee.
 	 * @param reasonForLeaving The reason for leaving the position.
 	 */
-	public void newHistory(int employeeId, String department, String position, String startDate, String endDate,
+	public EmployeeHistory newHistory(int employeeId, String department, String position, String startDate, String endDate,
 			double salary, String reasonForLeaving) {
-		this.saveHistory(
-				new EmployeeHistory(employeeId, department, position, startDate, endDate, salary, reasonForLeaving));
+		return new EmployeeHistory(employeeId, department, position, startDate, endDate, salary, reasonForLeaving);
 	}
 
 	// Get, Save, Update, Delete, New Skill Methods
@@ -311,8 +310,9 @@ public class Employee {
 	 * @param yearsOfExperience The number of years of experience with the skill.
 	 * @param lastUsedDate      The date when the skill was last used.
 	 */
-	public void newSkill(String skillName, String proficiencyLevel, int yearsOfExperience, String lastUsedDate) {
-		this.saveSkill(new EmployeeSkill(this.id, skillName, proficiencyLevel, yearsOfExperience, lastUsedDate));
+	public EmployeeSkill newSkill(String skillName, String proficiencyLevel, int yearsOfExperience,
+			String lastUsedDate) {
+		return new EmployeeSkill(this.id, skillName, proficiencyLevel, yearsOfExperience, lastUsedDate);
 	}
 
 	// Getters
