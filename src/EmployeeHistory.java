@@ -2,6 +2,7 @@ import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 
 public class EmployeeHistory {
+    private static final String databasePath = "src/databases/employee_histories.csv";
 
     @CsvBindByName(column = "id")
     private int id;
@@ -81,26 +82,7 @@ public class EmployeeHistory {
      * @return A list of EmployeeHistory objects, or null if an error occurs.
      */
     public static List<EmployeeHistory> getHistories() {
-        try {
-            return CSVHelper.readBeansFromCsv("src/databases/employee_histories.csv", EmployeeHistory.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Helper method to save a list of EmployeeHistory objects to the CSV file.
-     * This method is not meant to be called directly.
-     *
-     * @param employeeHistories The list of EmployeeHistory objects to save.
-     */
-    private static void saveHistories(List<EmployeeHistory> employeeHistories) {
-        try {
-            CSVHelper.writeBeansToCsv(employeeHistories, "src/databases/employee_histories.csv", EmployeeHistory.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return CSVHelper.get(databasePath, EmployeeHistory.class);
     }
 
     /**
@@ -109,9 +91,7 @@ public class EmployeeHistory {
      * @param employeeHistory The EmployeeHistory object to save.
      */
     public static void saveHistory(EmployeeHistory employeeHistory) {
-        List<EmployeeHistory> employeeHistories = getHistories();
-        employeeHistories.add(employeeHistory);
-        saveHistories(employeeHistories);
+        CSVHelper.save(employeeHistory, databasePath, EmployeeHistory.class);
     }
 
     /**
@@ -120,14 +100,7 @@ public class EmployeeHistory {
      * @param employeeHistory The EmployeeHistory object with updated information.
      */
     public static void updateHistory(EmployeeHistory employeeHistory) {
-        List<EmployeeHistory> employeeHistories = getHistories();
-        for (int i = 0; i < employeeHistories.size(); i++) {
-            if (employeeHistories.get(i).getId() == employeeHistory.getId()) {
-                employeeHistories.set(i, employeeHistory);
-                break;
-            }
-        }
-        saveHistories(employeeHistories);
+        CSVHelper.update(employeeHistory, databasePath, EmployeeHistory.class);
     }
 
     /**
@@ -135,15 +108,8 @@ public class EmployeeHistory {
      *
      * @param id The ID of the employee history to delete.
      */
-    public static void deleteHistory(int id) {
-        List<EmployeeHistory> employeeHistories = getHistories();
-        for (int i = 0; i < employeeHistories.size(); i++) {
-            if (employeeHistories.get(i).getId() == id) {
-                employeeHistories.remove(i);
-                break;
-            }
-        }
-        saveHistories(employeeHistories);
+    public static void deleteHistory(EmployeeHistory employeeHistory) {
+        CSVHelper.delete(employeeHistory, databasePath, EmployeeHistory.class);
     }
 
     // Getters

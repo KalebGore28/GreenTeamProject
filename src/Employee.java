@@ -2,7 +2,8 @@ import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Employee {
+public class Employee implements Identifiable {
+	private static final String databasePath = "src/databases/employees.csv";
 
 	@CsvBindByName(column = "id")
 	private int id;
@@ -80,57 +81,26 @@ public class Employee {
 	 * @return A list of Employee objects, or null if an error occurs.
 	 */
 	public static List<Employee> getEmployees() {
-		try {
-			return CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return CSVHelper.get(databasePath, Employee.class);
 	}
 
 	/**
-	 * Retrieves a single employee from the CSV file by their ID.
+	 * Retrieves a single employee by their ID.
 	 *
 	 * @param employee_id The ID of the employee to retrieve.
 	 * @return The Employee object, or null if the employee is not found.
 	 */
 	public static Employee getEmployee(int employee_id) {
-		try {
-			List<Employee> employees = CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
-			for (Employee employee : employees) {
-				if (employee.getId() == employee_id) {
-					return employee;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		return CSVHelper.get(databasePath, Employee.class, employee_id);
 	}
 
 	/**
-	 * Saves a list of employees to the CSV file.
-	 * Not meant to be called directly.
-	 *
-	 * @param employees The list of Employee objects to save.
-	 */
-	private static void saveEmployees(List<Employee> employees) {
-		try {
-			CSVHelper.writeBeansToCsv(employees, "src/databases/employees.csv", Employee.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Saves a single employee to the CSV file.
+	 * Saves a new employee to the CSV file.
 	 *
 	 * @param employee The Employee object to save.
 	 */
 	public static void saveEmployee(Employee employee) {
-		List<Employee> employees = getEmployees();
-		employees.add(employee);
-		saveEmployees(employees);
+		CSVHelper.save(employee, databasePath, Employee.class);
 	}
 
 	/**
@@ -139,18 +109,7 @@ public class Employee {
 	 * @param employee The Employee object with updated information.
 	 */
 	public static void updateEmployee(Employee employee) {
-		List<Employee> employees = getEmployees();
-
-		// Find the employee in the list
-		for (int i = 0; i < employees.size(); i++) {
-			if (employees.get(i).getId() == employee.getId()) {
-				employees.set(i, employee);
-				break;
-			}
-		}
-
-		// Save the updated list of employees
-		saveEmployees(employees);
+		CSVHelper.update(employee, databasePath, Employee.class);
 	}
 
 	/**
@@ -158,22 +117,11 @@ public class Employee {
 	 *
 	 * @param employee_id The ID of the employee to delete.
 	 */
-	public static void deleteEmployee(int employee_id) {
-		List<Employee> employees = getEmployees();
-
-		// Find the employee in the list
-		for (int i = 0; i < employees.size(); i++) {
-			if (employees.get(i).getId() == employee_id) {
-				employees.remove(i);
-				break;
-			}
-		}
-
-		// Save the updated list of employees
-		saveEmployees(employees);
+	public static void deleteEmployee(Employee employee) {
+		CSVHelper.delete(employee, databasePath, Employee.class);
 	}
 
-	// Get, Save, Update, Delete, New History Methods
+	// Non-Static Get, Save, Update, Delete, New History Methods
 
 	/**
 	 * Retrieves a list of all employee histories from the CSV file.
@@ -197,7 +145,7 @@ public class Employee {
 	}
 
 	/**
-	 * Saves a single employee history to the CSV file.
+	 * Saves a new employee history to the CSV file.
 	 *
 	 * @param employeeHistory The EmployeeHistory object to save.
 	 */
@@ -219,8 +167,8 @@ public class Employee {
 	 *
 	 * @param employeeHistory_id The ID of the employee history to delete.
 	 */
-	public void deleteHistory(int history_id) {
-		EmployeeHistory.deleteHistory(history_id);
+	public void deleteHistory(EmployeeHistory employeeHistory) {
+		EmployeeHistory.deleteHistory(employeeHistory);
 	}
 
 	/**
@@ -285,8 +233,8 @@ public class Employee {
 	 *
 	 * @param employeeSkill_id The ID of the employee skill to delete.
 	 */
-	public void deleteSkill(int skill_id) {
-		EmployeeSkill.deleteSkill(skill_id);
+	public void deleteSkill(EmployeeSkill employeeSkill) {
+		EmployeeSkill.deleteSkill(employeeSkill);
 	}
 
 	/**

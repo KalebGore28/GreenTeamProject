@@ -2,6 +2,7 @@ import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 
 public class EmployeeSkill {
+    private static final String databasePath = "src/databases/employee_skills.csv";
 
     @CsvBindByName(column = "id")
     private int id;
@@ -65,12 +66,7 @@ public class EmployeeSkill {
      * @return A list of EmployeeSkill objects, or null if an error occurs.
      */
     public static List<EmployeeSkill> getSkills() {
-        try {
-            return CSVHelper.readBeansFromCsv("src/databases/employee_skills.csv", EmployeeSkill.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return CSVHelper.get(databasePath, EmployeeSkill.class);
     }
 
     /**
@@ -81,32 +77,7 @@ public class EmployeeSkill {
      *         not found or an error occurs.
      */
     public static EmployeeSkill getSkill(int employee_id) {
-        try {
-            List<EmployeeSkill> employeeSkills = CSVHelper.readBeansFromCsv("src/databases/employee_skills.csv",
-                    EmployeeSkill.class);
-            for (EmployeeSkill employeeSkill : employeeSkills) {
-                if (employeeSkill.getEmployeeId() == employee_id) {
-                    return employeeSkill;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Helper method to set the list of employee skills to the CSV file.
-     * This method is not meant to be called directly.
-     *
-     * @param employeeSkills The list of EmployeeSkill objects to save.
-     */
-    private static void saveSkills(List<EmployeeSkill> employeeSkills) {
-        try {
-            CSVHelper.writeBeansToCsv(employeeSkills, "src/databases/employee_skills.csv", EmployeeSkill.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return CSVHelper.get(databasePath, EmployeeSkill.class, employee_id);
     }
 
     /**
@@ -115,14 +86,7 @@ public class EmployeeSkill {
      * @param employeeSkill The EmployeeSkill object to set.
      */
     public static void saveSkill(EmployeeSkill employeeSkill) {
-        List<EmployeeSkill> employeeSkills = getSkills();
-        for (int i = 0; i < employeeSkills.size(); i++) {
-            if (employeeSkills.get(i).getEmployeeId() == employeeSkill.getEmployeeId()) {
-                employeeSkills.set(i, employeeSkill);
-                break;
-            }
-        }
-        saveSkills(employeeSkills);
+        CSVHelper.save(employeeSkill, databasePath, EmployeeSkill.class);
     }
 
     /**
@@ -131,14 +95,7 @@ public class EmployeeSkill {
      * @param employeeSkill The EmployeeSkill object with updated information.
      */
     public static void updateSkill(EmployeeSkill employeeSkill) {
-        List<EmployeeSkill> employeeSkills = getSkills();
-        for (int i = 0; i < employeeSkills.size(); i++) {
-            if (employeeSkills.get(i).getId() == employeeSkill.getId()) {
-                employeeSkills.set(i, employeeSkill);
-                break;
-            }
-        }
-        saveSkills(employeeSkills);
+        CSVHelper.update(employeeSkill, databasePath, EmployeeSkill.class);
     }
 
     /**
@@ -146,15 +103,8 @@ public class EmployeeSkill {
      *
      * @param id The ID of the employee skill to delete.
      */
-    public static void deleteSkill(int id) {
-        List<EmployeeSkill> employeeSkills = getSkills();
-        for (int i = 0; i < employeeSkills.size(); i++) {
-            if (employeeSkills.get(i).getId() == id) {
-                employeeSkills.remove(i);
-                break;
-            }
-        }
-        saveSkills(employeeSkills);
+    public static void deleteSkill(EmployeeSkill employeeSkill) {
+        CSVHelper.delete(employeeSkill, databasePath, EmployeeSkill.class);
     }
 
     // Getters

@@ -2,7 +2,8 @@ import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Sprint {
+public class Sprint implements Identifiable {
+	private static final String databasePath = "src/databases/sprints.csv";
 
 	@CsvBindByName(column = "id")
 	private int id;
@@ -22,6 +23,11 @@ public class Sprint {
 	@CsvBindByName(column = "velocity")
 	private int velocity;
 
+	// Constructors
+
+	/**
+	 * Default constructor.
+	 */
 	public Sprint() {
 	}
 
@@ -69,12 +75,7 @@ public class Sprint {
 	 * @return A list of Sprint objects.
 	 */
 	public static List<Sprint> getSprints() {
-		try {
-			return CSVHelper.readBeansFromCsv("src/databases/sprints.csv", Sprint.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return CSVHelper.get(databasePath, Sprint.class);
 	}
 
 	/**
@@ -84,30 +85,7 @@ public class Sprint {
 	 * @return The Sprint object, or null if the sprint is not found.
 	 */
 	public static Sprint getSprint(int sprint_id) {
-		try {
-			List<Sprint> sprints = getSprints();
-			for (Sprint sprint : sprints) {
-				if (sprint.getId() == sprint_id) {
-					return sprint;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * Saves a list of sprints to the CSV file.
-	 *
-	 * @param sprints The list of Sprint objects.
-	 */
-	private static void saveSprints(List<Sprint> sprints) {
-		try {
-			CSVHelper.writeBeansToCsv(sprints, "src/databases/sprints.csv", Sprint.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return CSVHelper.get(databasePath, Sprint.class, sprint_id);
 	}
 
 	/**
@@ -116,50 +94,28 @@ public class Sprint {
 	 * @param sprint The new Sprint object.
 	 */
 	public static void saveSprint(Sprint sprint) {
-		List<Sprint> sprints = getSprints();
-		sprints.add(sprint);
-		saveSprints(sprints);
+		CSVHelper.save(sprint, databasePath, Sprint.class);
 	}
 
 	/**
-	 * Updates a sprint in the CSV file.
+	 * Updates an existing sprint in the CSV file.
 	 *
 	 * @param sprint The updated Sprint object.
 	 */
 	public static void updateSprint(Sprint sprint) {
-		List<Sprint> sprints = getSprints();
-
-		// Find the sprint in the list and replace it
-		for (int i = 0; i < sprints.size(); i++) {
-			if (sprints.get(i).getId() == sprint.getId()) {
-				sprints.set(i, sprint);
-				break;
-			}
-		}
-
-		saveSprints(sprints);
+		CSVHelper.update(sprint, databasePath, Sprint.class);
 	}
 
 	/**
-	 * Deletes a sprint from the CSV file.
+	 * Deletes a sprint from the CSV file by its ID.
 	 *
 	 * @param sprint_id The ID of the sprint to delete.
 	 */
-	public static void deleteSprint(int sprint_id) {
-		List<Sprint> sprints = getSprints();
-
-		// Find the sprint in the list and remove it
-		for (int i = 0; i < sprints.size(); i++) {
-			if (sprints.get(i).getId() == sprint_id) {
-				sprints.remove(i);
-				break;
-			}
-		}
-
-		saveSprints(sprints);
+	public static void deleteSprint(Sprint sprint) {
+		CSVHelper.delete(sprint, databasePath, Sprint.class);
 	}
 
-	// Get, Save, Update, Delete, New Evaluation Methods
+	// Non-Static Get, Save, Update, Delete, New Evaluation Methods
 
 	/**
 	 * Retrieves a list of all evaluations for this sprint from the CSV file.
@@ -193,7 +149,7 @@ public class Sprint {
 	}
 
 	/**
-	 * Updates an evaluation for this sprint in the CSV file.
+	 * Updates an existing evaluation for this sprint in the CSV file.
 	 *
 	 * @param evaluation The updated SprintEvaluation object.
 	 */
@@ -206,8 +162,8 @@ public class Sprint {
 	 *
 	 * @param evaluation_id The ID of the evaluation to delete.
 	 */
-	public void deleteEvaluation(int evaluation_id) {
-		SprintEvaluation.deleteSprintEvaluation(evaluation_id);
+	public void deleteEvaluation(SprintEvaluation evaluation) {
+		SprintEvaluation.deleteSprintEvaluation(evaluation);
 	}
 
 	/**
@@ -260,8 +216,7 @@ public class Sprint {
 		for (SprintAssignedEmployee sprintAssignedEmployee : sprintAssignedEmployees) {
 			if (sprintAssignedEmployee.getSprintId() == this.id
 					&& sprintAssignedEmployee.getEmployeeId() == employeeId) {
-				SprintAssignedEmployee.deleteSprintAssignedEmployee(sprintAssignedEmployee.getId());
-				return;
+				SprintAssignedEmployee.deleteSprintAssignedEmployee(sprintAssignedEmployee);
 			}
 		}
 	}
