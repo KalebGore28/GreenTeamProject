@@ -1,7 +1,7 @@
 import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 
-public class EmployeeHistory {
+public class EmployeeHistory implements Identifiable {
     private static final String databasePath = "src/databases/employee_histories.csv";
 
     @CsvBindByName(column = "id")

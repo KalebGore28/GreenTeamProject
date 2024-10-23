@@ -73,7 +73,7 @@ public class Employee implements Identifiable {
 		return nextId;
 	}
 
-	// Static Get, Save, Update, Delete Employee Methods
+	// CRUD Methods
 
 	/**
 	 * Retrieves a list of all employees from the CSV file.
@@ -121,7 +121,7 @@ public class Employee implements Identifiable {
 		CSVHelper.delete(employee, databasePath, Employee.class);
 	}
 
-	// Non-Static Get, Save, Update, Delete, New History Methods
+	// Get, Save, Update, Delete, New History Methods
 
 	/**
 	 * Retrieves a list of all employee histories from the CSV file.
@@ -248,6 +248,124 @@ public class Employee implements Identifiable {
 	public void newSkill(String skillName, String proficiencyLevel, int yearsOfExperience,
 			String lastUsedDate) {
 		saveSkill(new EmployeeSkill(this.id, skillName, proficiencyLevel, yearsOfExperience, lastUsedDate));
+	}
+
+	// Get, Save, Update, Delete, New Tasks Methods
+
+	/**
+	 * Retrieves a list of all employee tasks from the CSV file.
+	 *
+	 * @return A list of EmployeeTask objects, or null if an error occurs.
+	 */
+	public List<EmployeeTask> getTasks() {
+		try {
+			List<EmployeeTask> allEmployeeTasks = EmployeeTask.getEmployeeTasks();
+			List<EmployeeTask> foundEmployeeTasks = new ArrayList<EmployeeTask>();
+			for (EmployeeTask employeeTask : allEmployeeTasks) {
+				if (employeeTask.getEmployeeId() == this.id) {
+					foundEmployeeTasks.add(employeeTask);
+				}
+			}
+			return foundEmployeeTasks;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Saves a single employee task to the CSV file.
+	 *
+	 * @param employeeTask The EmployeeTask object to save.
+	 */
+	public void saveTask(EmployeeTask employeeTask) {
+		EmployeeTask.saveEmployeeTask(employeeTask);
+	}
+
+	/**
+	 * Updates an existing employee task in the CSV file.
+	 *
+	 * @param employeeTask The EmployeeTask object with updated information.
+	 */
+	public void updateTask(EmployeeTask employeeTask) {
+		EmployeeTask.updateEmployeeTask(employeeTask);
+	}
+
+	/**
+	 * Deletes an employee task from the CSV file by their ID.
+	 *
+	 * @param employeeTask_id The ID of the employee task to delete.
+	 */
+	public void deleteTask(EmployeeTask employeeTask) {
+		EmployeeTask.deleteEmployeeTask(employeeTask);
+	}
+
+	/**
+	 * Creates a new employee task and saves it to the CSV file.
+	 *
+	 * @param taskName        The name of the task.
+	 * @param taskDescription The description of the task.
+	 * @param taskStatus      The status of the task.
+	 * @param taskStartDate   The start date of the task.
+	 * @param taskEndDate     The end date of the task.
+	 */
+	public void newTask(String taskName, String taskDescription, String taskStatus, String taskStartDate,
+			String taskEndDate) {
+		EmployeeTask.saveEmployeeTask(
+				new EmployeeTask(this.id, taskName, taskDescription, taskStatus, taskStartDate, taskEndDate));
+	}
+
+	// Get, Save, Update, Delete, New Employee Demographics Methods
+
+	/**
+	 * Retrieves a list of all employee demographics from the CSV file.
+	 *
+	 * @return A list of EmployeeDemographic objects, or null if an error occurs.
+	 */
+	public EmployeeDemographic getDemographic() {
+		return EmployeeDemographic.getEmployeeDemographic(this.id);
+	}
+
+	/**
+	 * Saves a single employee demographic to the CSV file.
+	 *
+	 * @param employeeDemographic The EmployeeDemographic object to save.
+	 */
+	public void saveDemographic(EmployeeDemographic employeeDemographic) {
+		EmployeeDemographic.saveEmployeeDemographic(employeeDemographic);
+	}
+
+	/**
+	 * Updates an existing employee demographic in the CSV file.
+	 *
+	 * @param employeeDemographic The EmployeeDemographic object with updated
+	 *                            information.
+	 */
+	public void updateDemographic(EmployeeDemographic employeeDemographic) {
+		EmployeeDemographic.updateEmployeeDemographic(employeeDemographic);
+	}
+
+	/**
+	 * Deletes an employee demographic from the CSV file by their ID.
+	 *
+	 * @param employeeDemographic_id The ID of the employee demographic to delete.
+	 */
+	public void deleteDemographic(EmployeeDemographic employeeDemographic) {
+		EmployeeDemographic.deleteEmployeeDemographic(employeeDemographic);
+	}
+
+	/**
+	 * Creates a new employee demographic and saves it to the CSV file.
+	 *
+	 * @param employeeId       The ID of the employee.
+	 * @param birthDate        The birth date of the employee.
+	 * @param gender           The gender of the employee.
+	 * @param ethnicity        The ethnicity of the employee.
+	 * @param employmentStatus The employment status of the employee.
+	 */
+	public void newDemographic(String birthDate, String gender, String ethnicity, String employmentStatus) {
+		EmployeeDemographic.saveEmployeeDemographic(
+				new EmployeeDemographic(this.id, birthDate, gender, ethnicity, employmentStatus));
 	}
 
 	// Getters

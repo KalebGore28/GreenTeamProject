@@ -1,7 +1,7 @@
 import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 
-public class SprintEvaluation {
+public class SprintEvaluation implements Identifiable {
 	private static final String databasePath = "src/databases/sprint_evaluations.csv";
 
 	@CsvBindByName(column = "id")
