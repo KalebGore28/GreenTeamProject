@@ -61,7 +61,7 @@ public class Sprint {
 		return nextId;
 	}
 
-	// Static Get, Save, Update, Delete, New Sprint Methods
+	// Static Get, Save, Update, Delete Sprint Methods
 
 	/**
 	 * Retrieves a list of all sprints from the CSV file.
@@ -223,7 +223,51 @@ public class Sprint {
 		saveEvaluation(new SprintEvaluation(this.id, employeeId, date, rating, comment));
 	}
 
+	// Other Methods
+
+	/**
+	 * Retrieves a list of all employees assigned to this sprint from the CSV file.
+	 *
+	 * @return A list of Employee objects.
+	 */
+	public List<Employee> getAssignedEmployees() {
+		List<SprintAssignedEmployee> sprintAssignedEmployees = SprintAssignedEmployee.getSprintAssignedEmployees();
+		List<Employee> assignedEmployees = new ArrayList<Employee>();
+		for (SprintAssignedEmployee sprintAssignedEmployee : sprintAssignedEmployees) {
+			if (sprintAssignedEmployee.getSprintId() == this.id) {
+				assignedEmployees.add(Employee.getEmployee(sprintAssignedEmployee.getEmployeeId()));
+			}
+		}
+		return assignedEmployees;
+	}
+
+	/**
+	 * Assigns an employee to this sprint.
+	 *
+	 * @param employeeId The ID of the employee to assign.
+	 */
+	public void assignEmployee(int employeeId) {
+		SprintAssignedEmployee.saveSprintAssignedEmployee(new SprintAssignedEmployee(this.id, employeeId));
+	}
+
+	/**
+	 * Unassigns an employee from this sprint.
+	 *
+	 * @param employeeId The ID of the employee to unassign.
+	 */
+	public void unassignEmployee(int employeeId) {
+		List<SprintAssignedEmployee> sprintAssignedEmployees = SprintAssignedEmployee.getSprintAssignedEmployees();
+		for (SprintAssignedEmployee sprintAssignedEmployee : sprintAssignedEmployees) {
+			if (sprintAssignedEmployee.getSprintId() == this.id
+					&& sprintAssignedEmployee.getEmployeeId() == employeeId) {
+				SprintAssignedEmployee.deleteSprintAssignedEmployee(sprintAssignedEmployee.getId());
+				return;
+			}
+		}
+	}
+
 	// Getters
+
 	public int getId() {
 		return id;
 	}
