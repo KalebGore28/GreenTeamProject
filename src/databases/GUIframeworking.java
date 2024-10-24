@@ -74,8 +74,12 @@ public class GUIframeworking {
                     Employee1Window.setSize(defaultFrameWidth, defaultFrameHeight);
                     employeeWindow.setVisible(false); 
                     Employee1Window.setVisible(true);   
+                    JLabel EmployeeLabel = new JLabel("Employee 1");
+                    
+                    
                     
                     canvas.removeAll(); //forces a wipe of the canvas
+                    canvas.add(EmployeeLabel);
                     
                     Employee1Window.add(canvas);
                  
