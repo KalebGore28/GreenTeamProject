@@ -2,7 +2,8 @@ import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Employee {
+public class Employee implements Identifiable {
+	private static final String databasePath = "src/databases/employees.csv";
 
 	@CsvBindByName(column = "id")
 	private int id;
@@ -72,7 +73,7 @@ public class Employee {
 		return nextId;
 	}
 
-	// Static Get, Save, Update, Delete Employee Methods
+	// CRUD Methods
 
 	/**
 	 * Retrieves a list of all employees from the CSV file.
@@ -80,57 +81,26 @@ public class Employee {
 	 * @return A list of Employee objects, or null if an error occurs.
 	 */
 	public static List<Employee> getEmployees() {
-		try {
-			return CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return CSVHelper.get(databasePath, Employee.class);
 	}
 
 	/**
-	 * Retrieves a single employee from the CSV file by their ID.
+	 * Retrieves a single employee by their ID.
 	 *
 	 * @param employee_id The ID of the employee to retrieve.
 	 * @return The Employee object, or null if the employee is not found.
 	 */
 	public static Employee getEmployee(int employee_id) {
-		try {
-			List<Employee> employees = CSVHelper.readBeansFromCsv("src/databases/employees.csv", Employee.class);
-			for (Employee employee : employees) {
-				if (employee.getId() == employee_id) {
-					return employee;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		return CSVHelper.get(databasePath, Employee.class, employee_id);
 	}
 
 	/**
-	 * Saves a list of employees to the CSV file.
-	 * Not meant to be called directly.
-	 *
-	 * @param employees The list of Employee objects to save.
-	 */
-	private static void saveEmployees(List<Employee> employees) {
-		try {
-			CSVHelper.writeBeansToCsv(employees, "src/databases/employees.csv", Employee.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Saves a single employee to the CSV file.
+	 * Saves a new employee to the CSV file.
 	 *
 	 * @param employee The Employee object to save.
 	 */
 	public static void saveEmployee(Employee employee) {
-		List<Employee> employees = getEmployees();
-		employees.add(employee);
-		saveEmployees(employees);
+		CSVHelper.save(employee, databasePath, Employee.class);
 	}
 
 	/**
@@ -139,18 +109,7 @@ public class Employee {
 	 * @param employee The Employee object with updated information.
 	 */
 	public static void updateEmployee(Employee employee) {
-		List<Employee> employees = getEmployees();
-
-		// Find the employee in the list
-		for (int i = 0; i < employees.size(); i++) {
-			if (employees.get(i).getId() == employee.getId()) {
-				employees.set(i, employee);
-				break;
-			}
-		}
-
-		// Save the updated list of employees
-		saveEmployees(employees);
+		CSVHelper.update(employee, databasePath, Employee.class);
 	}
 
 	/**
@@ -158,19 +117,8 @@ public class Employee {
 	 *
 	 * @param employee_id The ID of the employee to delete.
 	 */
-	public static void deleteEmployee(int employee_id) {
-		List<Employee> employees = getEmployees();
-
-		// Find the employee in the list
-		for (int i = 0; i < employees.size(); i++) {
-			if (employees.get(i).getId() == employee_id) {
-				employees.remove(i);
-				break;
-			}
-		}
-
-		// Save the updated list of employees
-		saveEmployees(employees);
+	public static void deleteEmployee(Employee employee) {
+		CSVHelper.delete(employee, databasePath, Employee.class);
 	}
 
 	// Get, Save, Update, Delete, New History Methods
@@ -197,7 +145,7 @@ public class Employee {
 	}
 
 	/**
-	 * Saves a single employee history to the CSV file.
+	 * Saves a new employee history to the CSV file.
 	 *
 	 * @param employeeHistory The EmployeeHistory object to save.
 	 */
@@ -219,8 +167,8 @@ public class Employee {
 	 *
 	 * @param employeeHistory_id The ID of the employee history to delete.
 	 */
-	public void deleteHistory(int history_id) {
-		EmployeeHistory.deleteHistory(history_id);
+	public void deleteHistory(EmployeeHistory employeeHistory) {
+		EmployeeHistory.deleteHistory(employeeHistory);
 	}
 
 	/**
@@ -285,8 +233,8 @@ public class Employee {
 	 *
 	 * @param employeeSkill_id The ID of the employee skill to delete.
 	 */
-	public void deleteSkill(int skill_id) {
-		EmployeeSkill.deleteSkill(skill_id);
+	public void deleteSkill(EmployeeSkill employeeSkill) {
+		EmployeeSkill.deleteSkill(employeeSkill);
 	}
 
 	/**
@@ -300,6 +248,124 @@ public class Employee {
 	public void newSkill(String skillName, String proficiencyLevel, int yearsOfExperience,
 			String lastUsedDate) {
 		saveSkill(new EmployeeSkill(this.id, skillName, proficiencyLevel, yearsOfExperience, lastUsedDate));
+	}
+
+	// Get, Save, Update, Delete, New Tasks Methods
+
+	/**
+	 * Retrieves a list of all employee tasks from the CSV file.
+	 *
+	 * @return A list of EmployeeTask objects, or null if an error occurs.
+	 */
+	public List<EmployeeTask> getTasks() {
+		try {
+			List<EmployeeTask> allEmployeeTasks = EmployeeTask.getEmployeeTasks();
+			List<EmployeeTask> foundEmployeeTasks = new ArrayList<EmployeeTask>();
+			for (EmployeeTask employeeTask : allEmployeeTasks) {
+				if (employeeTask.getEmployeeId() == this.id) {
+					foundEmployeeTasks.add(employeeTask);
+				}
+			}
+			return foundEmployeeTasks;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Saves a single employee task to the CSV file.
+	 *
+	 * @param employeeTask The EmployeeTask object to save.
+	 */
+	public void saveTask(EmployeeTask employeeTask) {
+		EmployeeTask.saveEmployeeTask(employeeTask);
+	}
+
+	/**
+	 * Updates an existing employee task in the CSV file.
+	 *
+	 * @param employeeTask The EmployeeTask object with updated information.
+	 */
+	public void updateTask(EmployeeTask employeeTask) {
+		EmployeeTask.updateEmployeeTask(employeeTask);
+	}
+
+	/**
+	 * Deletes an employee task from the CSV file by their ID.
+	 *
+	 * @param employeeTask_id The ID of the employee task to delete.
+	 */
+	public void deleteTask(EmployeeTask employeeTask) {
+		EmployeeTask.deleteEmployeeTask(employeeTask);
+	}
+
+	/**
+	 * Creates a new employee task and saves it to the CSV file.
+	 *
+	 * @param taskName        The name of the task.
+	 * @param taskDescription The description of the task.
+	 * @param taskStatus      The status of the task.
+	 * @param taskStartDate   The start date of the task.
+	 * @param taskEndDate     The end date of the task.
+	 */
+	public void newTask(String taskName, String taskDescription, String taskStatus, String taskStartDate,
+			String taskEndDate) {
+		EmployeeTask.saveEmployeeTask(
+				new EmployeeTask(this.id, taskName, taskDescription, taskStatus, taskStartDate, taskEndDate));
+	}
+
+	// Get, Save, Update, Delete, New Employee Demographics Methods
+
+	/**
+	 * Retrieves a list of all employee demographics from the CSV file.
+	 *
+	 * @return A list of EmployeeDemographic objects, or null if an error occurs.
+	 */
+	public EmployeeDemographic getDemographic() {
+		return EmployeeDemographic.getEmployeeDemographic(this.id);
+	}
+
+	/**
+	 * Saves a single employee demographic to the CSV file.
+	 *
+	 * @param employeeDemographic The EmployeeDemographic object to save.
+	 */
+	public void saveDemographic(EmployeeDemographic employeeDemographic) {
+		EmployeeDemographic.saveEmployeeDemographic(employeeDemographic);
+	}
+
+	/**
+	 * Updates an existing employee demographic in the CSV file.
+	 *
+	 * @param employeeDemographic The EmployeeDemographic object with updated
+	 *                            information.
+	 */
+	public void updateDemographic(EmployeeDemographic employeeDemographic) {
+		EmployeeDemographic.updateEmployeeDemographic(employeeDemographic);
+	}
+
+	/**
+	 * Deletes an employee demographic from the CSV file by their ID.
+	 *
+	 * @param employeeDemographic_id The ID of the employee demographic to delete.
+	 */
+	public void deleteDemographic(EmployeeDemographic employeeDemographic) {
+		EmployeeDemographic.deleteEmployeeDemographic(employeeDemographic);
+	}
+
+	/**
+	 * Creates a new employee demographic and saves it to the CSV file.
+	 *
+	 * @param employeeId       The ID of the employee.
+	 * @param birthDate        The birth date of the employee.
+	 * @param gender           The gender of the employee.
+	 * @param ethnicity        The ethnicity of the employee.
+	 * @param employmentStatus The employment status of the employee.
+	 */
+	public void newDemographic(String birthDate, String gender, String ethnicity, String employmentStatus) {
+		EmployeeDemographic.saveEmployeeDemographic(
+				new EmployeeDemographic(this.id, birthDate, gender, ethnicity, employmentStatus));
 	}
 
 	// Getters

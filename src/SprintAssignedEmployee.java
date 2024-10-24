@@ -1,7 +1,8 @@
 import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 
-public class SprintAssignedEmployee {
+public class SprintAssignedEmployee implements Identifiable {
+	private static final String databasePath = "src/databases/sprint_assigned_employees.csv";
 
 	@CsvBindByName(column = "id")
 	private int id;
@@ -53,28 +54,7 @@ public class SprintAssignedEmployee {
 	 * @return A list of all sprint assigned employees.
 	 */
 	public static List<SprintAssignedEmployee> getSprintAssignedEmployees() {
-		try {
-			return CSVHelper.readBeansFromCsv("src/databases/sprint_assigned_employees.csv",
-					SprintAssignedEmployee.class);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	/**
-	 * Saves a list of sprint assigned employees to the CSV file.
-	 *
-	 * @param sprintAssignedEmployees The list of sprint assigned employees to save.
-	 */
-	private static void saveSprintAssignedEmployees(List<SprintAssignedEmployee> sprintAssignedEmployees) {
-		try {
-			CSVHelper.writeBeansToCsv(sprintAssignedEmployees, "src/databases/sprint_assigned_employees.csv",
-					SprintAssignedEmployee.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return CSVHelper.get(databasePath, SprintAssignedEmployee.class);
 	}
 
 	/**
@@ -83,9 +63,7 @@ public class SprintAssignedEmployee {
 	 * @param sprintAssignedEmployee The sprint assigned employee to save.
 	 */
 	public static void saveSprintAssignedEmployee(SprintAssignedEmployee sprintAssignedEmployee) {
-		List<SprintAssignedEmployee> sprintAssignedEmployees = getSprintAssignedEmployees();
-		sprintAssignedEmployees.add(sprintAssignedEmployee);
-		saveSprintAssignedEmployees(sprintAssignedEmployees);
+		CSVHelper.save(sprintAssignedEmployee, databasePath, SprintAssignedEmployee.class);
 	}
 
 	/**
@@ -93,15 +71,8 @@ public class SprintAssignedEmployee {
 	 * 
 	 * @param id The ID of the sprint assigned employee to delete.
 	 */
-	public static void deleteSprintAssignedEmployee(int id) {
-		List<SprintAssignedEmployee> sprintAssignedEmployees = getSprintAssignedEmployees();
-		for (SprintAssignedEmployee sprintAssignedEmployee : sprintAssignedEmployees) {
-			if (sprintAssignedEmployee.getId() == id) {
-				sprintAssignedEmployees.remove(sprintAssignedEmployee);
-				saveSprintAssignedEmployees(sprintAssignedEmployees);
-				return;
-			}
-		}
+	public static void deleteSprintAssignedEmployee(SprintAssignedEmployee sprintAssignedEmployee) {
+		CSVHelper.delete(sprintAssignedEmployee, databasePath, SprintAssignedEmployee.class);
 	}
 
 	// Getters

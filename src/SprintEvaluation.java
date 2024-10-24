@@ -1,7 +1,8 @@
 import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 
-public class SprintEvaluation {
+public class SprintEvaluation implements Identifiable {
+	private static final String databasePath = "src/databases/sprint_evaluations.csv";
 
 	@CsvBindByName(column = "id")
 	private int id;
@@ -70,12 +71,7 @@ public class SprintEvaluation {
 	 * @return A list of all sprint evaluations.
 	 */
 	public static List<SprintEvaluation> getSprintEvaluations() {
-		try {
-			return CSVHelper.readBeansFromCsv("src/databases/sprint_evaluations.csv", SprintEvaluation.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return CSVHelper.get(databasePath, SprintEvaluation.class);
 	}
 
 	/**
@@ -85,30 +81,7 @@ public class SprintEvaluation {
 	 * @return The SprintEvaluation object, or null if not found.
 	 */
 	public static SprintEvaluation getSprintEvaluation(int sprint_eval_id) {
-		try {
-			List<SprintEvaluation> sprint_evals = getSprintEvaluations();
-			for (SprintEvaluation evaluation : sprint_evals) {
-				if (evaluation.getId() == sprint_eval_id) {
-					return evaluation;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * Saves a list of sprint evaluations to the CSV file.
-	 *
-	 * @param evaluations The list of SprintEvaluation objects.
-	 */
-	private static void saveSprintEvaluations(List<SprintEvaluation> evaluations) {
-		try {
-			CSVHelper.writeBeansToCsv(evaluations, "src/databases/sprint_evaluations.csv", SprintEvaluation.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return CSVHelper.get(databasePath, SprintEvaluation.class, sprint_eval_id);
 	}
 
 	/**
@@ -117,9 +90,7 @@ public class SprintEvaluation {
 	 * @param evaluation The SprintEvaluation object to save.
 	 */
 	public static void saveSprintEvaluation(SprintEvaluation evaluation) {
-		List<SprintEvaluation> evaluations = getSprintEvaluations();
-		evaluations.add(evaluation);
-		saveSprintEvaluations(evaluations);
+		CSVHelper.save(evaluation, databasePath, SprintEvaluation.class);
 	}
 
 	/**
@@ -128,16 +99,7 @@ public class SprintEvaluation {
 	 * @param evaluation The SprintEvaluation object to update.
 	 */
 	public static void updateSprintEvaluation(SprintEvaluation evaluation) {
-		List<SprintEvaluation> evaluations = getSprintEvaluations();
-
-		for (int i = 0; i < evaluations.size(); i++) {
-			if (evaluations.get(i).getId() == evaluation.getId()) {
-				evaluations.set(i, evaluation);
-				break;
-			}
-		}
-
-		saveSprintEvaluations(evaluations);
+		CSVHelper.update(evaluation, databasePath, SprintEvaluation.class);
 	}
 
 	/**
@@ -145,17 +107,8 @@ public class SprintEvaluation {
 	 *
 	 * @param evaluation The SprintEvaluation object to delete.
 	 */
-	public static void deleteSprintEvaluation(int sprint_eval_id ) {
-		List<SprintEvaluation> evaluations = getSprintEvaluations();
-
-		for (int i = 0; i < evaluations.size(); i++) {
-			if (evaluations.get(i).getId() == sprint_eval_id) {
-				evaluations.remove(i);
-				break;
-			}
-		}
-
-		saveSprintEvaluations(evaluations);
+	public static void deleteSprintEvaluation(SprintEvaluation evaluation) {
+		CSVHelper.delete(evaluation, databasePath, SprintEvaluation.class);
 	}
 
 	// Getters
