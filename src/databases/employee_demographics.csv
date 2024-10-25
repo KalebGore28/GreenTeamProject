@@ -1,3 +1,9 @@
 BIRTH_DATE,EMPLOYEE_ID,EMPLOYMENT_STATUS,ETHNICITY,GENDER,ID
-1990-01-01,1,Full-Time,White,Male,1
-1991-01-01,2,Part-Time,Black,Female,2
+1990-01-23,1,Full-Time,White,Male,1
+1991-02-11,2,Part-Time,Black,Female,2
+1992-04-07,3,Full-Time,Hispanic,Female, 3
+1993-03-17,4,Full-Time,Asian American,Male,4
+2000-01-01,5,Full-Time,White,Female,5
+1988-04-02,6,Part-Time,Black,Male,6
+1995-06-14,7,Full-Time,Hispanic,Female,7
+1998-07-23,8,Part-Time,White,Male,8

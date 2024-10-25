@@ -10,6 +10,9 @@ public class EmployeeHistory implements Identifiable {
     @CsvBindByName(column = "employee_id")
     private int employeeId;
 
+    @CsvBindByName(column = "company")
+    private String company;
+
     @CsvBindByName(column = "department")
     private String department;
 
@@ -47,10 +50,11 @@ public class EmployeeHistory implements Identifiable {
      * @param salary           The salary of the employee during this position.
      * @param reasonForLeaving The reason why the employee left the position.
      */
-    public EmployeeHistory(int employeeId, String department, String position, String startDate, String endDate,
-            double salary, String reasonForLeaving) {
+    public EmployeeHistory(int employeeId, String company, String department, String position, String startDate,
+            String endDate, double salary, String reasonForLeaving) {
         this.id = findNextId();
         this.employeeId = employeeId;
+        this.company = company;
         this.department = department;
         this.position = position;
         this.startDate = startDate;
@@ -122,6 +126,10 @@ public class EmployeeHistory implements Identifiable {
         return employeeId;
     }
 
+    public String getCompany() {
+        return company;
+    }
+
     public String getDepartment() {
         return department;
     }
@@ -152,6 +160,10 @@ public class EmployeeHistory implements Identifiable {
         this.employeeId = employeeId;
     }
 
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     public void setDepartment(String department) {
         this.department = department;
     }
@@ -178,8 +190,16 @@ public class EmployeeHistory implements Identifiable {
 
     @Override
     public String toString() {
-        return "EmployeeHistory{" + "id=" + id + ", employeeId=" + employeeId + ", department='" + department + '\''
-                + ", position='" + position + '\'' + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\''
-                + ", salary=" + salary + ", reasonForLeaving='" + reasonForLeaving + '\'' + '}';
+        return "EmployeeHistory{" +
+                "id=" + id +
+                ", employeeId=" + employeeId +
+                ", company='" + company + '\'' +
+                ", department='" + department + '\'' +
+                ", position='" + position + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", salary=" + salary +
+                ", reasonForLeaving='" + reasonForLeaving + '\'' +
+                '}';
     }
 }
