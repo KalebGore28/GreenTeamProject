@@ -200,10 +200,34 @@ public class Sprint implements Identifiable {
 	/**
 	 * Assigns an employee to this sprint.
 	 *
+	 * @param employee The employee to assign.
+	 */
+	public void assignEmployee(Employee employee) {
+		SprintAssignedEmployee.saveSprintAssignedEmployee(new SprintAssignedEmployee(this.id, employee.getId()));
+	}
+
+	/**
+	 * Assigns an employee to this sprint.
+	 *
 	 * @param employeeId The ID of the employee to assign.
 	 */
 	public void assignEmployee(int employeeId) {
 		SprintAssignedEmployee.saveSprintAssignedEmployee(new SprintAssignedEmployee(this.id, employeeId));
+	}
+
+	/**
+	 * Unassigns an employee from this sprint.
+	 *
+	 * @param employee The employee to unassign.
+	 */
+	public void unassignEmployee(Employee employee) {
+		List<SprintAssignedEmployee> sprintAssignedEmployees = SprintAssignedEmployee.getSprintAssignedEmployees();
+		for (SprintAssignedEmployee sprintAssignedEmployee : sprintAssignedEmployees) {
+			if (sprintAssignedEmployee.getSprintId() == this.id
+					&& sprintAssignedEmployee.getEmployeeId() == employee.getId()) {
+				SprintAssignedEmployee.deleteSprintAssignedEmployee(sprintAssignedEmployee);
+			}
+		}
 	}
 
 	/**
@@ -220,7 +244,7 @@ public class Sprint implements Identifiable {
 			}
 		}
 	}
-
+	
 	// Getters
 
 	public int getId() {
@@ -279,5 +303,8 @@ public class Sprint implements Identifiable {
 				", velocity=" + velocity +
 				'}';
 	}
+
+
+
 
 }

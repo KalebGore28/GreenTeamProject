@@ -182,9 +182,10 @@ public class Employee implements Identifiable {
 	 * @param salary           The salary of the employee.
 	 * @param reasonForLeaving The reason for leaving the position.
 	 */
-	public void newHistory(String department, String position, String startDate, String endDate, double salary,
-			String reasonForLeaving) {
-		saveHistory(new EmployeeHistory(this.id, department, position, startDate, endDate, salary, reasonForLeaving));
+	public void newHistory(String company, String department, String position, String startDate, String endDate,
+			double salary, String reasonForLeaving) {
+		saveHistory(new EmployeeHistory(this.id, company, department, position, startDate, endDate, salary,
+				reasonForLeaving));
 	}
 
 	// Get, Save, Update, Delete, New Skill Methods
@@ -450,5 +451,4 @@ public class Employee implements Identifiable {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
 				+ email + ", department=" + department + ", position=" + position + ", salary=" + salary + "]";
 	}
-
 }
