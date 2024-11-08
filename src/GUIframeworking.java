@@ -34,7 +34,7 @@ public class GUIframeworking {
     private static final int DEFAULT_FRAME_WIDTH = 540;
     private static final int DEFAULT_FRAME_HEIGHT = 960;
     private static final int DEFAULT_BUTTON_WIDTH = 500;
-    private static final int DEFAULT_BUTTON_HEIGHT = 25;
+    private static final int DEFAULT_BUTTON_HEIGHT = 20;
 
     // Main frames
     private static JFrame frame;
@@ -63,7 +63,18 @@ public class GUIframeworking {
         };
         
         // Set layout for canvas - stacks everything vertically
-        canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
+         canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
+        //canvas.setLayout(new GridBagLayout()); // Change to GridBagLayout
+        // Create GridBagConstraints
+
+        /* 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Fill the width of the button
+        gbc.gridx = 0; // Column 0
+        gbc.gridy = 0; // Row 0
+        gbc.weightx = 1; // Weight for horizontal resizing
+        gbc.insets = new Insets(10, 10, 10, 10); // Add some space between buttons
+        */
 
         // Create buttons
         JButton employeeButton = createButton("Employee");
@@ -92,26 +103,138 @@ public class GUIframeworking {
         frame.setVisible(false);
         employeeWindow.setVisible(true);
 
+           //clears the canvas for restructuring 
+        canvas.removeAll();
+
         //pull in the list of employees
         List <Employee> employees = Employee.getEmployees();
 
+        //should add a button for every employee
         for (Employee employee : employees) {
-            JButton employeeButton = createButton(employee.getFirstName() + " " + employee.getLastName());
+            String buttonTitle = employee.getFirstName() + " " + employee.getLastName();
+            JButton employeeButton = createButton(buttonTitle);
             employeeButton.addActionListener(e -> openIndividualEmployeeWindow(employee));
             canvas.add(employeeButton);
         }
 
-        //clears the canvas for restructuring 
-        canvas.removeAll();
-        
+        //adds create employee button 
         JButton createEmployeeButton = createButton("Create Employee");
-        createEmployeeButton.addActionListener(e -> System.out.println("Create Employee clicked!"));
+        createEmployeeButton.addActionListener(createEmployeeActionListener()); 
         canvas.add(createEmployeeButton);
         
         employeeWindow.add(canvas);
         employeeWindow.revalidate();
         employeeWindow.repaint();
     }
+
+    private static ActionListener createEmployeeActionListener() {
+        return e -> {
+            JFrame createEmployeeWindow = new JFrame("Create New Employee");
+            createEmployeeWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
+            createEmployeeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    
+            JPanel formPanel = new JPanel();
+            formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+    
+            // Text fields for input
+            JTextField firstNameField = new JTextField(20);
+            JTextField lastNameField = new JTextField(20);
+            JTextField emailField = new JTextField(20);
+            JTextField departmentField = new JTextField(20);
+            JTextField positionField = new JTextField(20);
+            JTextField salaryField = new JTextField(20);
+    
+            // Add labels and fields to the form panel
+            formPanel.add(new JLabel("First Name:"));
+            formPanel.add(firstNameField);
+            formPanel.add(new JLabel("Last Name:"));
+            formPanel.add(lastNameField);
+            formPanel.add(new JLabel("Email:"));
+            formPanel.add(emailField);
+            formPanel.add(new JLabel("Department:"));
+            formPanel.add(departmentField);
+            formPanel.add(new JLabel("Position:"));
+            formPanel.add(positionField);
+            formPanel.add(new JLabel("Salary:"));
+            formPanel.add(salaryField);
+    
+            // "Save" button
+            JButton saveButton = new JButton("Save");
+            saveButton.addActionListener(saveEvent -> {
+                // Gather data from text fields
+                String firstName = firstNameField.getText();
+                String lastName = lastNameField.getText();
+                String email = emailField.getText();
+                String department = departmentField.getText();
+                String position = positionField.getText();
+                double salary;
+    
+            
+
+                 // Validate email format
+                if (!email.contains("@")) {
+                    JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid email format. Email must contain '@'.");
+                    return;
+                }
+
+                try {
+                    salary = Double.parseDouble(salaryField.getText());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid salary input. Please enter a number.");
+                    return;
+                }
+    
+                // Create a new Employee object
+                Employee newEmployee = new Employee(firstName, lastName, email, department, position, salary);
+    
+                // Save the new employee using the saveEmployee method
+                Employee.saveEmployee(newEmployee);
+    
+                // Close the window after saving
+                createEmployeeWindow.dispose();
+    
+                // Refresh the employee list in the employeeWindow
+                refreshEmployeeList();
+            });
+    
+            // Add save button to form panel
+            formPanel.add(saveButton);
+    
+            // Add the form panel to the window
+            createEmployeeWindow.add(formPanel);
+            createEmployeeWindow.setVisible(true);
+        };
+    }
+
+    private static void refreshEmployeeList() {
+        // Clear the existing content in employeeWindow
+        employeeWindow.getContentPane().removeAll();
+    
+        JPanel canvas = new JPanel();
+        canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
+    
+        // Fetch updated list of employees
+        List<Employee> employees = Employee.getEmployees();
+    
+        // Create buttons for each employee
+        for (Employee employee : employees) {
+            String buttonTitle = employee.getFirstName() + " " + employee.getLastName();
+            JButton employeeButton = createButton(buttonTitle);
+            employeeButton.addActionListener(e -> openIndividualEmployeeWindow(employee));
+            canvas.add(employeeButton);
+        }
+    
+        // Add the "Create Employee" button using the reusable ActionListener method
+        JButton createEmployeeButton = createButton("Create Employee");
+        createEmployeeButton.addActionListener(createEmployeeActionListener());
+        canvas.add(createEmployeeButton);
+    
+        // Add updated content to employeeWindow and refresh it
+        employeeWindow.add(canvas);
+        employeeWindow.revalidate();
+        employeeWindow.repaint();
+    }
+    
 
     private static void openIndividualEmployeeWindow(Employee employee) {
         JFrame employeeDetailWindow = new JFrame(employee.getFirstName() + " " + employee.getLastName());
