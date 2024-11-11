@@ -12,6 +12,8 @@ public class GUIframeworking {
 
     //also going to focus on function before form 
 
+    //TODO add first window to say I am a supervisor(button)/employee(other button)
+
     
     //Reminders for me:
     //TODO figure out how to position things in the window
@@ -93,6 +95,7 @@ public class GUIframeworking {
     private static JButton createButton(String title) {
         JButton button = new JButton(title);
         button.setPreferredSize(new Dimension(DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT));
+        button.setMaximumSize(new Dimension(DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT));
         return button;
     }
 
@@ -167,6 +170,12 @@ public class GUIframeworking {
                 String department = departmentField.getText();
                 String position = positionField.getText();
                 double salary;
+
+                 // Validate email format
+                if (!email.contains("@")) {
+                    JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid email format. Email must contain '@'.");
+                    return;
+                }
     
                 try {
                     salary = Double.parseDouble(salaryField.getText());
@@ -197,7 +206,7 @@ public class GUIframeworking {
         };
     }
 
-    //TODO add edit employee button functionality
+   
     //TODO delete employee button
 
     
@@ -271,6 +280,12 @@ public class GUIframeworking {
                 String department = departmentField.getText();
                 String position = positionField.getText();
                 double salary;
+
+                 // Validate email format
+            if (!email.contains("@")) {
+                JOptionPane.showMessageDialog(editEmployeeWindow, "Invalid email format. Email must contain '@'.");
+                return;
+            }
     
                 try {
                     salary = Double.parseDouble(salaryField.getText());
