@@ -114,44 +114,44 @@ public class EmployeeTask implements Identifiable {
 		return employeeId;
 	}
 
-	public String getTaskName() {
+	public String getName() {
 		return taskName;
 	}
 
-	public String getTaskDescription() {
+	public String getDescription() {
 		return taskDescription;
 	}
 
-	public String getTaskStatus() {
+	public String getStatus() {
 		return taskStatus;
 	}
 
-	public String getTaskStartDate() {
+	public String getStartDate() {
 		return taskStartDate;
 	}
 
-	public String getTaskEndDate() {
+	public String getEndDate() {
 		return taskEndDate;
 	}
 
 	// Setters
-	public void setTaskName(String taskName) {
+	public void setName(String taskName) {
 		this.taskName = taskName;
 	}
 
-	public void setTaskDescription(String taskDescription) {
+	public void setDescription(String taskDescription) {
 		this.taskDescription = taskDescription;
 	}
 
-	public void setTaskStatus(String taskStatus) {
+	public void setStatus(String taskStatus) {
 		this.taskStatus = taskStatus;
 	}
 
-	public void setTaskStartDate(String taskStartDate) {
+	public void setStartDate(String taskStartDate) {
 		this.taskStartDate = taskStartDate;
 	}
 
-	public void setTaskEndDate(String taskEndDate) {
+	public void setEndDate(String taskEndDate) {
 		this.taskEndDate = taskEndDate;
 	}
 

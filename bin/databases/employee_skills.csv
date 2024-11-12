@@ -1,0 +1,75 @@
+EMPLOYEE_ID,ID,LAST_USED_DATE,PROFICIENCY_LEVEL,SKILL_NAME,YEARS_OF_EXPERIENCE
+1,1,2023-01-15,Expert,Java,5
+1,2,2023-02-20,Intermediate,JavaScript,3
+2,3,2022-11-10,Expert,Human Resources Management,7
+2,4,2023-03-15,Advanced,Employee Relations,5
+3,5,2023-07-01,Intermediate,SQL,4
+3,6,2023-06-18,Beginner,Python,1
+4,7,2023-04-30,Advanced,Digital Marketing,6
+4,8,2023-05-25,Intermediate,Content Creation,3
+5,9,2023-02-11,Expert,Networking,8
+5,10,2023-03-01,Advanced,Cybersecurity,5
+6,11,2022-12-15,Expert,AWS,7
+6,12,2023-01-22,Intermediate,Docker,4
+7,13,2023-02-10,Advanced,Salesforce,6
+7,14,2023-06-15,Intermediate,Customer Service,4
+8,15,2023-05-05,Expert,Python,6
+8,16,2023-05-22,Advanced,Data Analysis,5
+9,17,2023-01-10,Expert,DevOps,7
+9,18,2023-02-18,Intermediate,Kubernetes,3
+10,19,2022-12-08,Advanced,Product Management,4
+10,20,2023-03-30,Beginner,Agile,1
+11,21,2023-07-17,Intermediate,React,3
+11,22,2023-01-14,Beginner,Node.js,1
+12,23,2023-05-10,Expert,Technical Support,10
+12,24,2022-11-30,Advanced,Customer Relations,6
+13,25,2023-09-05,Intermediate,Financial Analysis,4
+13,26,2023-06-20,Beginner,QuickBooks,1
+14,27,2023-03-18,Advanced,Java,4
+14,28,2023-04-15,Intermediate,Spring Boot,2
+15,29,2023-07-30,Expert,UI Design,7
+15,30,2023-06-22,Advanced,Figma,5
+16,31,2023-02-28,Expert,Machine Learning,6
+16,32,2023-03-10,Advanced,TensorFlow,4
+17,33,2023-01-25,Expert,Operations Management,8
+18,34,2023-07-10,Advanced,Sales Strategy,5
+18,35,2022-12-12,Intermediate,CRM,3
+19,36,2023-06-15,Expert,Networking,9
+20,37,2023-05-22,Intermediate,HR Policies,3
+21,38,2023-07-30,Advanced,Data Science,5
+21,39,2023-06-10,Expert,R,6
+22,40,2023-04-18,Intermediate,System Administration,4
+23,41,2023-02-20,Beginner,JavaScript,1
+24,42,2023-06-05,Expert,Financial Planning,7
+24,43,2023-01-10,Advanced,Data Visualization,5
+25,44,2023-02-28,Expert,Sales,8
+25,45,2023-04-15,Advanced,Negotiation,6
+26,46,2023-03-30,Intermediate,Quality Assurance,3
+27,47,2023-07-01,Expert,Marketing Strategy,7
+27,48,2023-06-05,Advanced,SEO,5
+28,49,2023-01-25,Advanced,Customer Success,6
+28,50,2023-05-15,Intermediate,Onboarding,3
+29,51,2023-07-18,Expert,Technical Support,7
+29,52,2023-02-12,Advanced,Call Center Management,5
+30,53,2024-01-02,Beginner,Project Coordination,1
+31,54,2023-05-05,Expert,Software Development,7
+31,55,2023-04-10,Advanced,JavaScript,5
+32,56,2023-02-10,Intermediate,Accounting,4
+33,57,2023-04-15,Expert,Frontend Development,6
+34,58,2023-01-30,Advanced,Backend Development,5
+35,59,2023-06-22,Intermediate,Data Engineering,3
+36,60,2023-04-05,Expert,DevOps,8
+37,61,2023-07-30,Advanced,Machine Learning,5
+38,62,2023-03-01,Intermediate,Data Science,3
+39,63,2023-01-11,Advanced,Cybersecurity,6
+40,64,2023-02-20,Beginner,Python,1
+41,65,2023-04-10,Expert,System Administration,10
+42,66,2023-05-05,Advanced,SQL,6
+43,67,2023-06-18,Expert,Product Strategy,8
+44,68,2023-07-01,Intermediate,Market Research,4
+45,69,2023-02-12,Advanced,Leadership,5
+46,70,2023-01-30,Intermediate,Java,3
+47,71,2023-07-18,Expert,Python,9
+48,72,2023-02-25,Advanced,Ruby on Rails,6
+49,73,2023-06-20,Intermediate,Financial Reporting,4
+50,74,2023-04-15,Beginner,Content Marketing,1
