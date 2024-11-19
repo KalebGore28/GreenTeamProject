@@ -76,7 +76,6 @@ public class GUIframeworking {
         initialWindow.add(canvas);
         initialWindow.setVisible(true);
     }
-    
 
     private static JButton createButton(String title) {
         JButton button = new JButton(title);
@@ -84,8 +83,6 @@ public class GUIframeworking {
         button.setMaximumSize(new Dimension(DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT));
         return button;
     }
-
-    
 
     private static void promptForSupervisorPassword() {
         // Hardcoded password for the time being
@@ -289,8 +286,6 @@ private static void deleteEmployee(int employeeId, JPanel employeeListPanel) {
     }
 }
 
-
-
 // Updated searchEmployee method to handle int and String comparison
 private static void searchEmployee(String searchTerm, JPanel employeeListPanel) {
     employeeListPanel.removeAll();  // Clear existing results
@@ -320,9 +315,6 @@ private static void searchEmployee(String searchTerm, JPanel employeeListPanel) 
     employeeWindow.repaint();
 }
 
-
-
-
 // Helper method to add an employee's info to a panel
 private static void addEmployeeToPanel(JPanel panel, Employee employee, JPanel employeeListPanel) {
     JPanel employeeInfoPanel = new JPanel(new BorderLayout());
@@ -339,8 +331,6 @@ private static void addEmployeeToPanel(JPanel panel, Employee employee, JPanel e
     panel.add(new JSeparator(SwingConstants.HORIZONTAL));
 }
 
-
-
 // Method to load the full list of employees in the panel
 private static void loadEmployeeList(JPanel employeeListPanel) {
     List<Employee> employees = Employee.getEmployees();
@@ -348,10 +338,6 @@ private static void loadEmployeeList(JPanel employeeListPanel) {
         addEmployeeToPanel(employeeListPanel, employee, employeeListPanel);  // Pass employeeListPanel
     }
 }
-
-
-
-
 
 private static ActionListener createEmployeeActionListener(JPanel employeeListPanel) {
     return e -> {
@@ -415,9 +401,6 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
         JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid salary input. Please enter a number.");
     }
 }
-
-     
-    
 
     private static void openIndividualEmployeeWindow(Employee employee, JPanel employeeListPanel) {
         JFrame employeeDetailWindow = new JFrame(employee.getFirstName() + " " + employee.getLastName());
@@ -598,7 +581,6 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
         return evaluations;
     }
     
-
     private static ActionListener editEmployeeActionListener(Employee employee, JPanel employeeListPanel) {
         return e -> {
             JFrame editEmployeeWindow = new JFrame("Edit Employee");
