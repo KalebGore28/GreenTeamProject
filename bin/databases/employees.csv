@@ -1,0 +1,51 @@
+DEPARTMENT,EMAIL,FIRST_NAME,ID,LAST_NAME,POSITION,SALARY
+Engineering,john.doe@example.com,John,1,Doe,Software Engineer,75000.0
+Marketing,jane.smith@example.com,Jane,2,Smith,Marketing Manager,90000.0
+Sales,emily.jones@example.com,Emily,3,Jones,Sales Manager,80000.0
+HR,michael.brown@example.com,Michael,4,Brown,HR Manager,75000.0
+Finance,jessica.johnson@example.com,Jessica,5,Johnson,Finance Manager,75000.0
+Product,jason.hamilton@example.com,Jason,6,Hamilton,Product Manager,95000.0
+Legal,megan.gomez@example.com,Megan,7,Gomez,Corporate Counsel,105000.0
+Engineering,steven.dixon@example.com,Steven,8,Dixon,Machine Learning Engineer,120000.0
+Customer Support,paula.bishop@example.com,Paula,9,Bishop,Customer Support Specialist,50000.0
+IT,rachel.cunningham@example.com,Rachel,10,Cunningham,IT Systems Administrator,70000.0
+Operations,harry.hart@example.com,Harry,11,Hart,Operations Analyst,68000.0
+Logistics,karen.reynolds@example.com,Karen,12,Reynolds,Logistics Coordinator,60000.0
+Design,adrian.ross@example.com,Adrian,13,Ross,Graphic Designer,72000.0
+Engineering,maria.clark@example.com,Maria,14,Clark,Data Scientist,110000.0
+Legal,robert.martin@example.com,Robert,15,Martin,Compliance Officer,95000.0
+Customer Support,emma.cole@example.com,Emma,16,Cole,Technical Support Engineer,65000.0
+IT,james.owen@example.com,James,17,Owen,Network Security Engineer,90000.0
+Operations,alice.peterson@example.com,Alice,18,Peterson,Operations Manager,98000.0
+Design,lucy.holland@example.com,Lucy,19,Holland,UX Researcher,80000.0
+Logistics,brandon.gibson@example.com,Brandon,20,Gibson,Supply Chain Analyst,70000.0
+Product,diana.west@example.com,Diana,21,West,Product Designer,93000.0
+Legal,aaron.allen@example.com,Aaron,22,Allen,Paralegal,60000.0
+Customer Support,janet.harris@example.com,Janet,23,Harris,Customer Success Manager,70000.0
+IT,sarah.cook@example.com,Sarah,24,Cook,Database Administrator,85000.0
+Operations,patrick.young@example.com,Patrick,25,Young,Business Operations Specialist,91000.0
+Engineering,lucas.mason@example.com,Lucas,26,Mason,Embedded Systems Engineer,95000.0
+Logistics,oliver.parker@example.com,Oliver,27,Parker,Warehouse Supervisor,62000.0
+Design,claire.foster@example.com,Claire,28,Foster,Visual Designer,78000.0
+Product,amelia.richards@example.com,Amelia,29,Richards,Product Analyst,86000.0
+Legal,george.roberts@example.com,George,30,Roberts,Contract Administrator,72000.0
+Customer Support,elizabeth.sanders@example.com,Elizabeth,31,Sanders,Support Team Lead,74000.0
+IT,david.murray@example.com,David,32,Murray,Cloud Engineer,105000.0
+Operations,natalie.morgan@example.com,Natalie,33,Morgan,Inventory Planner,69000.0
+Engineering,michael.turner@example.com,Michael,34,Turner,Security Engineer,108000.0
+Logistics,sofia.hunt@example.com,Sofia,35,Hunt,Transportation Coordinator,58000.0
+Design,charlotte.barnes@example.com,Charlotte,36,Barnes,Brand Designer,83000.0
+Product,zachary.hughes@example.com,Zachary,37,Hughes,Product Marketing Specialist,87000.0
+Legal,melissa.webb@example.com,Melissa,38,Webb,Legal Assistant,56000.0
+Customer Support,bruce.stone@example.com,Bruce,39,Stone,Customer Onboarding Specialist,72000.0
+IT,henry.baker@example.com,Henry,40,Baker,DevOps Specialist,98000.0
+Operations,caroline.wells@example.com,Caroline,41,Wells,Project Coordinator,75000.0
+Engineering,aaron.price@example.com,Aaron,42,Price,Site Reliability Engineer,103000.0
+Logistics,nathaniel.ellis@example.com,Nathaniel,43,Ellis,Inventory Specialist,60000.0
+Design,victoria.simmons@example.com,Victoria,44,Simmons,Motion Designer,82000.0
+Product,olivia.patterson@example.com,Olivia,45,Patterson,User Engagement Manager,94000.0
+Legal,isaac.wood@example.com,Isaac,46,Wood,IP Specialist,98000.0
+Customer Support,emma.bradley@example.com,Emma,47,Bradley,Help Desk Technician,56000.0
+IT,charles.bell@example.com,Charles,48,Bell,IT Infrastructure Engineer,97000.0
+Operations,jacob.bryant@example.com,Jacob,49,Bryant,Process Improvement Analyst,89000.0
+Engineering,jackson.piper@example.com,Jackson,50,Piper,Software Engineer,75000.0

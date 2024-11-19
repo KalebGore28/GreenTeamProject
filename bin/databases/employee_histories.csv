@@ -1,0 +1,51 @@
+COMPANY,DEPARTMENT,EMPLOYEE_ID,END_DATE,ID,POSITION,REASON_FOR_LEAVING,SALARY,START_DATE
+Google,Engineering,1,2019-05-31,1,Junior Software Engineer,Promotion to Software Engineer,60000.0,2017-06-01
+TechSolutions,Engineering,1,,2,Software Engineer,,75000.0,2019-06-01
+TechSolutions,Human Resources,2,,3,HR Assistant,Career Change,45000.0,2020-02-10
+TechSolutions,Engineering,3,,4,Data Analyst,Relocation,70000.0,2020-04-15
+TechSolutions,Marketing,4,,5,Marketing Specialist,,58000.0,2021-01-05
+Microsoft,Engineering,5,2019-10-31,6,System Analyst,Better opportunity,68000.0,2017-09-01
+TechSolutions,IT,5,,7,IT Support Specialist,,62000.0,2019-11-01
+Amazon,Engineering,6,2021-03-31,8,Cloud Engineer,Joined TechSolutions,85000.0,2019-01-10
+TechSolutions,Engineering,6,,9,Cloud Engineer,,90000.0,2021-04-01
+TechSolutions,Sales,7,,10,Sales Associate,,55000.0,2023-02-15
+Facebook,Data Science,8,2022-12-31,11,Data Scientist,Joined TechSolutions,95000.0,2020-06-10
+TechSolutions,Data Science,8,,12,Senior Data Scientist,,105000.0,2023-01-01
+IBM,Engineering,9,2018-10-15,13,DevOps Engineer,Joined startup,72000.0,2016-09-20
+TechSolutions,Engineering,9,,14,Senior DevOps Engineer,,85000.0,2018-11-01
+TechSolutions,Product Management,10,,15,Product Manager,Career Break,80000.0,2020-05-01
+Apple,Engineering,11,2023-06-30,16,Junior Developer,Joined TechSolutions,60000.0,2021-07-01
+TechSolutions,Engineering,11,,17,Full Stack Developer,,70000.0,2023-07-01
+Cisco,Support,12,2019-04-15,18,Support Technician,Contract Ended,50000.0,2017-05-01
+TechSolutions,Support,12,,19,Support Lead,,65000.0,2019-05-01
+TechSolutions,Finance,13,,20,Financial Analyst,Joined Consulting,78000.0,2021-08-01
+TechSolutions,Engineering,14,,21,Software Developer,,71000.0,2022-09-10
+Adobe,Design,15,2020-12-31,22,UI Designer,Relocated,68000.0,2018-02-15
+TechSolutions,Design,15,,23,Senior UI Designer,,82000.0,2021-01-10
+Netflix,Engineering,16,2023-02-28,24,Machine Learning Engineer,Joined TechSolutions,95000.0,2021-01-01
+TechSolutions,AI Research,16,,25,AI Engineer,,100000.0,2023-03-01
+TechSolutions,Operations,17,,26,Operations Manager,,88000.0,2020-11-01
+Amazon,Sales,18,2021-09-30,27,Sales Associate,Joined TechSolutions,65000.0,2019-05-01
+TechSolutions,Sales,18,,28,Sales Executive,,73000.0,2021-10-01
+TechSolutions,IT,19,,29,Network Engineer,Left for family reasons,75000.0,2019-08-01
+TechSolutions,Human Resources,20,,30,HR Coordinator,,60000.0,2023-06-15
+IBM,Data Science,21,2019-11-30,31,Data Analyst,Joined TechSolutions,71000.0,2017-04-01
+TechSolutions,Data Science,21,,32,Data Scientist,,85000.0,2020-01-01
+Google,IT,22,2023-04-30,33,System Administrator,Better role offered,80000.0,2019-06-01
+TechSolutions,IT,22,,34,System Administrator,,88000.0,2023-05-01
+TechSolutions,Engineering,23,,35,Backend Developer,,67000.0,2023-04-05
+Microsoft,Finance,24,2022-01-31,36,Financial Analyst,Relocated,75000.0,2019-03-20
+TechSolutions,Finance,24,,37,Senior Financial Analyst,,92000.0,2022-02-01
+Oracle,Sales,25,2021-10-15,38,Sales Representative,Joined TechSolutions,63000.0,2019-09-05
+TechSolutions,Sales,25,,39,Sales Manager,,85000.0,2021-11-01
+TechSolutions,Engineering,26,,40,Quality Assurance Engineer,,70000.0,2023-07-01
+Google,Marketing,27,2022-05-31,41,Digital Marketing Specialist,Started own business,72000.0,2020-01-01
+TechSolutions,Marketing,27,,42,Marketing Strategist,,79000.0,2022-06-01
+TechSolutions,Customer Success,28,,43,Customer Success Manager,,75000.0,2021-08-01
+Apple,Support,29,2023-03-15,44,Customer Support Specialist,Joined TechSolutions,55000.0,2021-05-10
+TechSolutions,Support,29,,45,Customer Support Lead,,70000.0,2023-04-01
+TechSolutions,Product Management,30,,46,Associate Product Manager,,82000.0,2024-01-05
+Facebook,Engineering,31,2021-11-30,47,Software Engineer,Joined TechSolutions,91000.0,2019-02-01
+TechSolutions,Engineering,31,,48,Senior Software Engineer,,110000.0,2022-12-01
+TechSolutions,Finance,32,,49,Accountant,Left for another offer,65000.0,2020-03-01
+TechSolutions,Engineering,33,,50,Frontend Developer,,75000.0,2024-05-15

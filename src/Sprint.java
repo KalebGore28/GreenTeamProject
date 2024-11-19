@@ -175,8 +175,8 @@ public class Sprint implements Identifiable {
 	 * @param comment    The comment given in the evaluation.
 	 * @return The new SprintEvaluation object.
 	 */
-	public void newEvaluation(int employeeId, String date, int rating, String comment) {
-		saveEvaluation(new SprintEvaluation(this.id, employeeId, date, rating, comment));
+	public void newEvaluation(int employeeId, String date, int rating, String comment1, String comment2, String comment3) {
+		saveEvaluation(new SprintEvaluation(this.id, employeeId, date, rating, comment1, comment2, comment3));
 	}
 
 	// Other Methods
