@@ -5,6 +5,7 @@
      //TODO tune visibility of windows
      //TODO back button on windows
      //TODO home button? 
+     //TODO fix view sprint eval button 
 
     //going backwards through windows - add functional back buttons 
     //add possible home button at the bottom of screen that returns to first window
@@ -19,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -264,143 +266,120 @@ public class GUIframeworking {
         employeeListPanel.repaint();
     }
 
-    // Method to delete an employee by ID
-private static void deleteEmployee(int employeeId, JPanel employeeListPanel) {
-    List<Employee> employees = Employee.getEmployees();
-    Employee employeeToDelete = null;
+    // Updated searchEmployee method to handle int and String comparison
+    private static void searchEmployee(String searchTerm, JPanel employeeListPanel) {
+        employeeListPanel.removeAll();  // Clear existing results
+        employeeListPanel.setLayout(new BoxLayout(employeeListPanel, BoxLayout.Y_AXIS));
 
-    // Find the employee by ID
-    for (Employee employee : employees) {
-        if (employee.getId() == employeeId) {
-            employeeToDelete = employee;
-            break;
+        List<Employee> employees = Employee.getEmployees();
+        boolean found = false;
+
+        for (Employee employee : employees) {
+            // Convert the int id to String and compare
+            if (String.valueOf(employee.getId()).equals(searchTerm) || 
+                employee.getFirstName().equalsIgnoreCase(searchTerm) || 
+                employee.getLastName().equalsIgnoreCase(searchTerm)) {
+                found = true;
+                addEmployeeToPanel(employeeListPanel, employee, employeeListPanel);  // Pass employeeListPanel
+            }
         }
+
+        if (!found) {
+            employeeListPanel.add(new JLabel("No matching employee found."));
+        }
+
+        // Refresh display with search results
+        employeeWindow.getContentPane().removeAll();
+        employeeWindow.add(new JScrollPane(employeeListPanel), BorderLayout.CENTER);
+        employeeWindow.revalidate();
+        employeeWindow.repaint();
     }
 
-    if (employeeToDelete != null) {
-        Employee.deleteEmployee(employeeToDelete);  // Assuming you have a delete method in Employee class
-        JOptionPane.showMessageDialog(frame, "Employee deleted successfully.");
-        refreshEmployeeList(employeeListPanel);  // Refresh the list in the main window
-    } else {
-        JOptionPane.showMessageDialog(frame, "Employee not found.");
+    // Helper method to add an employee's info to a panel
+    private static void addEmployeeToPanel(JPanel panel, Employee employee, JPanel employeeListPanel) {
+        JPanel employeeInfoPanel = new JPanel(new BorderLayout());
+        employeeInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel employeeLabel = new JLabel(employee.getId() + " - " + employee.getFirstName() + " " + employee.getLastName());
+        JButton moreInfoButton = new JButton("More Info");
+        moreInfoButton.addActionListener(e -> openIndividualEmployeeWindow(employee, employeeListPanel)); // Pass employeeListPanel
+
+        employeeInfoPanel.add(employeeLabel, BorderLayout.WEST);
+        employeeInfoPanel.add(moreInfoButton, BorderLayout.EAST);
+
+        panel.add(employeeInfoPanel);
+        panel.add(new JSeparator(SwingConstants.HORIZONTAL));
     }
-}
 
-// Updated searchEmployee method to handle int and String comparison
-private static void searchEmployee(String searchTerm, JPanel employeeListPanel) {
-    employeeListPanel.removeAll();  // Clear existing results
-    employeeListPanel.setLayout(new BoxLayout(employeeListPanel, BoxLayout.Y_AXIS));
-
-    List<Employee> employees = Employee.getEmployees();
-    boolean found = false;
-
-    for (Employee employee : employees) {
-        // Convert the int id to String and compare
-        if (String.valueOf(employee.getId()).equals(searchTerm) || 
-            employee.getFirstName().equalsIgnoreCase(searchTerm) || 
-            employee.getLastName().equalsIgnoreCase(searchTerm)) {
-            found = true;
+    // Method to load the full list of employees in the panel
+    private static void loadEmployeeList(JPanel employeeListPanel) {
+        List<Employee> employees = Employee.getEmployees();
+        for (Employee employee : employees) {
             addEmployeeToPanel(employeeListPanel, employee, employeeListPanel);  // Pass employeeListPanel
         }
     }
 
-    if (!found) {
-        employeeListPanel.add(new JLabel("No matching employee found."));
+    private static ActionListener createEmployeeActionListener(JPanel employeeListPanel) {
+        return e -> {
+            JFrame createEmployeeWindow = new JFrame("Create Employee");
+            createEmployeeWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
+            createEmployeeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JPanel formPanel = new JPanel();
+            formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+
+            JTextField firstNameField = new JTextField(20);
+            JTextField lastNameField = new JTextField(20);
+            JTextField emailField = new JTextField(20);
+            JTextField departmentField = new JTextField(20);
+            JTextField positionField = new JTextField(20);
+            JTextField salaryField = new JTextField(20);
+
+            formPanel.add(new JLabel("First Name:"));
+            formPanel.add(firstNameField);
+            formPanel.add(new JLabel("Last Name:"));
+            formPanel.add(lastNameField);
+            formPanel.add(new JLabel("Email:"));
+            formPanel.add(emailField);
+            formPanel.add(new JLabel("Department:"));
+            formPanel.add(departmentField);
+            formPanel.add(new JLabel("Position:"));
+            formPanel.add(positionField);
+            formPanel.add(new JLabel("Salary:"));
+            formPanel.add(salaryField);
+
+            JButton saveButton = new JButton("Save");
+            saveButton.addActionListener(saveEvent -> saveEmployee(createEmployeeWindow, firstNameField, lastNameField, emailField, departmentField, positionField, salaryField, employeeListPanel));
+            formPanel.add(saveButton);
+
+            createEmployeeWindow.add(formPanel);
+            createEmployeeWindow.setVisible(true);
+        };
     }
 
-    // Refresh display with search results
-    employeeWindow.getContentPane().removeAll();
-    employeeWindow.add(new JScrollPane(employeeListPanel), BorderLayout.CENTER);
-    employeeWindow.revalidate();
-    employeeWindow.repaint();
-}
+    private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNameField, JTextField lastNameField, JTextField emailField, JTextField departmentField, JTextField positionField, JTextField salaryField, JPanel employeeListPanel) {
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String email = emailField.getText();
+        String department = departmentField.getText();
+        String position = positionField.getText();
+        double salary;
 
-// Helper method to add an employee's info to a panel
-private static void addEmployeeToPanel(JPanel panel, Employee employee, JPanel employeeListPanel) {
-    JPanel employeeInfoPanel = new JPanel(new BorderLayout());
-    employeeInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        if (!email.contains("@")) {
+            JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid email format. Email must contain '@'.");
+            return;
+        }
 
-    JLabel employeeLabel = new JLabel(employee.getId() + " - " + employee.getFirstName() + " " + employee.getLastName());
-    JButton moreInfoButton = new JButton("More Info");
-    moreInfoButton.addActionListener(e -> openIndividualEmployeeWindow(employee, employeeListPanel)); // Pass employeeListPanel
-
-    employeeInfoPanel.add(employeeLabel, BorderLayout.WEST);
-    employeeInfoPanel.add(moreInfoButton, BorderLayout.EAST);
-
-    panel.add(employeeInfoPanel);
-    panel.add(new JSeparator(SwingConstants.HORIZONTAL));
-}
-
-// Method to load the full list of employees in the panel
-private static void loadEmployeeList(JPanel employeeListPanel) {
-    List<Employee> employees = Employee.getEmployees();
-    for (Employee employee : employees) {
-        addEmployeeToPanel(employeeListPanel, employee, employeeListPanel);  // Pass employeeListPanel
+        try {
+            salary = Double.parseDouble(salaryField.getText());
+            Employee newEmployee = new Employee(firstName, lastName, email, department, position, salary);
+            Employee.saveEmployee(newEmployee);
+            createEmployeeWindow.dispose();
+            refreshEmployeeList(employeeListPanel);  // Refresh the list in the main window
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid salary input. Please enter a number.");
+        }
     }
-}
-
-private static ActionListener createEmployeeActionListener(JPanel employeeListPanel) {
-    return e -> {
-        JFrame createEmployeeWindow = new JFrame("Create Employee");
-        createEmployeeWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
-        createEmployeeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-
-        JTextField firstNameField = new JTextField(20);
-        JTextField lastNameField = new JTextField(20);
-        JTextField emailField = new JTextField(20);
-        JTextField departmentField = new JTextField(20);
-        JTextField positionField = new JTextField(20);
-        JTextField salaryField = new JTextField(20);
-
-        formPanel.add(new JLabel("First Name:"));
-        formPanel.add(firstNameField);
-        formPanel.add(new JLabel("Last Name:"));
-        formPanel.add(lastNameField);
-        formPanel.add(new JLabel("Email:"));
-        formPanel.add(emailField);
-        formPanel.add(new JLabel("Department:"));
-        formPanel.add(departmentField);
-        formPanel.add(new JLabel("Position:"));
-        formPanel.add(positionField);
-        formPanel.add(new JLabel("Salary:"));
-        formPanel.add(salaryField);
-
-        JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(saveEvent -> saveEmployee(createEmployeeWindow, firstNameField, lastNameField, emailField, departmentField, positionField, salaryField, employeeListPanel));
-        formPanel.add(saveButton);
-
-        createEmployeeWindow.add(formPanel);
-        createEmployeeWindow.setVisible(true);
-    };
-}
-
-
-private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNameField, JTextField lastNameField, JTextField emailField, JTextField departmentField, JTextField positionField, JTextField salaryField, JPanel employeeListPanel) {
-    String firstName = firstNameField.getText();
-    String lastName = lastNameField.getText();
-    String email = emailField.getText();
-    String department = departmentField.getText();
-    String position = positionField.getText();
-    double salary;
-
-    if (!email.contains("@")) {
-        JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid email format. Email must contain '@'.");
-        return;
-    }
-
-    try {
-        salary = Double.parseDouble(salaryField.getText());
-        Employee newEmployee = new Employee(firstName, lastName, email, department, position, salary);
-        Employee.saveEmployee(newEmployee);
-        createEmployeeWindow.dispose();
-        refreshEmployeeList(employeeListPanel);  // Refresh the list in the main window
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(createEmployeeWindow, "Invalid salary input. Please enter a number.");
-    }
-}
 
     private static void openIndividualEmployeeWindow(Employee employee, JPanel employeeListPanel) {
         JFrame employeeDetailWindow = new JFrame(employee.getFirstName() + " " + employee.getLastName());
@@ -423,7 +402,10 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
         JButton sprintEvalButton = createButton("Open Sprint Evaluation");
     
         // Add an ActionListener to the button
-        sprintEvalButton.addActionListener(e -> openSprintEvalWindow());
+        sprintEvalButton.addActionListener(e -> {
+            int sprintID = getActiveSprintID(); // Replace with your method for retrieving the current sprint ID
+            openSprintEvalWindow(employee.getId(), sprintID);
+        });
     
         // Add the button to the main frame or a specific panel
         JPanel buttonPanel = new JPanel(); // Create a panel for the button
@@ -446,9 +428,15 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
         employeeDetailWindow.revalidate();
         employeeDetailWindow.repaint();
     }
+
+    //TODO add functionality 
+    private static int getActiveSprintID() {
+        // Example placeholder logic to return an active sprint ID
+        return 1; // Replace with dynamic logic
+    }
     
 
-    private static void openSprintEvalWindow() {
+    private static void openSprintEvalWindow(int employeeID, int sprintID) {
         // Create a new JFrame for the sprint evaluation window
         JFrame sprintEvalFrame = new JFrame("Sprint Evaluation");
         sprintEvalFrame.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
@@ -479,19 +467,28 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
         response3.setWrapStyleWord(true);
         JScrollPane scroll3 = new JScrollPane(response3);
     
+        // Add a field for rating
+        JLabel ratingLabel = new JLabel("Rating (1-5):");
+        JTextField ratingField = new JTextField(5);
+    
         // Add a submit button
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-            // Capture responses
-            String accomplished = response1.getText().trim();
-            String remaining = response2.getText().trim();
-            String comments = response3.getText().trim();
+            try {
+                // Capture responses
+                String accomplished = response1.getText().trim();
+                String remaining = response2.getText().trim();
+                String comments = response3.getText().trim();
+                int rating = Integer.parseInt(ratingField.getText().trim());
     
-            // Save the responses
-            saveSprintEvaluation(accomplished, remaining, comments);
+                // Save the responses
+                saveSprintEvaluation(comments, employeeID, sprintID, rating);
     
-            // Close the window after submission
-            sprintEvalFrame.dispose();
+                // Close the window after submission
+                sprintEvalFrame.dispose();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(sprintEvalFrame, "Invalid input for rating. Please enter a number between 1 and 5.");
+            }
         });
     
         // Add components to the panel
@@ -501,12 +498,15 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
         evalPanel.add(scroll2);
         evalPanel.add(question3);
         evalPanel.add(scroll3);
+        evalPanel.add(ratingLabel);
+        evalPanel.add(ratingField);
         evalPanel.add(submitButton);
     
         // Add the panel to the frame and make it visible
         sprintEvalFrame.add(evalPanel);
         sprintEvalFrame.setVisible(true);
     }
+    
 
     private static void viewSprintEvaluations(int employeeID) {
         JFrame evalViewWindow = new JFrame("Sprint Evaluations");
@@ -515,8 +515,8 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
     
         JPanel canvas = new JPanel();
         canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
-    
-        List<String> evaluations = getSprintEvaluationsForEmployee(employeeID);
+        //TODO line below is what's breaking 
+        List<String> evaluations = getSprintEvaluationsForEmployee(employeeID); 
     
         if (evaluations.isEmpty()) {
             JLabel noEvalLabel = new JLabel("No sprint evaluations found for this employee.");
@@ -538,48 +538,56 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
     }
     
 
-    private static void saveSprintEvaluation(String accomplished, String remaining, String comments) {
-        String filePath = "sprint_evaluations.csv"; // Path to your CSV file
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String timestamp = LocalDateTime.now().format(formatter);
+    private static void saveSprintEvaluation(String comment, int employeeID, int sprintID, int rating) {
+    String filePath = "sprint_evaluations.csv";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String date = LocalDate.now().format(formatter);
 
-        // Prepare CSV entry
-        String csvEntry = String.format("\"%s\",\"%s\",\"%s\",\"%s\"\n", timestamp, accomplished, remaining, comments);
+    // Generate unique evaluation ID
+    List<SprintEvaluation> allEvaluations = SprintEvaluation.getSprintEvaluations();
+    int nextID = allEvaluations.stream().mapToInt(SprintEvaluation::getId).max().orElse(0) + 1;
 
-        // Append to the CSV file
-        try (FileWriter writer = new FileWriter(filePath, true)) {
-            writer.write(csvEntry);
-            JOptionPane.showMessageDialog(null, "Sprint evaluation submitted successfully!");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Failed to save sprint evaluation: " + e.getMessage());
-            e.printStackTrace();
-        }
+    // Create CSV entry
+    String csvEntry = String.format("\"%s\",\"%s\",%d,%d,%d,%d\n", 
+                                    comment, date, employeeID, nextID, rating, sprintID);
+
+    // Append to CSV
+    try (FileWriter writer = new FileWriter(filePath, true)) {
+        writer.write(csvEntry);
+        JOptionPane.showMessageDialog(null, "Sprint evaluation submitted successfully!");
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Failed to save sprint evaluation: " + e.getMessage());
+        e.printStackTrace();
     }
+}
+
 
     //TODO rewrite to be a view sprint eval button? 
     private static List<String> getSprintEvaluationsForEmployee(int employeeID) {
         List<String> evaluations = new ArrayList<>();
         String filePath = "sprint_evaluations.csv";
-        
+    
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            reader.readLine(); // Skip header
             while ((line = reader.readLine()) != null) {
-                String[] columns = line.split(",");
-                // Assuming the format is: TIMESTAMP,COMMENT,REMAINING,COMMENTS,EMPLOYEE_ID
-                //TODO implement format?
-                int evalEmployeeID = Integer.parseInt(columns[4].trim());
+                String[] columns = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); // Properly parse CSV with quotes
+                if (columns.length < 6) continue; // Skip malformed lines
+    
+                int evalEmployeeID = Integer.parseInt(columns[2].trim()); // EMPLOYEE_ID column
                 if (evalEmployeeID == employeeID) {
-                    String timestamp = columns[0].replace("\"", "").trim();
-                    String comment = columns[1].replace("\"", "").trim(); 
-                    evaluations.add("Date: " + timestamp + " - Comment: " + comment);
+                    String date = columns[1].replace("\"", "").trim();
+                    String comment = columns[0].replace("\"", "").trim();
+                    evaluations.add("Date: " + date + " - Comment: " + comment);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+    
         return evaluations;
     }
+    
     
     private static ActionListener editEmployeeActionListener(Employee employee, JPanel employeeListPanel) {
         return e -> {
@@ -612,18 +620,20 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
     
             JButton saveButton = new JButton("Save");
             saveButton.addActionListener(saveEvent -> {
-                employee.setFirstName(firstNameField.getText());
-                employee.setLastName(lastNameField.getText());
-                employee.setEmail(emailField.getText());
-                employee.setDepartment(departmentField.getText());
-                employee.setPosition(positionField.getText());
                 try {
-                    employee.setSalary(Double.parseDouble(salaryField.getText()));
-                    Employee.saveEmployee(employee);
+                    employee.setFirstName(firstNameField.getText().trim());
+                    employee.setLastName(lastNameField.getText().trim());
+                    employee.setEmail(emailField.getText().trim());
+                    employee.setDepartment(departmentField.getText().trim());
+                    employee.setPosition(positionField.getText().trim());
+                    employee.setSalary(Double.parseDouble(salaryField.getText().trim()));
+    
+                    Employee.saveEmployee(employee); // Persist changes
+                    JOptionPane.showMessageDialog(editEmployeeWindow, "Employee updated successfully!");
                     editEmployeeWindow.dispose();
-                    refreshEmployeeList(employeeListPanel);  // Refresh the list in the main window
+                    refreshEmployeeList(employeeListPanel); // Refresh the main list
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(editEmployeeWindow, "Invalid salary input. Please enter a number.");
+                    JOptionPane.showMessageDialog(editEmployeeWindow, "Invalid salary input. Please enter a valid number.");
                 }
             });
     
@@ -632,5 +642,6 @@ private static void saveEmployee(JFrame createEmployeeWindow, JTextField firstNa
             editEmployeeWindow.setVisible(true);
         };
     }
+    
     
 }
