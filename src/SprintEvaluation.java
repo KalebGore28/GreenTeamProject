@@ -19,8 +19,14 @@ public class SprintEvaluation implements Identifiable {
 	@CsvBindByName(column = "rating")
 	private int rating;
 
-	@CsvBindByName(column = "comment")
-	private String comment;
+	@CsvBindByName(column = "comment1")
+	private String comment1;
+
+	@CsvBindByName(column = "comment2")
+	private String comment2;
+
+	@CsvBindByName(column = "comment3")
+	private String comment3;
 
 	// Constructors
 
@@ -36,13 +42,16 @@ public class SprintEvaluation implements Identifiable {
 	 * @param rating     The rating given to the employee for the sprint.
 	 * @param comments   Additional comments or feedback for the employee.
 	 */
-	public SprintEvaluation(int sprintId, int employeeId, String date, int rating, String comment) {
+	public SprintEvaluation(int sprintId, int employeeId, String date, int rating, String comment1, String comment2,
+			String comment3) {
 		this.id = findNextId();
 		this.sprintId = sprintId;
 		this.employeeId = employeeId;
 		this.date = date;
 		this.rating = rating;
-		this.comment = comment;
+		this.comment1 = comment1;
+		this.comment2 = comment2;
+		this.comment3 = comment3;
 	}
 
 	// Helper Methods
@@ -132,8 +141,16 @@ public class SprintEvaluation implements Identifiable {
 		return rating;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getComment1() {
+		return comment1;
+	}
+
+	public String getComment2() {
+		return comment2;
+	}
+
+	public String getComment3() {
+		return comment3;
 	}
 
 	// Setters
@@ -145,13 +162,23 @@ public class SprintEvaluation implements Identifiable {
 		this.rating = rating;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setComment1(String comment1) {
+		this.comment1 = comment1;
+	}
+
+	public void setComment2(String comment2) {
+		this.comment2 = comment2;
+	}
+
+	public void setComment3(String comment3) {
+		this.comment3 = comment3;
 	}
 
 	@Override
 	public String toString() {
 		return "SprintEvaluation{" + "id=" + id + ", sprintId=" + sprintId + ", employeeId=" + employeeId + ", date='"
-				+ date + '\'' + ", rating=" + rating + ", comment='" + comment + '\'' + '}';
+				+ date + '\'' + ", rating=" + rating + ", comment1='" + comment1 + '\'' + ", comment2='" + comment2
+				+ '\''
+				+ ", comment3='" + comment3 + '\'' + '}';
 	}
 }
