@@ -120,6 +120,24 @@ public class SprintEvaluation implements Identifiable {
 		CSVHelper.delete(evaluation, databasePath, SprintEvaluation.class);
 	}
 
+	/**
+	 * Creates a new sprint evaluation and saves it to the CSV file.
+	 *
+	 * @param sprintId  The ID of the sprint being evaluated.
+	 * @param employeeId The ID of the employee being evaluated.
+	 * @param date      The date of the evaluation.
+	 * @param rating    The rating given to the employee for the sprint.
+	 * @param comment1  Additional comment 1.
+	 * @param comment2  Additional comment 2.
+	 * @param comment3  Additional comment 3.
+	 */
+	public static void newSprintEvaluation(int sprintId, int employeeId, String date, int rating, String comment1,
+			String comment2, String comment3) {
+		SprintEvaluation evaluation = new SprintEvaluation(sprintId, employeeId, date, rating, comment1, comment2,
+				comment3);
+		saveSprintEvaluation(evaluation);
+	}
+
 	// Getters
 	public int getId() {
 		return id;
