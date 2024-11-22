@@ -2,10 +2,8 @@
      //TODO tune visibility of windows
      //TODO back button on windows
      //TODO home button? 
-     //TODO fix view sprint eval button 
-     //TODO rewrite employee scroll wheel screen to not have open sprint eval button 
      //TODO add employee history to display individual employee window 
-     //TODO length of time? - employee histories.csv 
+     //TODO length of time working at a company? - employee histories.csv 
 
     //going backwards through windows - add functional back buttons 
     //add possible home button at the bottom of screen that returns to first window
@@ -13,6 +11,7 @@
     import java.awt.*;
     import java.awt.event.*;
     import javax.swing.*;
+    import javax.swing.border.Border;
     import java.util.List;
     import java.io.FileWriter;
     import java.io.IOException;
@@ -75,6 +74,7 @@
     
         private static JButton createButton(String title) {
             JButton button = new JButton(title);
+            styleButton(button);
             button.setPreferredSize(new Dimension(DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT));
             button.setMaximumSize(new Dimension(DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT));
             return button;
@@ -161,6 +161,7 @@
         
             JButton searchButton = new JButton("Search Employee");
             searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            styleButton(searchButton);
         
             // Initialize employeeListPanel here
             JPanel employeeListPanel = new JPanel();
@@ -185,6 +186,7 @@
             buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         
             JButton createEmployeeButton = new JButton("Create Employee");
+            styleButton(createEmployeeButton);
             createEmployeeButton.addActionListener(createEmployeeActionListener(employeeListPanel));  // Pass employeeListPanel here
             buttonPanel.add(createEmployeeButton);
         
@@ -195,6 +197,7 @@
         
             // Button for deleting the employee
             JButton deleteEmployeeButton = new JButton("Delete Employee");
+            styleButton(deleteEmployeeButton);
             deleteEmployeeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         
             // Action listener to handle deleting an employee
@@ -294,6 +297,7 @@
     
             JLabel employeeLabel = new JLabel(employee.getId() + " - " + employee.getFirstName() + " " + employee.getLastName());
             JButton moreInfoButton = new JButton("More Info");
+            styleButton(moreInfoButton);
             moreInfoButton.addActionListener(e -> openIndividualEmployeeWindowForSupervisor(employee, employeeListPanel)); // Pass employeeListPanel
     
             employeeInfoPanel.add(employeeLabel, BorderLayout.WEST);
@@ -301,6 +305,66 @@
     
             panel.add(employeeInfoPanel);
             panel.add(new JSeparator(SwingConstants.HORIZONTAL));
+        }
+
+        // Style a button for a modern look
+        private static void styleButton(JButton button) {
+            button.setFont(new Font("Arial", Font.PLAIN, 16));
+            button.setForeground(Color.WHITE); // White text for contrast
+            button.setBackground(new Color(70, 130, 180)); // Steel Blue background
+            button.setOpaque(false); // Allow for custom painting
+            button.setContentAreaFilled(false); // Prevent default fill
+            button.setFocusPainted(false); // Remove focus painting
+            button.setBorderPainted(false); // Remove border painting
+            
+            // Add a rounded border
+            button.setBorder(createRoundedBorder(10));
+            
+            // Add hover effect
+            button.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    button.setBackground(new Color(100, 149, 237)); // Lighter blue on hover
+                    button.repaint();
+                }
+                
+                @Override
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    button.setBackground(new Color(70, 130, 180)); // Original color
+                    button.repaint();
+                }
+            });
+            
+            // Custom painting for rounded corners
+            button.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
+            @Override
+                public void paint(Graphics g, JComponent c) {
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+                    
+                    // Paint background
+                    g2.setColor(button.getBackground());
+                    g2.fillRoundRect(0, 0, button.getWidth(), button.getHeight(), 20, 20);
+                    
+                    // Paint text
+                    FontMetrics fm = g2.getFontMetrics();
+                    g2.setColor(button.getForeground());
+                    String text = button.getText();
+                    int textX = (button.getWidth() - fm.stringWidth(text)) / 2;
+                    int textY = (button.getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+                    g2.drawString(text, textX, textY);
+                }
+            });
+        }
+
+        // Style button
+        private static Border createRoundedBorder(int radius) {
+            return BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(70, 130, 180), 2), // Border color
+            BorderFactory.createEmptyBorder(radius, radius * 2, radius, radius *
+            2) // Padding
+            );
         }
     
         // Method to load the full list of employees in the panel
@@ -442,23 +506,45 @@
             JPanel canvas = new JPanel();
             canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
         
-            JLabel nameLabel = new JLabel("Name: " + employee.getFirstName() + " " + employee.getLastName());
-            JLabel emailLabel = new JLabel("Email: " + employee.getEmail());
-            JLabel departmentLabel = new JLabel("Department: " + employee.getDepartment());
-            JLabel positionLabel = new JLabel("Position: " + employee.getPosition());
-            JLabel salaryLabel = new JLabel("Salary: $" + String.format("%.2f", employee.getSalary()));
+            // Editable fields
+            JTextField firstNameField = new JTextField(employee.getFirstName(), 20);
+            JTextField lastNameField = new JTextField(employee.getLastName(), 20);
+            JTextField emailField = new JTextField(employee.getEmail(), 20);
+            JTextField departmentField = new JTextField(employee.getDepartment(), 20);
+            JTextField positionField = new JTextField(employee.getPosition(), 20);
+            JSpinner salarySpinner = new JSpinner(new SpinnerNumberModel(employee.getSalary(), 0, 1_000_000, 100));
         
-            JButton editEmployeeButton = createButton("Edit Employee");
-            editEmployeeButton.addActionListener(editEmployeeActionListener(employee, employeeListPanel));
-
-            canvas.add(nameLabel);
-            canvas.add(emailLabel);
-            canvas.add(departmentLabel);
-            canvas.add(positionLabel);
-            canvas.add(salaryLabel);
-            canvas.add(editEmployeeButton);
+            // Add components to the panel
+            canvas.add(new JLabel("First Name:"));
+            canvas.add(firstNameField);
+            canvas.add(new JLabel("Last Name:"));
+            canvas.add(lastNameField);
+            canvas.add(new JLabel("Email:"));
+            canvas.add(emailField);
+            canvas.add(new JLabel("Department:"));
+            canvas.add(departmentField);
+            canvas.add(new JLabel("Position:"));
+            canvas.add(positionField);
+            canvas.add(new JLabel("Salary:"));
+            canvas.add(salarySpinner);
         
-            // Retrieve the active sprint and create Sprint-related buttons
+            // Save button for editing
+            JButton saveButton = createButton("Save Changes");
+            saveButton.addActionListener(e -> {
+                employee.setFirstName(firstNameField.getText());
+                employee.setLastName(lastNameField.getText());
+                employee.setEmail(emailField.getText());
+                employee.setDepartment(departmentField.getText());
+                employee.setPosition(positionField.getText());
+                employee.setSalary((Double) salarySpinner.getValue());
+                JOptionPane.showMessageDialog(employeeDetailWindow, "Employee details updated successfully.");
+                // Optionally refresh the employee list panel if needed
+                refreshEmployeeList(employeeListPanel); // Implement this as needed
+            });
+        
+            canvas.add(saveButton);
+        
+            // Sprint evaluation buttons
             Sprint activeSprint = Sprint.getSprint(getActiveSprintID()); // Replace getActiveSprintID with your implementation
             if (activeSprint != null) {
                 JButton sprintEvalButton = createButton("Open Sprint Evaluation");
@@ -476,11 +562,12 @@
                 JLabel noSprintLabel = new JLabel("No active sprint found.");
                 canvas.add(noSprintLabel);
             }
-    
+        
             employeeDetailWindow.add(canvas);
             employeeDetailWindow.revalidate();
             employeeDetailWindow.repaint();
         }
+        
 
         private static void displaySprintEvaluationsForEmployee(List<SprintEvaluation> evaluations, int employeeId) {
             // Create a new window for displaying evaluations
@@ -683,9 +770,37 @@
                     }
                 });
         
-                formPanel.add(saveButton);
+                
+        
+                // Add section to view employee history
+                formPanel.add(new JLabel("Employment History:"));
+                List<EmployeeHistory> historyList = employee.getHistories();
+                if (historyList != null && !historyList.isEmpty()) {
+                    String[] columnNames = { "Company", "Department", "Position", "Start Date", "End Date", "Salary", "Reason for Leaving" };
+                    String[][] data = new String[historyList.size()][columnNames.length];
+        
+                    for (int i = 0; i < historyList.size(); i++) {
+                        EmployeeHistory history = historyList.get(i);
+                        data[i][0] = history.getCompany();
+                        data[i][1] = history.getDepartment();
+                        data[i][2] = history.getPosition();
+                        data[i][3] = history.getStartDate();
+                        data[i][4] = history.getEndDate();
+                        data[i][5] = String.valueOf(history.getSalary());
+                        data[i][6] = history.getReasonForLeaving();
+                    }
+        
+                    JTable historyTable = new JTable(data, columnNames);
+                    JScrollPane scrollPane = new JScrollPane(historyTable);
+                    formPanel.add(scrollPane);
+                } else {
+                    formPanel.add(new JLabel("No employment history available."));
+                }
                 editEmployeeWindow.add(formPanel);
+                formPanel.add(saveButton);
+
                 editEmployeeWindow.setVisible(true);
             };
-        } 
+        }
+        
     }
