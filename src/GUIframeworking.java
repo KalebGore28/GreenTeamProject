@@ -1,12 +1,8 @@
     //Reminders for me:
      //TODO tune visibility of windows
      //TODO back button on windows
-     //TODO home button? 
-     //TODO add employee history to display individual employee window 
-     //TODO length of time working at a company? - employee histories.csv 
-
-    //going backwards through windows - add functional back buttons 
-    //add possible home button at the bottom of screen that returns to first window
+     //TODO fix the employee window display of history 
+     //TODO fix the visibility of the delete button in the employee window 
 
     import java.awt.*;
     import java.awt.event.*;
@@ -437,8 +433,7 @@
             }
         }
     
-        //TODO shift assign/unassign from sprint buttons to supervisor version of the method only 
-        //
+
         private static void openIndividualEmployeeWindowForSupervisor(Employee employee, JPanel employeeListPanel) {
             JFrame employeeDetailWindow = new JFrame(employee.getFirstName() + " " + employee.getLastName());
             employeeDetailWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
@@ -447,6 +442,7 @@
             JPanel canvas = new JPanel();
             canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
         
+            // Basic employee details
             JLabel nameLabel = new JLabel("Name: " + employee.getFirstName() + " " + employee.getLastName());
             JLabel emailLabel = new JLabel("Email: " + employee.getEmail());
             JLabel departmentLabel = new JLabel("Department: " + employee.getDepartment());
@@ -455,19 +451,39 @@
         
             JButton editEmployeeButton = createButton("Edit Employee");
             editEmployeeButton.addActionListener(editEmployeeActionListener(employee, employeeListPanel));
-
+        
             canvas.add(nameLabel);
             canvas.add(emailLabel);
             canvas.add(departmentLabel);
             canvas.add(positionLabel);
             canvas.add(salaryLabel);
+            
+        
+            // View history (non-editable)
+            JLabel historyLabel = new JLabel("Employee Histories:");
+            canvas.add(historyLabel);
+        
+            // Fetch and display histories (e.g., previous positions, evaluations, etc.)
+            List<String> histories = getEmployeeHistories(employee.getId()); // Replace with actual method to fetch histories
+            if (histories != null && !histories.isEmpty()) {
+                JTable historyTable = new JTable(histories.size(), 1);
+                historyTable.setEnabled(false); // Disable editing
+                historyTable.getTableHeader().setVisible(false); // Hide the header for simplicity
+                for (int i = 0; i < histories.size(); i++) {
+                    historyTable.setValueAt(histories.get(i), i, 0);
+                }
+                JScrollPane scrollPane = new JScrollPane(historyTable);
+                canvas.add(scrollPane);
+            } else {
+                JLabel noHistoryLabel = new JLabel("No histories available for this employee.");
+                canvas.add(noHistoryLabel);
+            }
+
             canvas.add(editEmployeeButton);
         
-            // Retrieve the active sprint and create Sprint-related buttons
-            Sprint activeSprint = Sprint.getSprint(getActiveSprintID()); // Replace getActiveSprintID with your implementation
+            // Sprint-related buttons
+            Sprint activeSprint = Sprint.getActiveSprint(); // Replace getActiveSprintID with your implementation
             if (activeSprint != null) {
-
-        
                 JButton viewSprintEvalButton = createButton("View Sprint Eval");
                 viewSprintEvalButton.addActionListener(e -> {
                     List<SprintEvaluation> evaluations = activeSprint.getEvaluations();
@@ -493,10 +509,20 @@
                 JLabel noSprintLabel = new JLabel("No active sprint found.");
                 canvas.add(noSprintLabel);
             }
+        
             employeeDetailWindow.add(canvas);
             employeeDetailWindow.revalidate();
             employeeDetailWindow.repaint();
         }
+        
+        // Example method to retrieve employee histories
+        private static List<String> getEmployeeHistories(int employeeId) {
+            // Mock implementation - replace with actual logic to fetch data
+            return List.of("Promotion: Junior Engineer to Senior Engineer (2022)", 
+                           "Completed Sprint: Project Phoenix", 
+                           "Awarded Employee of the Month (June 2023)");
+        }
+        
 
         private static void openIndividualEmployeeWindow(Employee employee, JPanel employeeListPanel) {
             JFrame employeeDetailWindow = new JFrame(employee.getFirstName() + " " + employee.getLastName());
@@ -545,7 +571,7 @@
             canvas.add(saveButton);
         
             // Sprint evaluation buttons
-            Sprint activeSprint = Sprint.getSprint(getActiveSprintID()); // Replace getActiveSprintID with your implementation
+            Sprint activeSprint = Sprint.getActiveSprint(); // Replace getActiveSprintID with your implementation
             if (activeSprint != null) {
                 JButton sprintEvalButton = createButton("Open Sprint Evaluation");
                 sprintEvalButton.addActionListener(e -> openSprintEvalWindow(employee.getId(), activeSprint.getId()));
@@ -621,11 +647,7 @@
         
         
     
-        //TODO add functionality - should exist in sprint.java
-        private static int getActiveSprintID() {
-            // Example placeholder logic to return an active sprint ID
-            return 1; // Replace with dynamic logic
-        }
+       
     
         private static void openSprintEvalWindow(int employeeID, int sprintID) {
             // Create a new JFrame for the sprint evaluation window
