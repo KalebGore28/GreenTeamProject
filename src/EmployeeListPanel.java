@@ -15,6 +15,14 @@ public class EmployeeListPanel extends JPanel {
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE); // Clean white background
 
+		// Add component listener to refresh the list dynamically when shown
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				refreshEmployeeList(mainPanel); // Fetch and update the employee list dynamically
+			}
+		});
+
 		// Top panel with Back button, search bar, and "Create Employee" button
 		JPanel topPanel = new JPanel(new BorderLayout());
 		topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -44,11 +52,11 @@ public class EmployeeListPanel extends JPanel {
 					searchField.setForeground(Color.GRAY); // Show placeholder color
 				}
 			}
-		
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (searchField.getText().equals("Search employees...")) {
-					searchField.setText(" "); //Please don't remove the space, it breaks the search focus if removed
+					searchField.setText(" "); // Please don't remove the space, it breaks the search focus if removed
 					searchField.setForeground(Color.BLACK); // Restore default text color
 				}
 			}
@@ -74,7 +82,10 @@ public class EmployeeListPanel extends JPanel {
 		// "Create Employee" button
 		JButton createEmployeeButton = new JButton("Create Employee");
 		styleButton(createEmployeeButton);
-		createEmployeeButton.addActionListener(_ -> openCreateEmployeeWindow());
+		createEmployeeButton.addActionListener(_ -> {
+			CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+			cardLayout.show(mainPanel, "CreateEmployee");
+		});
 
 		// Add Back button, search bar, and Create Employee button to the top panel
 		JPanel buttonPanel = new JPanel(new GridBagLayout()); // Use GridBagLayout for precise spacing
@@ -191,69 +202,6 @@ public class EmployeeListPanel extends JPanel {
 		populateEmployeeList(filteredEmployees, getParentPanel());
 	}
 
-	// Open a form or window to create a new employee
-	private void openCreateEmployeeWindow() {
-		// Create input fields for the employee details
-		JTextField firstNameField = new JTextField();
-		JTextField lastNameField = new JTextField();
-		JTextField emailField = new JTextField();
-		JTextField departmentField = new JTextField();
-		JTextField positionField = new JTextField();
-		JTextField salaryField = new JTextField();
-
-		// Create an array to hold the form fields with their labels
-		Object[] fields = {
-				"First Name:", firstNameField,
-				"Last Name:", lastNameField,
-				"Email:", emailField,
-				"Department:", departmentField,
-				"Position:", positionField,
-				"Salary:", salaryField
-		};
-
-		// Show the dialog to gather user input
-		int option = JOptionPane.showConfirmDialog(
-				this, fields, "Create New Employee", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-		// Handle the form submission
-		if (option == JOptionPane.OK_OPTION) {
-			try {
-				// Parse and validate the inputs
-				String firstName = firstNameField.getText().trim();
-				String lastName = lastNameField.getText().trim();
-				String email = emailField.getText().trim();
-				String department = departmentField.getText().trim();
-				String position = positionField.getText().trim();
-				double salary = Double.parseDouble(salaryField.getText().trim());
-
-				// Ensure no fields are empty
-				if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || department.isEmpty()
-						|| position.isEmpty()) {
-					JOptionPane.showMessageDialog(this, "All fields except Salary must be filled.", "Validation Error",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-				// Create and save the new employee
-				Employee newEmployee = new Employee(firstName, lastName, email, department, position, salary);
-				Employee.saveEmployee(newEmployee);
-
-				// Refresh the employee list
-				employees.add(newEmployee);
-				filterEmployeeList(); // Update the displayed list
-
-				JOptionPane.showMessageDialog(this, "Employee created successfully!", "Success",
-						JOptionPane.INFORMATION_MESSAGE);
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, "Invalid number format for Salary.", "Input Error",
-						JOptionPane.ERROR_MESSAGE);
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this, "Error saving employee: " + e.getMessage(), "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
-	}
-
 	// Style button
 	private Border createRoundedBorder(int radius) {
 		return BorderFactory.createCompoundBorder(
@@ -346,5 +294,11 @@ public class EmployeeListPanel extends JPanel {
 	// Helper method to retrieve the parent panel (for layout updates)
 	private JPanel getParentPanel() {
 		return (JPanel) this.getParent();
+	}
+
+	// Dynamically refresh the employee list
+	private void refreshEmployeeList(JPanel mainPanel) {
+		employees = Employee.getEmployees(); // Fetch updated employee list
+		populateEmployeeList(employees, mainPanel); // Populate the employee list dynamically
 	}
 }

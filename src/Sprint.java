@@ -115,6 +115,16 @@ public class Sprint implements Identifiable {
 		CSVHelper.delete(sprint, databasePath, Sprint.class);
 	}
 
+	// Get active sprint
+	public static Sprint getActiveSprint() {
+		List<Sprint> sprints = getSprints();
+		for (Sprint sprint : sprints) {
+			if (sprint.getStatus().equals("In Progress")) {
+				return sprint;
+			}
+		}
+		return null;
+	}
 	// Non-Static Get, Save, Update, Delete, New Evaluation Methods
 
 	/**
@@ -175,7 +185,8 @@ public class Sprint implements Identifiable {
 	 * @param comment    The comment given in the evaluation.
 	 * @return The new SprintEvaluation object.
 	 */
-	public void newEvaluation(int employeeId, String date, int rating, String comment1, String comment2, String comment3) {
+	public void newEvaluation(int employeeId, String date, int rating, String comment1, String comment2,
+			String comment3) {
 		saveEvaluation(new SprintEvaluation(this.id, employeeId, date, rating, comment1, comment2, comment3));
 	}
 
@@ -244,7 +255,7 @@ public class Sprint implements Identifiable {
 			}
 		}
 	}
-	
+
 	// Getters
 
 	public int getId() {
@@ -303,8 +314,4 @@ public class Sprint implements Identifiable {
 				", velocity=" + velocity +
 				'}';
 	}
-
-
-
-
 }
