@@ -3,6 +3,9 @@
      //TODO back button on windows
      //TODO home button? 
      //TODO fix view sprint eval button 
+     //TODO rewrite employee scroll wheel screen to not have open sprint eval button 
+     //TODO add employee history to display individual employee window 
+     //TODO length of time? - employee histories.csv 
 
     //going backwards through windows - add functional back buttons 
     //add possible home button at the bottom of screen that returns to first window
@@ -10,14 +13,10 @@
     import java.awt.*;
     import java.awt.event.*;
     import javax.swing.*;
-    import java.util.ArrayList;
     import java.util.List;
-    import java.io.BufferedReader;
-    import java.io.FileReader;
     import java.io.FileWriter;
     import java.io.IOException;
     import java.time.LocalDate;
-    import java.time.LocalDateTime;
     import java.time.format.DateTimeFormatter;
     
     public class GUIframeworking {
@@ -295,7 +294,7 @@
     
             JLabel employeeLabel = new JLabel(employee.getId() + " - " + employee.getFirstName() + " " + employee.getLastName());
             JButton moreInfoButton = new JButton("More Info");
-            moreInfoButton.addActionListener(e -> openIndividualEmployeeWindow(employee, employeeListPanel)); // Pass employeeListPanel
+            moreInfoButton.addActionListener(e -> openIndividualEmployeeWindowForSupervisor(employee, employeeListPanel)); // Pass employeeListPanel
     
             employeeInfoPanel.add(employeeLabel, BorderLayout.WEST);
             employeeInfoPanel.add(moreInfoButton, BorderLayout.EAST);
@@ -374,6 +373,67 @@
             }
         }
     
+        //TODO shift assign/unassign from sprint buttons to supervisor version of the method only 
+        //
+        private static void openIndividualEmployeeWindowForSupervisor(Employee employee, JPanel employeeListPanel) {
+            JFrame employeeDetailWindow = new JFrame(employee.getFirstName() + " " + employee.getLastName());
+            employeeDetailWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
+            employeeDetailWindow.setVisible(true);
+        
+            JPanel canvas = new JPanel();
+            canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
+        
+            JLabel nameLabel = new JLabel("Name: " + employee.getFirstName() + " " + employee.getLastName());
+            JLabel emailLabel = new JLabel("Email: " + employee.getEmail());
+            JLabel departmentLabel = new JLabel("Department: " + employee.getDepartment());
+            JLabel positionLabel = new JLabel("Position: " + employee.getPosition());
+            JLabel salaryLabel = new JLabel("Salary: $" + String.format("%.2f", employee.getSalary()));
+        
+            JButton editEmployeeButton = createButton("Edit Employee");
+            editEmployeeButton.addActionListener(editEmployeeActionListener(employee, employeeListPanel));
+
+            canvas.add(nameLabel);
+            canvas.add(emailLabel);
+            canvas.add(departmentLabel);
+            canvas.add(positionLabel);
+            canvas.add(salaryLabel);
+            canvas.add(editEmployeeButton);
+        
+            // Retrieve the active sprint and create Sprint-related buttons
+            Sprint activeSprint = Sprint.getSprint(getActiveSprintID()); // Replace getActiveSprintID with your implementation
+            if (activeSprint != null) {
+
+        
+                JButton viewSprintEvalButton = createButton("View Sprint Eval");
+                viewSprintEvalButton.addActionListener(e -> {
+                    List<SprintEvaluation> evaluations = activeSprint.getEvaluations();
+                    displaySprintEvaluationsForEmployee(evaluations, employee.getId()); // Implement this method
+                });
+        
+                JButton assignToSprintButton = createButton("Assign to Sprint");
+                assignToSprintButton.addActionListener(e -> {
+                    activeSprint.assignEmployee(employee);
+                    JOptionPane.showMessageDialog(employeeDetailWindow, "Employee assigned to sprint successfully.");
+                });
+        
+                JButton unassignFromSprintButton = createButton("Unassign from Sprint");
+                unassignFromSprintButton.addActionListener(e -> {
+                    activeSprint.unassignEmployee(employee);
+                    JOptionPane.showMessageDialog(employeeDetailWindow, "Employee unassigned from sprint successfully.");
+                });
+        
+                canvas.add(viewSprintEvalButton);
+                canvas.add(assignToSprintButton);
+                canvas.add(unassignFromSprintButton);
+            } else {
+                JLabel noSprintLabel = new JLabel("No active sprint found.");
+                canvas.add(noSprintLabel);
+            }
+            employeeDetailWindow.add(canvas);
+            employeeDetailWindow.revalidate();
+            employeeDetailWindow.repaint();
+        }
+
         private static void openIndividualEmployeeWindow(Employee employee, JPanel employeeListPanel) {
             JFrame employeeDetailWindow = new JFrame(employee.getFirstName() + " " + employee.getLastName());
             employeeDetailWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
@@ -390,39 +450,91 @@
         
             JButton editEmployeeButton = createButton("Edit Employee");
             editEmployeeButton.addActionListener(editEmployeeActionListener(employee, employeeListPanel));
-        
-            // Create a button for opening the Sprint Evaluation Window
-            JButton sprintEvalButton = createButton("Open Sprint Evaluation");
-        
-            // Add an ActionListener to the button
-            sprintEvalButton.addActionListener(e -> {
-                int sprintID = getActiveSprintID(); // Replace with your method for retrieving the current sprint ID
-                openSprintEvalWindow(employee.getId(), sprintID);
-            });
-        
-            // Add the button to the main frame or a specific panel
-            JPanel buttonPanel = new JPanel(); // Create a panel for the button
-            buttonPanel.add(sprintEvalButton);
-        
-            // Add button for viewing Sprint Eval
-            JButton viewSprintEvalButton = createButton("View Sprint Eval");
-            viewSprintEvalButton.addActionListener(e -> viewSprintEvaluations(employee.getId()));
-        
+
             canvas.add(nameLabel);
             canvas.add(emailLabel);
             canvas.add(departmentLabel);
             canvas.add(positionLabel);
             canvas.add(salaryLabel);
             canvas.add(editEmployeeButton);
-            canvas.add(sprintEvalButton);
-            canvas.add(viewSprintEvalButton);
         
+            // Retrieve the active sprint and create Sprint-related buttons
+            Sprint activeSprint = Sprint.getSprint(getActiveSprintID()); // Replace getActiveSprintID with your implementation
+            if (activeSprint != null) {
+                JButton sprintEvalButton = createButton("Open Sprint Evaluation");
+                sprintEvalButton.addActionListener(e -> openSprintEvalWindow(employee.getId(), activeSprint.getId()));
+        
+                JButton viewSprintEvalButton = createButton("View Sprint Eval");
+                viewSprintEvalButton.addActionListener(e -> {
+                    List<SprintEvaluation> evaluations = activeSprint.getEvaluations();
+                    displaySprintEvaluationsForEmployee(evaluations, employee.getId()); // Implement this method
+                });
+        
+                canvas.add(sprintEvalButton);
+                canvas.add(viewSprintEvalButton);
+            } else {
+                JLabel noSprintLabel = new JLabel("No active sprint found.");
+                canvas.add(noSprintLabel);
+            }
+    
             employeeDetailWindow.add(canvas);
             employeeDetailWindow.revalidate();
             employeeDetailWindow.repaint();
         }
+
+        private static void displaySprintEvaluationsForEmployee(List<SprintEvaluation> evaluations, int employeeId) {
+            // Create a new window for displaying evaluations
+            JFrame evaluationWindow = new JFrame("Sprint Evaluations for Employee ID: " + employeeId);
+            evaluationWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
+            evaluationWindow.setLayout(new BorderLayout());
+        
+            // Create a panel to display the evaluations
+            JPanel evaluationPanel = new JPanel();
+            evaluationPanel.setLayout(new BoxLayout(evaluationPanel, BoxLayout.Y_AXIS));
+        
+            // Filter evaluations for the specified employee
+            List<SprintEvaluation> employeeEvaluations = evaluations.stream()
+                .filter(evaluation -> evaluation.getEmployeeId() == employeeId)
+                .toList();
+        
+            if (employeeEvaluations.isEmpty()) {
+                JLabel noEvaluationsLabel = new JLabel("No evaluations found for this employee.");
+                evaluationPanel.add(noEvaluationsLabel);
+            } else {
+                for (SprintEvaluation evaluation : employeeEvaluations) {
+                    // Display details of each evaluation
+                    JLabel evalLabel = new JLabel(
+                        "<html>" +
+                        "Date: " + evaluation.getDate() + "<br>" +
+                        "Rating: " + evaluation.getRating() + "<br>" +
+                        "Comments: <br>" +
+                        "1. " + evaluation.getComment1() + "<br>" +
+                        "2. " + evaluation.getComment2() + "<br>" +
+                        "3. " + evaluation.getComment3() +
+                        "</html>"
+                    );
+                    evalLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    evaluationPanel.add(evalLabel);
+                }
+            }
+        
+            // Add a scroll pane in case of many evaluations
+            JScrollPane scrollPane = new JScrollPane(evaluationPanel);
+            evaluationWindow.add(scrollPane, BorderLayout.CENTER);
+        
+            // Add a close button
+            JButton closeButton = new JButton("Close");
+            closeButton.addActionListener(e -> evaluationWindow.dispose());
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(closeButton);
+            evaluationWindow.add(buttonPanel, BorderLayout.SOUTH);
+        
+            evaluationWindow.setVisible(true);
+        }
+        
+        
     
-        //TODO add functionality 
+        //TODO add functionality - should exist in sprint.java
         private static int getActiveSprintID() {
             // Example placeholder logic to return an active sprint ID
             return 1; // Replace with dynamic logic
@@ -498,83 +610,29 @@
             sprintEvalFrame.add(evalPanel);
             sprintEvalFrame.setVisible(true);
         }
-        
-        private static void viewSprintEvaluations(int employeeID) {
-            JFrame evalViewWindow = new JFrame("Sprint Evaluations");
-            evalViewWindow.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
-            evalViewWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-            JPanel canvas = new JPanel();
-            canvas.setLayout(new BoxLayout(canvas, BoxLayout.Y_AXIS));
-            //TODO line below is what's breaking 
-            List<String> evaluations = getSprintEvaluationsForEmployee(employeeID); 
-        
-            if (evaluations.isEmpty()) {
-                JLabel noEvalLabel = new JLabel("No sprint evaluations found for this employee.");
-                canvas.add(noEvalLabel);
-            } else {
-                for (String eval : evaluations) {
-                    JLabel evalLabel = new JLabel(eval);
-                    canvas.add(evalLabel);
-                    canvas.add(new JSeparator(SwingConstants.HORIZONTAL));
-                }
-            }
-        
-            JButton closeButton = createButton("Close");
-            closeButton.addActionListener(e -> evalViewWindow.dispose());
-            canvas.add(closeButton);
-        
-            evalViewWindow.add(new JScrollPane(canvas));
-            evalViewWindow.setVisible(true);
-        }
-        
+
+        //TODO rewrite using the sprint path 
         private static void saveSprintEvaluation(String comment, int employeeID, int sprintID, int rating) {
-        String filePath = "sprint_evaluations.csv";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String date = LocalDate.now().format(formatter);
-    
-        // Generate unique evaluation ID
-        List<SprintEvaluation> allEvaluations = SprintEvaluation.getSprintEvaluations();
-        int nextID = allEvaluations.stream().mapToInt(SprintEvaluation::getId).max().orElse(0) + 1;
-    
-        // Create CSV entry
-        String csvEntry = String.format("\"%s\",\"%s\",%d,%d,%d,%d\n", 
-                                        comment, date, employeeID, nextID, rating, sprintID);
-    
-        // Append to CSV
-        try (FileWriter writer = new FileWriter(filePath, true)) {
-            writer.write(csvEntry);
-            JOptionPane.showMessageDialog(null, "Sprint evaluation submitted successfully!");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Failed to save sprint evaluation: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-        //TODO rewrite to be a view sprint eval button? 
-        private static List<String> getSprintEvaluationsForEmployee(int employeeID) {
-            List<String> evaluations = new ArrayList<>();
-            String filePath = "sprint_evaluations.csv";
+            String filePath = "sprint_evaluations.csv"; //shouldn't have to use this directly 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String date = LocalDate.now().format(formatter);
         
-            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-                String line;
-                reader.readLine(); // Skip header
-                while ((line = reader.readLine()) != null) {
-                    String[] columns = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); // Properly parse CSV with quotes
-                    if (columns.length < 6) continue; // Skip malformed lines
+            // Generate unique evaluation ID
+            List<SprintEvaluation> allEvaluations = SprintEvaluation.getSprintEvaluations();
+            int nextID = allEvaluations.stream().mapToInt(SprintEvaluation::getId).max().orElse(0) + 1;
         
-                    int evalEmployeeID = Integer.parseInt(columns[2].trim()); // EMPLOYEE_ID column
-                    if (evalEmployeeID == employeeID) {
-                        String date = columns[1].replace("\"", "").trim();
-                        String comment = columns[0].replace("\"", "").trim();
-                        evaluations.add("Date: " + date + " - Comment: " + comment);
-                    }
-                }
+            // Create CSV entry
+            String csvEntry = String.format("\"%s\",\"%s\",%d,%d,%d,%d\n", 
+                                            comment, date, employeeID, nextID, rating, sprintID);
+        
+            // Append to CSV
+            try (FileWriter writer = new FileWriter(filePath, true)) {
+                writer.write(csvEntry);
+                JOptionPane.showMessageDialog(null, "Sprint evaluation submitted successfully!");
             } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Failed to save sprint evaluation: " + e.getMessage());
                 e.printStackTrace();
             }
-        
-            return evaluations;
         }
         
         private static ActionListener editEmployeeActionListener(Employee employee, JPanel employeeListPanel) {
