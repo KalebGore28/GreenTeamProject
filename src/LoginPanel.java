@@ -10,7 +10,6 @@ public class LoginPanel extends BasePanel {
 
     @Override
     protected void initializeContent() {
-        AppState.setCurrentPanelName("LoginPanel");
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
 

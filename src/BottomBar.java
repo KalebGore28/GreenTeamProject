@@ -37,13 +37,7 @@ public class BottomBar extends BasePanel {
 
     // Handles back button action based on AppState
     private void handleBackAction() {
-        String previousPanel = AppState.getPreviousPanelName();
-        if ("LoginPanel".equals(previousPanel)) {
-            System.err.println("Back action disabled for LoginPanel");
-            return; // Prevent navigating back to LoginPanel
-        }
-
-        navigateToPanel(previousPanel); // Navigate to the previous panel
+        navigateBack();
     }
 
     // Handles logout functionality

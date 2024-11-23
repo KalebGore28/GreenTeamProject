@@ -49,11 +49,9 @@ public class HomePanel extends BasePanel {
     @Override
     protected void refreshContent() {
         contentPanel.removeAll(); // Clear existing components
-        System.out.println("Refreshing HomePanel...");
 
         User currentUser = AppState.getCurrentUser();
         if (currentUser == null) {
-            System.err.println("No user is logged in! Redirecting to LoginPanel...");
             navigateToPanel("LoginPanel");
             return;
         }
@@ -64,11 +62,9 @@ public class HomePanel extends BasePanel {
         welcomeLabel.setText(welcomeMessage);
         welcomeLabel.setForeground(ACCENT);
 
-        System.out.println("User Type: " + currentUser.getClass().getSimpleName());
 
         // Add user-specific cards
         if (currentUser instanceof Employee) {
-            System.out.println("Adding Employee-specific buttons...");
             contentPanel.add(createCard("My Tasks", "TaskPanel"));
 
             JButton employeeViewButton = new JButton("My Info");
@@ -81,7 +77,6 @@ public class HomePanel extends BasePanel {
             contentPanel.add(employeeViewButton);
 
         } else if (currentUser instanceof Supervisor) {
-            System.out.println("Adding Supervisor-specific buttons...");
             contentPanel.add(createCard("Manage Employees", "EmployeeList"));
             contentPanel.add(createCard("View Reports", "ReportPanel"));
         }

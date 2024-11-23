@@ -218,7 +218,6 @@ public class EmployeeListPanel extends BasePanel {
 
 	// Dynamically refresh the employee list
 	private void refreshEmployeeList() {
-		System.out.println("Refreshing employee list..."); // Debug message for tracking
 		try {
 			employees = Employee.getEmployees(); // Fetch the latest employee list
 			if (employees == null || employees.isEmpty()) {

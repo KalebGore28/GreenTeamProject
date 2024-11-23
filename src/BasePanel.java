@@ -1,9 +1,11 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.Stack;
 
 public abstract class BasePanel extends JPanel {
 	protected JPanel mainPanel; // Reference to the main container with CardLayout
+	private static final Stack<String> panelStack = new Stack<>(); // Navigation stack for history
 
 	// Primary Colors
 	public static final Color PRIMARY = new Color(131, 17, 0); // Dark Red
@@ -151,25 +153,58 @@ public abstract class BasePanel extends JPanel {
 
 	// Common method to navigate between panels
 	protected synchronized void navigateToPanel(String panelName) {
-		// Avoid redundant navigation to the current panel
-		if (panelName.equals(AppState.getCurrentPanelName())) {
+		// Avoid redundant navigation to the same panel
+		if (!panelStack.isEmpty() && panelStack.peek().equals(panelName)) {
+			System.out.println("Already on Panel: " + panelName);
 			return;
 		}
 
-		// Set the current panel in AppState
-		AppState.setCurrentPanelName(panelName);
+		// Push the current panel to the stack
+		panelStack.push(panelName);
 
-		// Refresh the content of the panel being navigated to
-		Component[] components = mainPanel.getComponents();
-		for (Component component : components) {
-			if (component instanceof BasePanel && panelName.equals(AppState.getCurrentPanelName())) {
+		// Refresh the new panel if it supports refreshContent
+		for (Component component : mainPanel.getComponents()) {
+			if (component instanceof BasePanel && panelName.equals(component.getName())) {
 				((BasePanel) component).refreshContent();
 			}
 		}
 
-		// Navigate to the target panel
+		// Switch to the new panel
 		CardLayout layout = (CardLayout) mainPanel.getLayout();
 		layout.show(mainPanel, panelName);
+
+		System.out.println("Navigated to Panel: " + panelName);
+
+		// Print out the current
+		System.out.println("Current Panel Stack: " + panelStack);
+	}
+
+	// Navigate back to the previous panel
+	protected void navigateBack() {
+		if (!panelStack.isEmpty()) {
+			panelStack.pop(); // Remove the current panel
+
+			// Check if next panel is an edit panel
+			if (!panelStack.isEmpty() && panelStack.peek().contains("Edit")) {
+				panelStack.pop(); // Remove the edit panel
+			}
+
+			if (!panelStack.isEmpty()) {
+				String previousPanel = panelStack.peek(); // Get the previous panel
+				System.out.println("Navigating back to Panel: " + previousPanel);
+
+				// Show the previous panel
+				CardLayout layout = (CardLayout) mainPanel.getLayout();
+				layout.show(mainPanel, previousPanel);
+
+				// Refresh content
+				for (Component component : mainPanel.getComponents()) {
+					if (component instanceof BasePanel && component.getName().equals(previousPanel)) {
+						((BasePanel) component).refreshContent();
+					}
+				}
+			}
+		}
 	}
 
 	// Common method to find panel by name
