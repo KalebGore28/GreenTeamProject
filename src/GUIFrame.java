@@ -6,6 +6,7 @@ public class GUIFrame {
         JFrame frame = new JFrame("Employee Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(540, 960);
+        frame.setResizable(false);
 
         // Center the frame on the screen
         frame.setLocationRelativeTo(null);
