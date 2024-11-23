@@ -46,7 +46,8 @@ public class BottomBar extends BasePanel {
                 this, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             AppState.setCurrentUser(null); // Clear the logged-in user
-            navigateToPanel("LoginPanel"); // Redirect to the login panel
+            navigateToLoginPanel();
+
         }
     }
 

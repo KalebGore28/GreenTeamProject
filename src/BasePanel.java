@@ -207,6 +207,15 @@ public abstract class BasePanel extends JPanel {
 		}
 	}
 
+	// Navigate to the login panel and clear the navigation stack
+	protected void navigateToLoginPanel() {
+		panelStack.clear(); // Clear the navigation stack
+		
+		// Show the login panel
+		CardLayout layout = (CardLayout) mainPanel.getLayout();
+		layout.show(mainPanel, "LoginPanel");
+	}
+
 	// Common method to find panel by name
 	@SuppressWarnings("unchecked")
 	protected <T extends Component> T findPanelByType(Class<T> panelClass) {
