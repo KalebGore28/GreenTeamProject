@@ -17,7 +17,7 @@ public class EmployeeTask implements Identifiable {
 	private String taskDescription;
 
 	@CsvBindByName(column = "task_status")
-	private String taskStatus;
+	private Boolean taskStatus;
 
 	@CsvBindByName(column = "task_start_date")
 	private String taskStartDate;
@@ -29,7 +29,7 @@ public class EmployeeTask implements Identifiable {
 	public EmployeeTask() {
 	}
 
-	public EmployeeTask(int employeeId, String taskName, String taskDescription, String taskStatus,
+	public EmployeeTask(int employeeId, String taskName, String taskDescription, Boolean taskStatus,
 			String taskStartDate, String taskEndDate) {
 		this.id = findNextId();
 		this.employeeId = employeeId;
@@ -122,7 +122,7 @@ public class EmployeeTask implements Identifiable {
 		return taskDescription;
 	}
 
-	public String getStatus() {
+	public Boolean getStatus() {
 		return taskStatus;
 	}
 
@@ -143,7 +143,7 @@ public class EmployeeTask implements Identifiable {
 		this.taskDescription = taskDescription;
 	}
 
-	public void setStatus(String taskStatus) {
+	public void setStatus(Boolean taskStatus) {
 		this.taskStatus = taskStatus;
 	}
 

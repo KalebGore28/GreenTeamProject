@@ -310,7 +310,7 @@ public class Employee implements User, Identifiable {
 	 * @param taskStartDate   The start date of the task.
 	 * @param taskEndDate     The end date of the task.
 	 */
-	public void newTask(String taskName, String taskDescription, String taskStatus, String taskStartDate,
+	public void newTask(String taskName, String taskDescription, Boolean taskStatus, String taskStartDate,
 			String taskEndDate) {
 		EmployeeTask.saveEmployeeTask(
 				new EmployeeTask(this.id, taskName, taskDescription, taskStatus, taskStartDate, taskEndDate));

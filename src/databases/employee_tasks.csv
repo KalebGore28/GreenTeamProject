@@ -1,51 +1,52 @@
 EMPLOYEE_ID,ID,TASK_DESCRIPTION,TASK_END_DATE,TASK_NAME,TASK_START_DATE,TASK_STATUS
-1,1,Complete project documentation,2021-01-31,Read Documentation,2021-01-01,In Progress
-2,2,Setup initial project repository,2022-02-15,Initialize Repository,2022-02-01,Completed
-3,3,Conduct onboarding training,2023-03-05,Onboarding Session,2023-02-15,Completed
-4,4,Create marketing campaign,2023-04-20,Develop Marketing Plan,2023-04-01,In Progress
-5,5,Upgrade server infrastructure,2023-06-30,Server Upgrade,2023-06-01,Completed
-6,6,Analyze customer data,2023-07-15,Data Analysis,2023-07-01,In Progress
-7,7,Prepare quarterly budget report,2023-08-01,Financial Report,2023-07-15,Completed
-8,8,Develop UI prototypes,2023-09-15,UI Design,2023-08-20,Completed
-9,9,Write unit tests,2023-10-10,Testing,2023-09-25,In Progress
-10,10,Conduct stakeholder meetings,2023-11-20,Meeting Coordination,2023-11-01,In Progress
-11,11,Update company website,2022-12-10,Website Update,2022-11-20,Completed
-12,12,Implement security protocols,2023-02-05,Security Implementation,2023-01-15,Completed
-13,13,Train team on new tools,2023-03-25,Tool Training,2023-03-01,Completed
-14,14,Review financial records,2023-05-15,Financial Review,2023-05-01,In Progress
-15,15,Optimize SEO strategies,2023-06-25,SEO Optimization,2023-06-01,Completed
-16,16,Setup cloud infrastructure,2023-07-20,Cloud Setup,2023-07-05,In Progress
-17,17,Design a new product feature,2023-08-30,Feature Design,2023-08-15,Completed
-18,18,Manage product launch,2023-09-20,Launch Management,2023-09-01,In Progress
-19,19,Coordinate sales training,2023-10-01,Sales Training,2023-09-15,Completed
-20,20,Update employee policies,2023-10-15,Policy Update,2023-10-01,In Progress
-21,21,Test new software features,2023-11-05,Feature Testing,2023-10-20,Completed
-22,22,Build client presentations,2023-12-01,Presentation Prep,2023-11-15,In Progress
-23,23,Organize team-building event,2023-07-10,Event Organization,2023-06-25,Completed
-24,24,Prepare marketing materials,2023-08-05,Marketing Prep,2023-07-20,Completed
-25,25,Develop analytics reports,2023-09-10,Report Development,2023-08-25,In Progress
-26,26,Review software licenses,2023-10-25,License Review,2023-10-10,Completed
-27,27,Train interns,2023-11-30,Intern Training,2023-11-01,In Progress
-28,28,Create customer support guide,2023-08-30,Support Guide,2023-08-10,Completed
-29,29,Conduct market research,2023-09-20,Market Research,2023-09-01,Completed
-30,30,Implement feature improvements,2023-10-05,Feature Enhancement,2023-09-20,In Progress
-31,31,Run system diagnostics,2023-11-15,System Check,2023-11-01,In Progress
-32,32,Oversee project development,2023-12-20,Project Management,2023-12-01,Pending
-33,33,Handle client support tickets,2023-09-10,Ticket Support,2023-08-25,Completed
-34,34,Update CRM data,2023-10-01,CRM Update,2023-09-15,Completed
-35,35,Prepare team feedback report,2023-11-10,Feedback Report,2023-10-25,In Progress
-36,36,Manage hiring process,2023-12-15,Recruitment,2023-12-01,Pending
-37,37,Set up new server,2024-01-05,Server Setup,2023-12-20,Pending
-38,38,Design training program,2023-08-05,Training Development,2023-07-20,Completed
-39,39,Oversee QA testing,2023-09-25,Quality Assurance,2023-09-10,In Progress
-40,40,Collaborate on product demo,2023-10-15,Product Demo,2023-10-01,In Progress
-41,41,Coordinate internal audit,2023-11-20,Internal Audit,2023-11-01,Completed
-42,42,Develop user personas,2023-12-01,Persona Development,2023-11-15,In Progress
-43,43,Create promotional content,2023-10-05,Promotion Creation,2023-09-20,Completed
-44,44,Organize end-of-year party,2023-12-20,Event Planning,2023-12-01,Pending
-45,45,Oversee legal compliance,2023-11-10,Compliance Review,2023-10-25,In Progress
-46,46,Optimize server performance,2023-12-15,Performance Tuning,2023-12-01,Pending
-47,47,Write technical documentation,2023-08-15,Documentation,2023-08-01,Completed
-48,48,Develop mobile app,2023-09-30,App Development,2023-09-10,In Progress
-49,49,Coordinate partnership meeting,2023-10-20,Partnership Coordination,2023-10-01,In Progress
-50,50,Research industry trends,2023-11-25,Trend Research,2023-11-10,In Progress
+1,1,Rewrite project documentation,2021-01-31,Read Documentation,2021-01-01,false
+2,2,Setup initial project repository,2022-02-15,Initialize Repository,2022-02-01,true
+3,3,Conduct onboarding training,2023-03-05,Onboarding Session,2023-02-15,true
+4,4,Create marketing campaign,2023-04-20,Develop Marketing Plan,2023-04-01,false
+5,5,Upgrade server infrastructure,2023-06-30,Server Upgrade,2023-06-01,true
+6,6,Analyze customer data,2023-07-15,Data Analysis,2023-07-01,false
+7,7,Prepare quarterly budget report,2023-08-01,Financial Report,2023-07-15,true
+8,8,Develop UI prototypes,2023-09-15,UI Design,2023-08-20,true
+9,9,Write unit tests,2023-10-10,Testing,2023-09-25,false
+10,10,Conduct stakeholder meetings,2023-11-20,Meeting Coordination,2023-11-01,false
+11,11,Update company website,2022-12-10,Website Update,2022-11-20,true
+12,12,Implement security protocols,2023-02-05,Security Implementation,2023-01-15,true
+13,13,Train team on new tools,2023-03-25,Tool Training,2023-03-01,true
+14,14,Review financial records,2023-05-15,Financial Review,2023-05-01,false
+15,15,Optimize SEO strategies,2023-06-25,SEO Optimization,2023-06-01,true
+16,16,Setup cloud infrastructure,2023-07-20,Cloud Setup,2023-07-05,false
+17,17,Design a new product feature,2023-08-30,Feature Design,2023-08-15,true
+18,18,Manage product launch,2023-09-20,Launch Management,2023-09-01,false
+19,19,Coordinate sales training,2023-10-01,Sales Training,2023-09-15,true
+20,20,Update employee policies,2023-10-15,Policy Update,2023-10-01,false
+21,21,Test new software features,2023-11-05,Feature Testing,2023-10-20,true
+22,22,Build client presentations,2023-12-01,Presentation Prep,2023-11-15,false
+23,23,Organize team-building event,2023-07-10,Event Organization,2023-06-25,true
+24,24,Prepare marketing materials,2023-08-05,Marketing Prep,2023-07-20,true
+25,25,Develop analytics reports,2023-09-10,Report Development,2023-08-25,false
+26,26,Review software licenses,2023-10-25,License Review,2023-10-10,true
+27,27,Train interns,2023-11-30,Intern Training,2023-11-01,false
+28,28,Create customer support guide,2023-08-30,Support Guide,2023-08-10,true
+29,29,Conduct market research,2023-09-20,Market Research,2023-09-01,true
+30,30,Implement feature improvements,2023-10-05,Feature Enhancement,2023-09-20,false
+31,31,Run system diagnostics,2023-11-15,System Check,2023-11-01,false
+32,32,Oversee project development,2023-12-20,Project Management,2023-12-01,false
+33,33,Handle client support tickets,2023-09-10,Ticket Support,2023-08-25,true
+34,34,Update CRM data,2023-10-01,CRM Update,2023-09-15,true
+35,35,Prepare team feedback report,2023-11-10,Feedback Report,2023-10-25,false
+36,36,Manage hiring process,2023-12-15,Recruitment,2023-12-01,false
+37,37,Set up new server,2024-01-05,Server Setup,2023-12-20,false
+38,38,Design training program,2023-08-05,Training Development,2023-07-20,true
+39,39,Oversee QA testing,2023-09-25,Quality Assurance,2023-09-10,false
+40,40,Collaborate on product demo,2023-10-15,Product Demo,2023-10-01,false
+41,41,Coordinate internal audit,2023-11-20,Internal Audit,2023-11-01,true
+42,42,Develop user personas,2023-12-01,Persona Development,2023-11-15,false
+43,43,Create promotional content,2023-10-05,Promotion Creation,2023-09-20,true
+44,44,Organize end-of-year party,2023-12-20,Event Planning,2023-12-01,false
+45,45,Oversee legal compliance,2023-11-10,Compliance Review,2023-10-25,false
+46,46,Optimize server performance,2023-12-15,Performance Tuning,2023-12-01,false
+47,47,Write technical documentation,2023-08-15,Documentation,2023-08-01,true
+48,48,Develop mobile app,2023-09-30,App Development,2023-09-10,false
+49,49,Coordinate partnership meeting,2023-10-20,Partnership Coordination,2023-10-01,false
+50,50,Research industry trends,2023-11-25,Trend Research,2023-11-10,false
+1,51,yes,present,Hello,past,false

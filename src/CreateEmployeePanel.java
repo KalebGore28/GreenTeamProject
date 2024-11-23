@@ -80,7 +80,7 @@ public class CreateEmployeePanel extends BasePanel {
                         JOptionPane.INFORMATION_MESSAGE);
 
                 // Navigate back to EmployeeListPanel
-                navigateToPanel("EmployeeList");
+                navigateBack();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Invalid salary input. Please enter a valid number.",
                         "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -89,7 +89,7 @@ public class CreateEmployeePanel extends BasePanel {
 
         JButton backButton = new JButton("Back");
         styleButton(backButton);
-        backButton.addActionListener(_ -> navigateToPanel("EmployeeList"));
+        backButton.addActionListener(_ -> navigateBack());
 
         buttonPanel.add(submitButton);
         buttonPanel.add(backButton);

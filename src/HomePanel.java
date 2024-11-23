@@ -65,7 +65,14 @@ public class HomePanel extends BasePanel {
 
         // Add user-specific cards
         if (currentUser instanceof Employee) {
-            contentPanel.add(createCard("My Tasks", "TaskPanel"));
+            JButton tasksButton = new JButton("My Tasks");
+            styleButton(tasksButton);
+            tasksButton.addActionListener(_ -> {
+                EmployeeTasksPanel employeeTasksPanel = findPanelByType(EmployeeTasksPanel.class);
+                employeeTasksPanel.setEmployee((Employee) currentUser);
+                navigateToPanel("EmployeeTasks");
+            });
+            contentPanel.add(tasksButton);
 
             JButton employeeViewButton = new JButton("My Info");
             styleButton(employeeViewButton);

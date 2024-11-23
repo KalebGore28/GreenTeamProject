@@ -139,8 +139,8 @@ public class EmployeeViewPanel extends BasePanel {
 	}
 
 	private void navigateToTasksPanel() {
-		// EmployeeTasksPanel tasksPanel = findPanelByType(EmployeeTasksPanel.class);
-		// tasksPanel.setEmployee(employee);
-		// navigateToPanel("EmployeeTasks");
+		EmployeeTasksPanel tasksPanel = findPanelByType(EmployeeTasksPanel.class);
+		tasksPanel.setEmployee(employee);
+		navigateToPanel("EmployeeTasks");
 	}
 }

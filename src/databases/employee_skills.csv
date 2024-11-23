@@ -1,6 +1,6 @@
 EMPLOYEE_ID,ID,LAST_USED_DATE,PROFICIENCY_LEVEL,SKILL_NAME,YEARS_OF_EXPERIENCE
-1,1,2023-01-15,Expert,Java,5
-1,2,2023-02-20,Intermediate,JavaScript,3
+1,1,2023-01-15,Expert,Java,6
+1,2,2023-02-20,Intermediate,JavaScript,4
 2,3,2022-11-10,Expert,Human Resources Management,7
 2,4,2023-03-15,Advanced,Employee Relations,5
 3,5,2023-07-01,Intermediate,SQL,4
