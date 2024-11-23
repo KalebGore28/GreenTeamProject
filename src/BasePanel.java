@@ -105,32 +105,38 @@ public abstract class BasePanel extends JPanel {
 		label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding for a cleaner look
 	}
 
-	// Common method to style a text field
 	protected void styleTextField(JTextField textField) {
 		textField.setFont(new Font("Arial", Font.PLAIN, 14));
 		textField.setBackground(Color.WHITE); // Set background color
 		textField.setForeground(Color.BLACK); // Text color
-		textField.setOpaque(true); // Ensure custom painting applies
-
-		// Apply a rounded border with padding
+		textField.setOpaque(false); // Allow custom painting
+	
+		// Set a preferred size to avoid sizing issues
+		textField.setPreferredSize(new Dimension(200, 30)); // Adjust dimensions as needed
+	
+		// Apply a rounded border
 		textField.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(ACCENT_DARK, 2, true), // Rounded border with primary color
-				BorderFactory.createEmptyBorder(5, 10, 5, 10) // Inner padding
+				BorderFactory.createEmptyBorder(5, 10, 5, 10), // Padding inside
+				BorderFactory.createEmptyBorder() // Placeholder for external border
 		));
-
+	
 		// Custom UI for rounded corners
 		textField.setUI(new javax.swing.plaf.basic.BasicTextFieldUI() {
 			@Override
 			protected void paintSafely(Graphics g) {
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	
+				// Background with rounded corners
 				g2.setColor(textField.getBackground());
-
-				// Draw rounded rectangle
 				int arcWidth = 20, arcHeight = 20; // Rounded corner dimensions
 				g2.fillRoundRect(0, 0, textField.getWidth(), textField.getHeight(), arcWidth, arcHeight);
-
-				super.paintSafely(g); // Paint the text and caret
+	
+				// Border with rounded corners
+				g2.setColor(ACCENT_DARK);
+				g2.drawRoundRect(0, 0, textField.getWidth() - 1, textField.getHeight() - 1, arcWidth, arcHeight);
+	
+				super.paintSafely(g); // Draw text and caret
 			}
 		});
 	}

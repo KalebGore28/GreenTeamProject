@@ -38,6 +38,11 @@ public class GUIFrame {
         EmployeeTaskEditPanel employeeTaskEditPanel = new EmployeeTaskEditPanel(mainPanel);
         employeeTaskEditPanel.setName("EmployeeTaskEdit");
 
+        SprintListPanel sprintListPanel = new SprintListPanel(mainPanel);
+        sprintListPanel.setName("SprintList");
+        CreateSprintPanel createSprintPanel = new CreateSprintPanel(mainPanel);
+        createSprintPanel.setName("CreateSprint");
+
         mainPanel.add(loginPanel, "LoginPanel");
         mainPanel.add(employeeListPanel, "EmployeeList");
         mainPanel.add(createEmployeePanel, "CreateEmployee");
@@ -50,6 +55,9 @@ public class GUIFrame {
         mainPanel.add(employeeSkillsEditPanel, "EmployeeSkillsEdit");
         mainPanel.add(employeeTasksPanel, "EmployeeTasks");
         mainPanel.add(employeeTaskEditPanel, "EmployeeTaskEdit");
+
+        mainPanel.add(sprintListPanel, "SprintList");
+        mainPanel.add(createSprintPanel, "CreateSprint");
 
 
         frame.add(mainPanel, BorderLayout.CENTER);

@@ -85,7 +85,7 @@ public class HomePanel extends BasePanel {
 
         } else if (currentUser instanceof Supervisor) {
             contentPanel.add(createCard("Manage Employees", "EmployeeList"));
-            contentPanel.add(createCard("View Reports", "ReportPanel"));
+            contentPanel.add(createCard("Manage Sprints", "SprintList"));
         }
 
         // Update the UI
