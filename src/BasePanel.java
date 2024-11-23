@@ -172,6 +172,17 @@ public abstract class BasePanel extends JPanel {
 		layout.show(mainPanel, panelName);
 	}
 
+	// Common method to find panel by name
+	@SuppressWarnings("unchecked")
+	protected <T extends Component> T findPanelByType(Class<T> panelClass) {
+		for (Component component : mainPanel.getComponents()) {
+			if (panelClass.isInstance(component)) {
+				return (T) component; // Return the panel if it's of the correct type
+			}
+		}
+		throw new IllegalArgumentException("Panel of type " + panelClass.getSimpleName() + " not found.");
+	}
+
 	// Default implementation for refreshing content, can be overridden
 	protected void refreshContent() {
 	}

@@ -13,13 +13,13 @@ public class GUIFrame {
         EmployeeListPanel listPanel = new EmployeeListPanel(mainPanel);
         CreateEmployeePanel createEmployeePanel = new CreateEmployeePanel(mainPanel);
         HomePanel homePanel = new HomePanel(mainPanel);
-        EmployeeDetailPanel detailPanel = new EmployeeDetailPanel(mainPanel);
+        EmployeeViewPanel employeeViewPanel = new EmployeeViewPanel(mainPanel);
 
         mainPanel.add(loginPanel, "LoginPanel");
         mainPanel.add(listPanel, "EmployeeList");
         mainPanel.add(createEmployeePanel, "CreateEmployee");
         mainPanel.add(homePanel, "HomePanel");
-        mainPanel.add(detailPanel, "EmployeeDetail");
+        mainPanel.add(employeeViewPanel, "EmployeeView");
 
         frame.add(mainPanel, BorderLayout.CENTER);
 

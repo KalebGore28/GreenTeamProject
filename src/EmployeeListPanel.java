@@ -206,7 +206,6 @@ public class EmployeeListPanel extends BasePanel {
 		});
 	}
 
-
 	// Styling for text field
 	private void styleCustomTextField(JTextField textField) {
 		textField.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -268,7 +267,11 @@ public class EmployeeListPanel extends BasePanel {
 		// More Info Button
 		JButton moreInfoButton = new JButton("More Info");
 		styleButton(moreInfoButton);
-		moreInfoButton.addActionListener(_ -> navigateToPanel("EmployeeDetail"));
+		moreInfoButton.addActionListener(_ -> {
+			EmployeeViewPanel viewPanel = findPanelByType(EmployeeViewPanel.class);
+			viewPanel.setEmployee(employee);
+			navigateToPanel("EmployeeView");
+		});
 
 		// Add components to the card
 		employeeCard.add(employeeLabel, BorderLayout.CENTER);

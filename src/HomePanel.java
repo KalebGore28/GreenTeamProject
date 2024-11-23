@@ -70,7 +70,16 @@ public class HomePanel extends BasePanel {
         if (currentUser instanceof Employee) {
             System.out.println("Adding Employee-specific buttons...");
             contentPanel.add(createCard("My Tasks", "TaskPanel"));
-            contentPanel.add(createCard("My Details", "EmployeeDetail"));
+
+            JButton employeeViewButton = new JButton("My Info");
+            styleButton(employeeViewButton);
+            employeeViewButton.addActionListener(_ -> {
+                EmployeeViewPanel employeeViewPanel = findPanelByType(EmployeeViewPanel.class);
+                employeeViewPanel.setEmployee((Employee) currentUser);
+                navigateToPanel("EmployeeView");
+            });
+            contentPanel.add(employeeViewButton);
+
         } else if (currentUser instanceof Supervisor) {
             System.out.println("Adding Supervisor-specific buttons...");
             contentPanel.add(createCard("Manage Employees", "EmployeeList"));
@@ -95,6 +104,5 @@ public class HomePanel extends BasePanel {
         button.addActionListener(_ -> navigateToPanel(panelName));
         return button;
     }
-
 
 }
