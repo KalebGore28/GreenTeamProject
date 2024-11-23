@@ -3,11 +3,19 @@ import java.awt.*;
 import java.util.List;
 
 public class EmployeeDetailPanel extends JPanel {
-	public EmployeeDetailPanel(Employee employee, JPanel mainPanel) {
+	public EmployeeDetailPanel(JPanel mainPanel) {
+		// Get current employee from the application state
+		Employee employee = (Employee)AppState.getCurrentUser();
+
+		if (employee == null) {
+			System.err.println("No employee is selected! Redirecting to EmployeeListPanel...");
+			AppState.setCurrentPanelName("EmployeeList");
+			return;
+		}
+
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		setBackground(Color.WHITE);
-
 
 		// Title Label
 		JLabel titleLabel = new JLabel("Employee Details");
@@ -23,11 +31,12 @@ public class EmployeeDetailPanel extends JPanel {
 
 		// Add modernized sections
 		mainContainer.add(createDetailsSection(employee));
-		// mainContainer.add(Box.createVerticalStrut(20)); // Add spacing between sections
+		mainContainer.add(Box.createVerticalStrut(20)); // Add spacing between
+		// sections
 		mainContainer.add(createSkillsSection(employee));
-		// mainContainer.add(Box.createVerticalStrut(20));
+		mainContainer.add(Box.createVerticalStrut(20));
 		mainContainer.add(createHistorySection(employee));
-		// mainContainer.add(Box.createVerticalStrut(20));
+		mainContainer.add(Box.createVerticalStrut(20));
 		mainContainer.add(createTasksSection(employee));
 
 		// Wrap mainContainer in JScrollPane
@@ -38,23 +47,9 @@ public class EmployeeDetailPanel extends JPanel {
 		scrollPane.getViewport().setBackground(Color.WHITE); // Ensure the viewport matches the background
 		add(scrollPane, BorderLayout.CENTER);
 
-		// Back Button
-		JButton backButton = new JButton("Back");
-		backButton.setFont(new Font("Arial", Font.PLAIN, 16));
-		backButton.setBackground(new Color(52, 152, 219)); // Modern button color
-		backButton.setForeground(Color.WHITE);
-		backButton.setFocusPainted(false);
-		backButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-		backButton.addActionListener(_ -> {
-			CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-			cardLayout.show(mainPanel, "EmployeeList");
-		});
-
-		// Button Panel for spacing and alignment
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(new Color(245, 245, 245));
-		buttonPanel.add(backButton);
-		add(buttonPanel, BorderLayout.PAGE_END);
+		// Add the reusable bottom bar
+		BottomBar bottomBar = new BottomBar(mainPanel);
+		add(bottomBar, BorderLayout.SOUTH);
 	}
 
 	// Create Details Section

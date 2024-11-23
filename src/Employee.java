@@ -2,7 +2,7 @@ import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Employee implements Identifiable {
+public class Employee implements User, Identifiable {
 	private static final String databasePath = "src/databases/employees.csv";
 
 	@CsvBindByName(column = "id")
@@ -404,6 +404,10 @@ public class Employee implements Identifiable {
 		return lastName;
 	}
 
+	public String getName() {
+		return firstName + " " + lastName;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -418,6 +422,10 @@ public class Employee implements Identifiable {
 
 	public double getSalary() {
 		return salary;
+	}
+
+	public String getRole() {
+		return "Employee";
 	}
 
 	// Setters
