@@ -62,7 +62,6 @@ public class HomePanel extends BasePanel {
         welcomeLabel.setText(welcomeMessage);
         welcomeLabel.setForeground(ACCENT);
 
-
         // Add user-specific cards
         if (currentUser instanceof Employee) {
             JButton tasksButton = new JButton("My Tasks");
@@ -82,6 +81,13 @@ public class HomePanel extends BasePanel {
                 navigateToPanel("EmployeeView");
             });
             contentPanel.add(employeeViewButton);
+
+            JButton sprintViewButton = new JButton("My Sprints");
+            styleButton(sprintViewButton);
+            sprintViewButton.addActionListener(_ -> {
+                navigateToPanel("EmployeeAssignedSprints");
+            });
+            contentPanel.add(sprintViewButton);
 
         } else if (currentUser instanceof Supervisor) {
             contentPanel.add(createCard("Manage Employees", "EmployeeList"));

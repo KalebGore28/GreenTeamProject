@@ -8,6 +8,7 @@ public class SprintListPanel extends BasePanel {
 	private JPanel sprintPanel; // Panel to display sprints
 	private JTextField searchField; // Search field for filtering sprints
 	private List<Sprint> sprints; // Full list of sprints
+	private Sprint activeSprint; // Currently active sprint
 
 	public SprintListPanel(JPanel mainPanel) {
 		super(mainPanel);
@@ -257,14 +258,25 @@ public class SprintListPanel extends BasePanel {
 		sprintCard.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		sprintCard.setBackground(WHITE);
 
-		JLabel sprintLabel = new JLabel(sprint.getId() + " - " + sprint.getName());
+		String status = sprint.getId() == activeSprint.getId() ? "(Active)" : sprint.getId() < activeSprint.getId() ? "(Completed)" : "(Upcoming)";
+
+		JLabel sprintLabel = new JLabel(sprint.getId() + " - " + sprint.getName() + " - " + status);
+
+		if(status == "(Active)") {
+			sprintLabel.setForeground(ACCENT);
+			sprintLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		} else if(status == "(Completed)") {
+			sprintLabel.setForeground(Color.GRAY);
+		} else {
+			sprintLabel.setForeground(Color.BLACK);
+		}
 
 		JButton moreInfoButton = new JButton("More Info");
 		styleButton(moreInfoButton);
 		moreInfoButton.addActionListener(_ -> {
-			// SprintViewPanel viewPanel = findPanelByType(SprintViewPanel.class);
-			// viewPanel.setSprint(sprint);
-			// navigateToPanel("SprintView");
+			SprintViewPanel viewPanel = findPanelByType(SprintViewPanel.class);
+			viewPanel.setSprint(sprint);
+			navigateToPanel("SprintView");
 		});
 
 		sprintCard.add(sprintLabel, BorderLayout.CENTER);
@@ -296,6 +308,7 @@ public class SprintListPanel extends BasePanel {
 
 	@Override
 	protected void refreshContent() {
+		activeSprint = Sprint.getActiveSprint(); // Fetch the current sprint
 		refreshSprintList(); // Refresh the sprint list when the panel is shown
 	}
 }

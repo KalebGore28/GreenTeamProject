@@ -1,5 +1,5 @@
 BIRTH_DATE,EMPLOYEE_ID,EMPLOYMENT_STATUS,ETHNICITY,GENDER,ID
-1985-04-15,1,Full-Time,Caucasian,Male,1
+1985-04-15,1,Full-Time,White,Male,1
 1990-06-22,2,Full-Time,Hispanic,Female,2
 1987-03-11,3,Full-Time,African American,Female,3
 1982-11-09,4,Full-Time,Caucasian,Male,4

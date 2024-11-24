@@ -125,6 +125,24 @@ public class Sprint implements Identifiable {
 		}
 		return null;
 	}
+
+	/**
+	 * Retrieves a list of all sprints assigned to a specific employee.
+	 *
+	 * @param employeeId The ID of the employee to search for.
+	 * @return A list of Sprint objects.
+	 */
+	public static List<Sprint> getSprintsForEmployee(int employeeId) {
+		List<SprintAssignedEmployee> sprintAssignedEmployees = SprintAssignedEmployee.getSprintAssignedEmployees();
+		List<Sprint> assignedSprints = new ArrayList<Sprint>();
+		for (SprintAssignedEmployee sprintAssignedEmployee : sprintAssignedEmployees) {
+			if (sprintAssignedEmployee.getEmployeeId() == employeeId) {
+				assignedSprints.add(Sprint.getSprint(sprintAssignedEmployee.getSprintId()));
+			}
+		}
+		return assignedSprints;
+	}
+
 	// Non-Static Get, Save, Update, Delete, New Evaluation Methods
 
 	/**
@@ -146,7 +164,16 @@ public class Sprint implements Identifiable {
 			e.printStackTrace();
 			return null;
 		}
+	}
 
+	public SprintEvaluation getEvaluation(int employeeId) {
+		List<SprintEvaluation> evaluations = getEvaluations();
+		for (SprintEvaluation evaluation : evaluations) {
+			if (evaluation.getEmployeeId() == employeeId) {
+				return evaluation;
+			}
+		}
+		return null;
 	}
 
 	/**

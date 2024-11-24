@@ -190,16 +190,6 @@ public class EmployeeHistoryEditPanel extends BasePanel {
 				}
 
 				if (history == null) {
-					// New history
-					history = new EmployeeHistory();
-					history.setCompany(company);
-					history.setDepartment(department);
-					history.setPosition(position);
-					history.setStartDate(startDate);
-					history.setEndDate(endDate);
-					history.setSalary(salary);
-					history.setReasonForLeaving(reasonForLeaving);
-
 					// Save the new history to the database
 					employee.newHistory(company, department, position, startDate, endDate, salary, reasonForLeaving);
 				} else {

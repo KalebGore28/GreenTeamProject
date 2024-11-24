@@ -37,11 +37,23 @@ public class GUIFrame {
         employeeTasksPanel.setName("EmployeeTasks");
         EmployeeTaskEditPanel employeeTaskEditPanel = new EmployeeTaskEditPanel(mainPanel);
         employeeTaskEditPanel.setName("EmployeeTaskEdit");
+        EmployeeDemographicsEditPanel employeeDemographicsEditPanel = new EmployeeDemographicsEditPanel(mainPanel);
+        employeeDemographicsEditPanel.setName("EmployeeDemographics");
+        EmployeeAssignedSprintsPanel employeeAssignedSprintsPanel = new EmployeeAssignedSprintsPanel(mainPanel);
+        employeeAssignedSprintsPanel.setName("EmployeeAssignedSprints");
 
         SprintListPanel sprintListPanel = new SprintListPanel(mainPanel);
         sprintListPanel.setName("SprintList");
         CreateSprintPanel createSprintPanel = new CreateSprintPanel(mainPanel);
         createSprintPanel.setName("CreateSprint");
+        SprintViewPanel sprintViewPanel = new SprintViewPanel(mainPanel);
+        sprintViewPanel.setName("SprintView");
+        SprintAssignedEmployeesPanel sprintAssignedEmployeesPanel = new SprintAssignedEmployeesPanel(mainPanel);
+        sprintAssignedEmployeesPanel.setName("SprintAssignedEmployees");
+        SprintEvaluationsPanel sprintEvaluationsPanel = new SprintEvaluationsPanel(mainPanel);
+        sprintEvaluationsPanel.setName("SprintEvaluations");
+        SprintEvaluationEditPanel sprintEvaluationEditPanel = new SprintEvaluationEditPanel(mainPanel);
+        sprintEvaluationEditPanel.setName("SprintEvaluationEdit");
 
         mainPanel.add(loginPanel, "LoginPanel");
         mainPanel.add(employeeListPanel, "EmployeeList");
@@ -55,9 +67,15 @@ public class GUIFrame {
         mainPanel.add(employeeSkillsEditPanel, "EmployeeSkillsEdit");
         mainPanel.add(employeeTasksPanel, "EmployeeTasks");
         mainPanel.add(employeeTaskEditPanel, "EmployeeTaskEdit");
+        mainPanel.add(employeeDemographicsEditPanel, "EmployeeDemographics");
+        mainPanel.add(employeeAssignedSprintsPanel, "EmployeeAssignedSprints");
 
         mainPanel.add(sprintListPanel, "SprintList");
         mainPanel.add(createSprintPanel, "CreateSprint");
+        mainPanel.add(sprintViewPanel, "SprintView");
+        mainPanel.add(sprintAssignedEmployeesPanel, "SprintAssignedEmployees");
+        mainPanel.add(sprintEvaluationsPanel, "SprintEvaluations");
+        mainPanel.add(sprintEvaluationEditPanel, "SprintEvaluationEdit");
 
 
         frame.add(mainPanel, BorderLayout.CENTER);

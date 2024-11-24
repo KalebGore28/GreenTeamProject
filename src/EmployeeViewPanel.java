@@ -39,6 +39,7 @@ public class EmployeeViewPanel extends BasePanel {
 		optionsPanel.add(createOptionCard("Basic Info", () -> navigateToInfoPanel()));
 		optionsPanel.add(createOptionCard("History", () -> navigateToHistoryPanel()));
 		optionsPanel.add(createOptionCard("Skills", () -> navigateToSkillsPanel()));
+		optionsPanel.add(createOptionCard("Demographics", () -> navigateToDemographicsPanel()));
 		optionsPanel.add(createOptionCard("Tasks", () -> navigateToTasksPanel()));
 
 		// Scrollable wrapper for the options
@@ -136,6 +137,12 @@ public class EmployeeViewPanel extends BasePanel {
 		EmployeeSkillsPanel skillsPanel = findPanelByType(EmployeeSkillsPanel.class);
 		skillsPanel.setEmployee(employee);
 		navigateToPanel("EmployeeSkills");
+	}
+
+	private void navigateToDemographicsPanel() {
+		EmployeeDemographicsEditPanel demographicsPanel = findPanelByType(EmployeeDemographicsEditPanel.class);
+		demographicsPanel.setEmployee(employee);
+		navigateToPanel("EmployeeDemographics");
 	}
 
 	private void navigateToTasksPanel() {

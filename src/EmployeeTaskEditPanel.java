@@ -109,6 +109,18 @@ public class EmployeeTaskEditPanel extends BasePanel {
         cancelButton.addActionListener(_ -> navigateBack());
         buttonPanel.add(cancelButton);
 
+        JButton deleteButton = new JButton("Delete");
+        styleButton(deleteButton);
+        deleteButton.addActionListener(_ -> {
+            if (task != null) {
+                employee.deleteTask(task);
+                JOptionPane.showMessageDialog(this, "Task deleted successfully!", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+                navigateBack();
+            }
+        });
+        buttonPanel.add(deleteButton);
+
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
