@@ -48,7 +48,43 @@ public class CreateSprintPanel extends BasePanel {
         JButton submitButton = new JButton("Submit");
         styleButton(submitButton);
         submitButton.addActionListener(_ -> {
-            // Validation and saving logic
+            try {
+                // Retrieve and validate input values
+                JTextField nameField = (JTextField) formPanel.getComponent(1);
+                JTextField startDateField = (JTextField) formPanel.getComponent(3);
+                JTextField endDateField = (JTextField) formPanel.getComponent(5);
+                JTextField statusField = (JTextField) formPanel.getComponent(7);
+                JTextField velocityField = (JTextField) formPanel.getComponent(9);
+        
+                String name = nameField.getText().trim();
+                String startDate = startDateField.getText().trim();
+                String endDate = endDateField.getText().trim();
+                String status = statusField.getText().trim();
+                int velocity;
+        
+                if (name.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || status.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "All fields must be filled.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+        
+                try {
+                    velocity = Integer.parseInt(velocityField.getText().trim());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Velocity must be a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+        
+                // Create and save the sprint
+                Sprint.newSprint(name, startDate, endDate, status, velocity);
+        
+                JOptionPane.showMessageDialog(this, "Sprint created successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        
+                // Navigate back to the SprintListPanel
+                navigateBack();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Failed to create sprint. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         });
 
         JButton backButton = new JButton("Back");
@@ -124,7 +160,7 @@ public class CreateSprintPanel extends BasePanel {
                 super.paintSafely(g); // Draw text and caret
             }
         });
-
         return textField;
     }
+
 }

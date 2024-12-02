@@ -115,6 +115,22 @@ public class Sprint implements Identifiable {
 		CSVHelper.delete(sprint, databasePath, Sprint.class);
 	}
 
+	/**
+	 * Creates a new sprint with the given parameters.
+	 *
+	 * @param name      The name of the sprint.
+	 * @param startDate The start date of the sprint.
+	 * @param endDate   The end date of the sprint.
+	 * @param status    The status of the sprint.
+	 * @param velocity  The velocity of the sprint.
+	 * @return The new Sprint object.
+	 */
+	public static Sprint newSprint(String name, String startDate, String endDate, String status, int velocity) {
+		Sprint sprint = new Sprint(name, startDate, endDate, status, velocity);
+		saveSprint(sprint);
+		return sprint;
+	}
+
 	// Get active sprint
 	public static Sprint getActiveSprint() {
 		List<Sprint> sprints = getSprints();
