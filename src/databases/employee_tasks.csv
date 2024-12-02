@@ -23,7 +23,7 @@ EMPLOYEE_ID,ID,TASK_DESCRIPTION,TASK_END_DATE,TASK_NAME,TASK_START_DATE,TASK_STA
 22,22,Build client presentations,2023-12-01,Presentation Prep,2023-11-15,false
 23,23,Organize team-building event,2023-07-10,Event Organization,2023-06-25,true
 24,24,Prepare marketing materials,2023-08-05,Marketing Prep,2023-07-20,true
-25,25,Develop analytics reports,2023-09-10,Report Development,2023-08-25,false
+25,25,Develop analytics reports,2023-09-10,Report Development,2023-08-25,true
 26,26,Review software licenses,2023-10-25,License Review,2023-10-10,true
 27,27,Train interns,2023-11-30,Intern Training,2023-11-01,false
 28,28,Create customer support guide,2023-08-30,Support Guide,2023-08-10,true
